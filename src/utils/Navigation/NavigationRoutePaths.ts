@@ -1,5 +1,10 @@
 export const NavigationRoutePaths = {
-	DASHBOARD: '/',
+	ROOT: '/',
+	LOGIN: '/login',
+	SIGN_UP: '/signUp',
+	DASHBOARD: '/dashboard',
+	INCOME: '/income',
+	EXPENSE: '/expense',
 	CREATE_PAGE: '/create',
 	BUDGET_PAGE: '/budget',
 	EDIT_PATTERN: (id?: string) => `/edit/${id ?? `:id`}`,

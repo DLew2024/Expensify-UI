@@ -1,0 +1,32 @@
+@use "/src/styles/index" as *;
+
+$height_75: 75%;
+$width_70: 70%;
+
+.container {
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    height: $height_75;
+
+    @include respond_min_width(md) {
+        height: $height_FULL;
+    }
+
+    @include respond_min_width(lg) {
+        width: $width_70;
+    }
+}
+
+.header {
+    font-size: text(xl);
+    font-weight: font(semibold);
+    // color: #000;
+}
+
+.text {
+    font-size: text(xs);
+    margin-top: 5px;
+    @include space(margin-bottom, 6);
+    // color: #334155;
+}

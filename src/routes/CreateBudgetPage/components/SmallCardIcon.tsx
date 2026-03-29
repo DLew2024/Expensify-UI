@@ -1,9 +1,9 @@
 interface SmallCardIconProps {
-	icon: string;
-	color: string;
+	icon?: string;
+	color?: string;
 }
 
-export const SmallCardIcon = ({ color, icon }: SmallCardIconProps) => {
-	const ColorValue = color;
+export const SmallCardIcon = (props: SmallCardIconProps) => {
+	
 	return <div>{'icon'}</div>;
 };

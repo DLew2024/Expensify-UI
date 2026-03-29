@@ -28,7 +28,7 @@ const EditExpensePage = () => {
 					expense={expense}
 					onSubmitForm={(expense) => {
 						dispatch(editExpense(expense));
-						navigate(NavigationRoutePaths.DASHBOARD);
+						navigate(NavigationRoutePaths.ROOT);
 					}}
 				/>
 				<button
@@ -36,7 +36,7 @@ const EditExpensePage = () => {
 					type="button"
 					onClick={() => {
 						dispatch(removeExpense(expense.id));
-						navigate(NavigationRoutePaths.DASHBOARD);
+						navigate(NavigationRoutePaths.ROOT);
 					}}
 				>
 					Remove Expense

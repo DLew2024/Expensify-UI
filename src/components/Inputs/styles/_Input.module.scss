@@ -1,0 +1,54 @@
+@use "/src/styles/index" as *;
+
+.inputBox {
+    width: 100%;
+    padding: 0.75rem 1rem;
+    border: 1px solid rgba(229, 231, 235, 0.5);
+    border-radius: 0.75rem;
+    font-size: 0.875rem;
+    color: #000;
+    background-color: #fff;
+
+    &:focus {
+        outline: none;
+        border-color: #8b5cf6;
+        box-shadow: 0 0 0 2px rgba(139, 92, 246, 0.2);
+    }
+
+    &::placeholder {
+        color: #9ca3af;
+    }
+}
+
+.label {
+    font-size: 13px;
+    color: #1e293b;
+}
+
+.input {
+    width: 100%;
+    background-color: transparent;
+    outline: none;
+}
+
+.FaRegEye {
+    color: #b194b8;
+    cursor: pointer;
+}
+
+.FaRegEyeSlash {
+    color: #94a3b8;
+    cursor: pointer;
+}
+
+.signUpText {
+    font-size: 13px;
+    color: #1e293b;
+    @include space(margin-top, 3);
+}
+
+.signUpLink {
+    color: #3374de;
+    text-decoration: underline;
+    @include font(medium);
+}

@@ -3,9 +3,10 @@ export interface ElementAttributes {
 	hidden?: boolean;
 	id?: string;
 	tabIndex?: number;
+	type?: 'submit' | 'button' | 'reset';
 }
 
 export interface AppliedAriaAttributes {
-	'arial-label'?: string;
-	'arial-describedby'?: string;
+	'aria-label'?: string;
+	'aria-describedby'?: string;
 }

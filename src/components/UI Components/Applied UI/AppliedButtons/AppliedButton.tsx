@@ -16,7 +16,6 @@ export type AppliedButtonProps = ElementAttributes &
 				| React.MouseEvent<HTMLButtonElement, MouseEvent>
 				| React.KeyboardEvent<HTMLButtonElement>,
 		) => void;
-
 		onMouseOver?: (event: React.MouseEvent<HTMLButtonElement, MouseEvent>) => void;
 		onMouseLeave?: (event: React.MouseEvent<HTMLButtonElement, MouseEvent>) => void;
 	};

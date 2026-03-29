@@ -1,4 +1,28 @@
-
 @forward "breakpoints";
 @forward "mixins";
 @forward "variables";
+
+// html {
+//     font-family: $font-family;
+// }
+
+// body {
+//     background-color: #fcfbfc;
+//     overflow-x: hidden;
+// }
+
+// .inputBox {
+//     width: 100%; // w-full
+//     display: flex; // flex
+//     justify-content: space-between; // justify-between
+//     gap: 0.75rem; // gap-3
+//     font-size: 0.875rem; // text-sm
+//     color: #000; // text-black
+//     background-color: #f1f5f9; // bg-slate-100
+//     border-radius: 0.25rem; // rounded
+//     padding: 0.75rem 1rem; // py-3 px-4
+//     margin-bottom: 1rem;
+//     margin-top: 0.75rem; // mt-3
+//     border: 1px solid #e2e8f0; // border + border-slate-200
+//     outline: none;
+// }

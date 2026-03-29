@@ -19,7 +19,7 @@ const AddExpensePage = () => {
 				<ExpenseForm
 					onSubmitForm={(expense) => {
 						dispatch(addExpense(expense));
-						navigate(NavigationRoutePaths.DASHBOARD);
+						navigate(NavigationRoutePaths.ROOT);
 					}}
 				/>
 			</div>

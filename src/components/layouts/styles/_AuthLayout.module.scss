@@ -1,0 +1,136 @@
+@use "/src/styles/index" as *;
+
+$borderRadius40px: 40px;
+
+.root {
+    display: flex;
+}
+
+.element {
+    width: 100vw;
+    height: 100vh;
+
+    padding: 2rem 3rem 3rem 3rem;
+
+    @media (min-width: 768px) {
+        width: 60vw;
+    }
+}
+
+.text {
+    color: #000;
+    @include text(lg);
+    @include font(500);
+}
+
+.imageContainer {
+    display: none;
+    width: 40vw;
+    height: 100vh;
+    // background-color: #f3f4f6; // bg-gray-100
+    // background-image: url('');
+    background-size: cover;
+    background-repeat: no-repeat;
+    background-position: center;
+    overflow: hidden;
+    position: relative;
+    @include space(padding, 8);
+
+    @include respond_min_width(md) {
+        display: block;
+    }
+}
+
+.floatingElement1 {
+    border-radius: $borderRadius40px;
+    background-color: black;
+    position: absolute;
+    top: -1.75rem;
+    left: -1.25rem;
+
+    @include space(width, 48);
+    @include space(height, 48);
+}
+
+.floatingElement2 {
+    position: absolute;
+    top: 30%;
+    right: -10%;
+
+    border-radius: $borderRadius40px;
+    border: 20px solid black;
+
+    @include space(width, 48);
+    @include space(height, 56);
+}
+
+.floatingElement3 {
+    position: absolute;
+    bottom: -1.75rem;
+    left: -1.25rem;
+
+    border-radius: $borderRadius40px;
+    background-color: black;
+
+    @include space(width, 48);
+    @include space(height, 48);
+}
+
+.image {
+    position: absolute;
+    box-shadow:
+        0 10px 15px -3px rgba(96, 165, 250, 0.15),
+        0 4px 6px -2px rgba(96, 165, 250, 0.15);
+
+    @include space(width, 64);
+    @include space(bottom, 10);
+
+    @media (min-width: 1024px) {
+        width: 90%; // lg:w-[90%]
+    }
+}
+
+.statsCardContainer {
+    display: grid;
+    grid-template-columns: repeat(1, minmax(0, 1fr));
+    z-index: 20;
+}
+
+.StatsInfoCardIconContainer {
+    display: flex;
+    background-color: #fff;
+    box-shadow:
+        0 4px 6px -1px rgba(192, 132, 252, 0.1),
+        0 2px 4px -2px rgba(192, 132, 252, 0.1);
+
+    border: 1px solid rgba(229, 231, 235, 0.5); // border + border-gray-200/50
+    z-index: 10;
+
+    @include space(gap, 6);
+    @include space(padding, 4);
+    @include rounded(xl);
+}
+
+.StatsInfoCardIcon {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    font-size: 26px;
+    color: #fff;
+    background-color: black;
+    filter: drop-shadow(0 20px 13px rgba(0, 0, 0, 0.25)) drop-shadow(0 8px 5px rgba(0, 0, 0, 0.1)); // drop-shadow-xl
+    @include space(width, 12);
+    @include space(height, 12);
+    @include rounded(full);
+}
+
+.StatsInfoCardHeader {
+    color: #6b7280;
+    margin-bottom: 0.25rem;
+    @include text(xs);
+    @include space(margin-bottom, 1);
+}
+
+.StatsInfoCardValue {
+    font-size: 20px;
+}
