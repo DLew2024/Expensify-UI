@@ -1,3 +1,4 @@
+@use "sass:map";
 @use "variables" as *;
 @use "breakpoints" as *;
 
@@ -22,25 +23,25 @@
 }
 
 @mixin respond_min_width($breakpoint) {
-    @media (min-width: map-get($breakpoints, $breakpoint)) {
+    @media (min-width: map.get($breakpoints, $breakpoint)) {
         @content;
     }
 }
 
 @mixin text($size) {
-    font-size: map-get($font-sizes, $size);
+    font-size: map.get($font-sizes, $size);
 }
 
 @mixin font($weight) {
-    font-weight: map-get($font-weights, $weight);
+    font-weight: map.get($font-weights, $weight);
 }
 
 @mixin space($property, $size) {
-    #{$property}: map-get($spacing, $size);
+    #{$property}: map.get($spacing, $size);
 }
 
 @mixin rounded($size) {
-    border-radius: map-get($radius, $size);
+    border-radius: map.get($radius, $size);
 }
 
 @mixin apply($property, $value) {

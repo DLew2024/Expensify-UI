@@ -19,22 +19,20 @@ $borderRadius40px: 40px;
 
 .text {
     color: #000;
-    @include text(lg);
-    @include font(500);
+    font-size: 1.25rem;
+    font-weight: 500;
 }
 
 .imageContainer {
     display: none;
     width: 40vw;
     height: 100vh;
-    // background-color: #f3f4f6; // bg-gray-100
-    // background-image: url('');
     background-size: cover;
     background-repeat: no-repeat;
     background-position: center;
     overflow: hidden;
     position: relative;
-    @include space(padding, 8);
+    padding: calc($defaultPadding * 4);
 
     @include respond_min_width(md) {
         display: block;
@@ -47,9 +45,8 @@ $borderRadius40px: 40px;
     position: absolute;
     top: -1.75rem;
     left: -1.25rem;
-
-    @include space(width, 48);
-    @include space(height, 48);
+    width: 12rem;
+    height: 12rem;
 }
 
 .floatingElement2 {
@@ -60,8 +57,8 @@ $borderRadius40px: 40px;
     border-radius: $borderRadius40px;
     border: 20px solid black;
 
-    @include space(width, 48);
-    @include space(height, 56);
+    width: 12rem;
+    height: 14rem;
 }
 
 .floatingElement3 {
@@ -72,8 +69,8 @@ $borderRadius40px: 40px;
     border-radius: $borderRadius40px;
     background-color: black;
 
-    @include space(width, 48);
-    @include space(height, 48);
+    width: 12rem;
+    height: 12rem;
 }
 
 .image {
@@ -82,11 +79,11 @@ $borderRadius40px: 40px;
         0 10px 15px -3px rgba(96, 165, 250, 0.15),
         0 4px 6px -2px rgba(96, 165, 250, 0.15);
 
-    @include space(width, 64);
-    @include space(bottom, 10);
+    width: 16rem;
+    bottom: 2.5rem;
 
     @media (min-width: 1024px) {
-        width: 90%; // lg:w-[90%]
+        width: 90%;
     }
 }
 
@@ -96,7 +93,7 @@ $borderRadius40px: 40px;
     z-index: 20;
 }
 
-.StatsInfoCardIconContainer {
+.statsInfoCardIconContainer {
     display: flex;
     background-color: #fff;
     box-shadow:
@@ -106,31 +103,30 @@ $borderRadius40px: 40px;
     border: 1px solid rgba(229, 231, 235, 0.5); // border + border-gray-200/50
     z-index: 10;
 
-    @include space(gap, 6);
-    @include space(padding, 4);
-    @include rounded(xl);
+    gap: calc($defaultGap * 3);
+    padding: calc($defaultPadding * 2);
+    border-radius: 0.75rem;
 }
 
-.StatsInfoCardIcon {
+.statsInfoCardIcon {
     display: flex;
     align-items: center;
     justify-content: center;
-    font-size: 26px;
+    font-size: 1.625rem;
     color: #fff;
     background-color: black;
     filter: drop-shadow(0 20px 13px rgba(0, 0, 0, 0.25)) drop-shadow(0 8px 5px rgba(0, 0, 0, 0.1)); // drop-shadow-xl
-    @include space(width, 12);
-    @include space(height, 12);
+    width: 3rem;
+    height: 3rem;
     @include rounded(full);
 }
 
-.StatsInfoCardHeader {
+.statsInfoCardHeader {
     color: #6b7280;
-    margin-bottom: 0.25rem;
-    @include text(xs);
-    @include space(margin-bottom, 1);
+    font-size: 0.75rem;
+    margin-bottom: calc($defaultGap * 1.25);
 }
 
-.StatsInfoCardValue {
-    font-size: 20px;
+.statsInfoCardValue {
+    font-size: 1.25rem;
 }

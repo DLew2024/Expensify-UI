@@ -2,7 +2,7 @@
 
 .inputBox {
     width: 100%;
-    padding: 0.75rem 1rem;
+    padding: $defaultPadding calc($defaultPadding * 2);
     border: 1px solid rgba(229, 231, 235, 0.5);
     border-radius: 0.75rem;
     font-size: 0.875rem;
@@ -21,7 +21,7 @@
 }
 
 .label {
-    font-size: 13px;
+    font-size: 0.875rem;
     color: #1e293b;
 }
 
@@ -42,13 +42,13 @@
 }
 
 .signUpText {
-    font-size: 13px;
+    font-size: 0.875rem;
     color: #1e293b;
-    @include space(margin-top, 3);
+    margin-top: $defaultGap;
 }
 
 .signUpLink {
     color: #3374de;
     text-decoration: underline;
-    @include font(medium);
+    font-weight: 500;
 }

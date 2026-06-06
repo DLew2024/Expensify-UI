@@ -1,32 +1,27 @@
 @use "/src/styles/index" as *;
 
-$height_75: 75%;
-$width_70: 70%;
-
 .container {
     display: flex;
     flex-direction: column;
     justify-content: center;
-    height: $height_75;
+    height: 75%;
 
     @include respond_min_width(md) {
-        height: $height_FULL;
+        height: 100%;
     }
 
     @include respond_min_width(lg) {
-        width: $width_70;
+        width: 70%;
     }
 }
 
 .header {
-    font-size: text(xl);
-    font-weight: font(semibold);
-    // color: #000;
+    font-size: 1.25rem;
+    font-weight: 500;
 }
 
 .text {
-    font-size: text(xs);
-    margin-top: 5px;
-    @include space(margin-bottom, 6);
-    // color: #334155;
+    font-size: 0.75rem;
+    margin-top: $defaultGap;
+    margin-bottom: calc($defaultGap * 2);
 }

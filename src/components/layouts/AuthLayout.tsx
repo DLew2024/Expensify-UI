@@ -48,14 +48,14 @@ const StatsInfoCard = ({
 	value: string;
 }) => {
 	return (
-		<div className={styles.StatsInfoCardIconContainer}>
-			<div className={styles.StatsInfoCardIcon}>{icon}</div>
+		<div className={styles.statsInfoCardIconContainer}>
+			<div className={styles.statsInfoCardIcon}>{icon}</div>
 
 			<div className="">
-				<MainTextTypography variant="h6" className={styles.StatsInfoCardHeader}>
+				<MainTextTypography variant="h6" className={styles.statsInfoCardHeader}>
 					{label}
 				</MainTextTypography>
-				<MainTextTypography variant="span" className={styles.StatsInfoCardValue}>
+				<MainTextTypography variant="span" className={styles.statsInfoCardValue}>
 					$ {value}
 				</MainTextTypography>
 			</div>
