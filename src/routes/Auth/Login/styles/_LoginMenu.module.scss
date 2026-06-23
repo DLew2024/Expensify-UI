@@ -15,6 +15,20 @@
     }
 }
 
+.form {
+    max-width: 30rem;
+
+    &__inputContainer {
+        margin-bottom: 1rem;
+    }
+
+    &__firstRow {
+        display: flex;
+        justify-content: space-between;
+        gap: $defaultGap;
+    }
+}
+
 .header {
     font-size: 1.25rem;
     font-weight: 500;
@@ -24,4 +38,8 @@
     font-size: 0.75rem;
     margin-top: $defaultGap;
     margin-bottom: calc($defaultGap * 2);
+}
+
+.error {
+    color: red;
 }

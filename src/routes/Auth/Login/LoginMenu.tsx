@@ -1,14 +1,14 @@
 import { useState } from 'react';
 import { Link, useNavigate } from 'react-router';
 import Input from '../../../components/Inputs/Input';
-import AuthLayout from '../../../components/layouts/AuthLayout';
 import MainTextTypography from '../../../components/MainTextTypography';
 import { PrimaryButton } from '../../../components/UI Components/buttons/PrimaryButton';
+import { validateEmail } from '../../../utils/Functions/Utility/ValidationFunctions';
 import { NavigationRoutePaths } from '../../../utils/Navigation/NavigationRoutePaths';
-import styles from './styles/_LoginPage.module.scss';
+import styles from './styles/_LoginMenu.module.scss';
 
 // Add Google Auth Provider
-const Login = () => {
+const LoginMenu = () => {
 	const navigate = useNavigate();
 
 	const [email, setEmail] = useState<string>('');
@@ -17,20 +17,31 @@ const Login = () => {
 
 	const handleLogin = async (e: React.FormEvent) => {
 		e.preventDefault();
+
+		if (!validateEmail(email)) {
+			setError('Please enter your email');
+			return;
+		}
+
+		if (!password) {
+			setError('Please enter your password');
+			return;
+		}
+
 		setError(null);
 	};
 
 	return (
-		<AuthLayout>
-			<div className={styles.container}>
-				<MainTextTypography variant="h3" className={styles.header}>
-					Welcome back!
-				</MainTextTypography>
-				<MainTextTypography variant="body" className={styles.text}>
-					Please enter your credentials to access your account.
-				</MainTextTypography>
+		<div className={styles.container}>
+			<MainTextTypography variant="h3" className={styles.header}>
+				Welcome back!
+			</MainTextTypography>
+			<MainTextTypography variant="body" className={styles.text}>
+				Please enter your credentials to access your account.
+			</MainTextTypography>
 
-				<form onSubmit={handleLogin} action="">
+			<form onSubmit={handleLogin} action="" className={styles.form}>
+				<div className={styles.form__inputContainer}>
 					<Input
 						value={email}
 						onChange={(value: string) => setEmail(value)}
@@ -51,21 +62,21 @@ const Login = () => {
 							{error}
 						</MainTextTypography>
 					)}
+				</div>
 
-					<PrimaryButton aria-label="Login Button" type="submit">
-						LOGIN
-					</PrimaryButton>
+				<PrimaryButton aria-label="Login Button" type="submit">
+					LOGIN
+				</PrimaryButton>
 
-					<MainTextTypography variant="body" className={styles.signUpText}>
-						Don't have an account?{' '}
-						<Link className={styles.signUpLink} to={NavigationRoutePaths.SIGN_UP}>
-							Sign up
-						</Link>
-					</MainTextTypography>
-				</form>
-			</div>
-		</AuthLayout>
+				<MainTextTypography variant="body" className={styles.signUpText}>
+					Don't have an account?
+					<Link className={styles.signUpLink} to={NavigationRoutePaths.SIGN_UP}>
+						Sign up
+					</Link>
+				</MainTextTypography>
+			</form>
+		</div>
 	);
 };
 
-export default Login;
+export default LoginMenu;
