@@ -1,20 +1,17 @@
 import type { ReactNode } from 'react';
 import { LuTrendingUpDown } from 'react-icons/lu';
+import LoginMenu from '../../routes/Auth/Login/LoginMenu';
 import MainTextTypography from '../MainTextTypography';
-import styles from './styles/_AuthLayout.module.scss';
+import styles from './styles/_LoginPage.module.scss';
 
-type AuthLayoutProps = {
-	children: ReactNode;
-};
-
-const AuthLayout = ({ children }: AuthLayoutProps) => {
+const LoginPage = () => {
 	return (
 		<div className={styles.root}>
 			<div className={styles.element}>
 				<MainTextTypography variant="h2" className={styles.text}>
 					Expense Tracker
 				</MainTextTypography>
-				{children}
+				<LoginMenu />
 			</div>
 
 			<div className={styles.imageContainer}>
@@ -36,7 +33,7 @@ const AuthLayout = ({ children }: AuthLayoutProps) => {
 	);
 };
 
-export default AuthLayout;
+export default LoginPage;
 
 const StatsInfoCard = ({
 	icon,
