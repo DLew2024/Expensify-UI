@@ -1,54 +1,57 @@
 @use "/src/styles/index" as *;
 
-.inputBox {
-    width: 100%;
-    padding: $defaultPadding calc($defaultPadding * 2);
-    border: 1px solid rgba(229, 231, 235, 0.5);
-    border-radius: 0.75rem;
-    font-size: 0.875rem;
-    color: #000;
-    background-color: #fff;
-
-    &:focus {
-        outline: none;
-        border-color: #8b5cf6;
-        box-shadow: 0 0 0 2px rgba(139, 92, 246, 0.2);
-    }
-
-    &::placeholder {
-        color: #9ca3af;
-    }
-}
-
-.label {
-    font-size: 0.875rem;
-    color: #1e293b;
-}
-
 .input {
     width: 100%;
-    background-color: transparent;
-    outline: none;
-}
 
-.FaRegEye {
-    color: #b194b8;
-    cursor: pointer;
-}
+    &__label {
+        font-size: 0.875rem;
+        color: #1e293b;
+    }
 
-.FaRegEyeSlash {
-    color: #94a3b8;
-    cursor: pointer;
-}
+    &__wrapper {
+        box-sizing: border-box;
+        width: 100%;
 
-.signUpText {
-    font-size: 0.875rem;
-    color: #1e293b;
-    margin-top: $defaultGap;
-}
+        display: flex;
+        align-items: center;
+        gap: 0.5rem;
 
-.signUpLink {
-    color: #3374de;
-    text-decoration: underline;
-    font-weight: 500;
+        padding: $defaultPadding calc($defaultPadding * 2);
+        border: 1px solid rgba(229, 231, 235, 0.5);
+        border-radius: 0.75rem;
+        background-color: #fff;
+
+        &:focus-within {
+            outline: none;
+            border-color: #8b5cf6;
+            box-shadow: 0 0 0 2px rgba(139, 92, 246, 0.2);
+        }
+
+        &::placeholder {
+            color: #9ca3af;
+        }
+    }
+
+    &__element {
+        box-sizing: border-box;
+        width: 100%;
+        min-width: 0;
+        flex: 1;
+        background-color: transparent;
+        outline: none;
+        border: none;
+    }
+
+    &__eyeOpenIcon {
+        color: #b194b8;
+    }
+
+    &__eyeClosedIcon {
+        color: #94a3b8;
+    }
+
+    &__eyeOpenIcon,
+    &__eyeClosedIcon {
+        cursor: pointer;
+    }
 }

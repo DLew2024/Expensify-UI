@@ -23,14 +23,14 @@ const Input = ({ label, value, placeholder, type = 'text', onChange }: InputProp
 	const inputType = isPassword ? (shouldShowPassword ? 'text' : 'password') : type;
 
 	return (
-		<div>
-			<MainTextTypography className={styles.label}>{label}</MainTextTypography>
+		<div className={styles.input}>
+			<MainTextTypography className={styles.input__label}>{label}</MainTextTypography>
 
-			<div className={styles.inputBox}>
+			<div className={styles.input__wrapper}>
 				<input
 					type={inputType}
 					placeholder={placeholder}
-					className={styles.input}
+					className={styles.input__element}
 					value={value}
 					onChange={(e: React.ChangeEvent<HTMLInputElement>) => onChange(e.target.value)}
 				/>
@@ -39,13 +39,13 @@ const Input = ({ label, value, placeholder, type = 'text', onChange }: InputProp
 					(shouldShowPassword ? (
 						<FaRegEye
 							size={22}
-							className={styles.FaRegEye}
+							className={styles.input__eyeOpenIcon}
 							onClick={() => togglePasswordVisibility()}
 						/>
 					) : (
 						<FaRegEyeSlash
 							size={22}
-							className={styles.FaRegEyeSlash}
+							className={styles.input__eyeClosedIcon}
 							onClick={() => togglePasswordVisibility()}
 						/>
 					))}
