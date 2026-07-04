@@ -1,0 +1,46 @@
+.page_header {
+    background: #f7f7f7f7;
+    margin-bottom: $defaultGap;
+    padding: $defaultPadding 0;
+}
+
+.page_header__actions {
+    margin-top: $defaultPadding;
+}
+
+.page_header__title {
+    font-weight: 300;
+    margin: 0;
+    span {
+        font-weight: 700;
+    }
+}
+
+.list_item__message {
+    align-items: center;
+    color: gray;
+    justify-content: center;
+    padding: $defaultPadding;
+
+    &:hover {
+        background: none;
+    }
+}
+
+.list_item__title {
+    margin: 0;
+    word-break: break-all;
+}
+
+.list_item__sub-title {
+    color: gray;
+    font-size: small;
+}
+
+.list_item__data {
+    margin: 0 0 0 $defaultGap;
+    @media (min-width: 500px) {
+        margin: 0;
+        padding-left: $defaultPadding;
+    }
+}

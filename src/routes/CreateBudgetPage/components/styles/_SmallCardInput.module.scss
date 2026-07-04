@@ -1,0 +1,11 @@
+@use "/src/styles/index" as *;
+
+.smallCardInputWrapper {
+    flex: 1;
+}
+
+.cardTitleContainer {
+    @include displayFlexRow;
+    justify-content: space-between;
+    align-items: center;
+}

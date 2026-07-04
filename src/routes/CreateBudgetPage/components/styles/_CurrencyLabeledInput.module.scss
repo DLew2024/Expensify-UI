@@ -1,0 +1,24 @@
+@use "/src/styles/index" as *;
+
+.labeledInputContainer {
+    @include displayFlexRow;
+    align-items: center;
+    gap: $defaultGap $defaultGap;
+}
+
+.firstInput {
+    flex: 1;
+    height: 40px;
+    padding: 0 12px;
+    border-radius: 10px;
+    border: 1px solid #e5e7eb;
+}
+
+.amountInput {
+    width: 90px;
+    height: 40px;
+    padding: 0 10px;
+    border-radius: 10px;
+    border: 1px solid #e5e7eb;
+    text-align: right;
+}

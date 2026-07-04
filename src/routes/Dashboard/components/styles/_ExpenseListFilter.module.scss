@@ -1,0 +1,38 @@
+.input_group {
+    display: flex;
+    flex-direction: column;
+    margin-bottom: $defaultGap;
+
+    @media (min-width: 500px) {
+        flex-direction: row;
+        margin-bottom: calc($defaultGap * 2);
+    }
+}
+
+.input_group__item {
+    margin-bottom: $defaultGap;
+
+    @media (min-width: 500px) {
+        margin-right: $defaultGap;
+        margin-: 0 $defaultGap 0 0;
+    }
+}
+
+//inputs
+
+.text_input {
+    border: 1px solid #cacccd;
+    height: 50px;
+    font-size: 1.8rem;
+    font-weight: 300;
+    padding: $defaultPadding;
+}
+
+.select {
+    @extend .text_input;
+}
+
+.text_area {
+    @extend .text_input;
+    height: 10rem;
+}

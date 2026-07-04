@@ -1,0 +1,68 @@
+@use "/src/styles/index" as *;
+
+.signup_container {
+    width: 100%;
+    height: auto;
+
+    margin-top: 2.5rem;
+
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+
+    @include respond_min_width(md) {
+        height: 100%;
+        margin-top: 0;
+    }
+
+    @include respond_min_width(lg) {
+        width: 100%;
+    }
+
+    &__title {
+        @include text(4xl);
+        @include font(semibold);
+        @include themify(color, black);
+    }
+
+    &__subtitle {
+        margin-top: 0.5rem;
+        margin-bottom: 1.5rem;
+
+        @include text(2xl);
+        @include themify(color, text-secondary);
+    }
+
+    .form__inputContainer {
+        display: grid;
+        grid-template-columns: 0.5fr 1fr;
+        grid-template-rows: 53.5px auto;
+
+        gap: $defaultGap;
+        margin-bottom: 1rem;
+
+        @include respond-min-width(md) {
+            grid-template-columns: repeat(2, 1fr);
+        }
+
+        &__password {
+            grid-column: span 2;
+        }
+    }
+
+    .errorText {
+        @include themify(color, danger);
+    }
+
+    .signUpText {
+        margin-top: 1.5rem;
+
+        @include text(2xl);
+        @include themify(color, text-secondary);
+
+        a {
+            @include themify(color, primary);
+            text-decoration: underline;
+        }
+    }
+}

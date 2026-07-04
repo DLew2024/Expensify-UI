@@ -1,17 +1,77 @@
+@use "./_variables" as *;
+@use "./_mixins" as *;
+
+* {
+    box-sizing: content-box;
+    margin: 0;
+    padding: 0;
+}
+
 html {
     font-size: 62.5%;
 }
 
 body {
-    font-family: Helvetica, sans-serif;
+    font-family: $font-family;
     font-size: $m-size;
 }
 
+h1,
+h2,
+h3,
+h4,
+h5,
+h6 {
+    margin: 0;
+    padding: 0;
+
+    font-size: inherit;
+    font-weight: inherit;
+    line-height: inherit;
+
+    color: inherit;
+}
+
+h1 {
+    @include text(6xl);
+    @include font(bold);
+}
+h2 {
+    @include text(5xl);
+    @include font(bold);
+}
+h3 {
+    @include text(4xl);
+    @include font(semibold);
+}
+h4 {
+    @include text(3xl);
+    @include font(semibold);
+}
+h5 {
+    @include text(2xl);
+    @include font(semibold);
+}
+h6 {
+    @include text(xl);
+    @include font(semibold);
+}
+
+span {
+    @include text(2xl);
+}
+
 button {
+    all: unset;
+    box-sizing: border-box;
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
     cursor: pointer;
+    font: inherit;
+    color: inherit;
 
     &:disabled {
         cursor: default;
     }
 }
-

@@ -1,0 +1,21 @@
+@use "/src/styles/index" as *;
+
+.primaryInput {
+    height: 40px;
+    font-size: 1rem;
+    padding: 0 calc($defaultPadding * 2);
+
+    border: 1px solid;
+    border-radius: $defaultBorderRadius;
+    outline: none;
+
+    @include themify(border-color, border-color);
+
+    &:focus {
+        @include themify(border-color, primary);
+    }
+
+    &::placeholder {
+        @include themify(color, text-secondary);
+    }
+}

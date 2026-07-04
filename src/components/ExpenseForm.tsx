@@ -6,6 +6,7 @@ import { createNewGuid, EMPTY_GUID } from '../utils/DataTypes/Guid';
 import { dayjsToEpochSecondsSafeOrNowEpochSeconds } from '../utils/Functions/Conversions/DateUtils';
 import { AMOUNT_REGEX } from '../utils/Regex/RegexUtils';
 import { DateCalendar } from './DateCalendar';
+import styles from './styles/_ExpenseForm.module.scss';
 
 type ExpenseFormProps = {
 	expense?: Expense;
@@ -42,38 +43,44 @@ const ExpenseForm = ({ expense = EMPTY_EXPENSE, onSubmitForm }: ExpenseFormProps
 	};
 
 	return (
-		<div>
-			{error && <p>{error}</p>}
-			<form onSubmit={onSubmit}>
-				<input
-					type="text"
-					placeholder="Description"
-					value={descriptionText}
-					onChange={(e) => setDescriptionText(e.target.value)}
-				/>
-				<input
-					type="number"
-					inputMode="decimal"
-					placeholder="Amount"
-					value={amountValue}
-					onChange={(e) => {
-						const amount = e.target.value;
-						if (amount === '' || AMOUNT_REGEX.test(amount)) setAmountValue(amount);
-					}}
-				/>
+		<form className="form" onSubmit={onSubmit}>
+			{error && <p className="formError">{error}</p>}
+			<input
+				type="text"
+				placeholder="Description"
+				className={styles.text_input}
+				value={descriptionText}
+				onChange={(e) => setDescriptionText(e.target.value)}
+			/>
+			<input
+				type="number"
+				inputMode="decimal"
+				placeholder="Amount"
+				className="text_input"
+				value={amountValue}
+				onChange={(e) => {
+					const amount = e.target.value;
+					if (amount === '' || AMOUNT_REGEX.test(amount)) setAmountValue(amount);
+				}}
+			/>
 
-				<DateCalendar value={date} onChange={setDate} />
+			<DateCalendar value={date} onChange={setDate} />
 
-				<textarea
-					name=""
-					id=""
-					placeholder="Add note for your expense (optional)"
-					value={noteText}
-					onChange={(e) => setNoteText(e.target.value)}
-				/>
-				<button type="submit">Add Expense</button>
-			</form>
-		</div>
+			<textarea
+				name=""
+				id=""
+				className="text_area"
+				placeholder="Add note for your expense (optional)"
+				value={noteText}
+				onChange={(e) => setNoteText(e.target.value)}
+			/>
+
+			<div>
+				<button className="button" type="submit">
+					Save Expense
+				</button>
+			</div>
+		</form>
 	);
 };
 

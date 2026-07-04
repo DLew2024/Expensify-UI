@@ -1,3 +1,5 @@
+import numeral from 'numeral';
+
 export const convertPriceToString = (price: number): string => {
-	return `$${price.toFixed(2)}`;
+	return numeral(price / 100).format('0,0.00');
 };

@@ -1,0 +1,26 @@
+@use "/src/styles/index" as *;
+
+.mediumCardContainer {
+    @include card-border;
+    padding: calc($defaultPadding * 2);
+}
+
+.mediumCardTitleContainer {
+    display: flex;
+    align-items: center;
+    gap: $defaultGap;
+
+    .title {
+        margin: 0;
+    }
+}
+
+// List Of Labels Component
+
+.listOfLabeledInputsWrapper {
+    margin-top: $defaultGap;
+}
+
+.listOfLabeledInputsContainer > *:not(:first-child) {
+    margin-top: $defaultGap;
+}

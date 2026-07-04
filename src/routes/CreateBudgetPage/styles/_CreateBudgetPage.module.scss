@@ -1,0 +1,18 @@
+@use "/src/styles/index" as *;
+
+.createBudgetWrapper {
+    display: flex;
+    flex-direction: column;
+    gap: calc($defaultGap * 4);
+}
+
+.smallMetricsContainer {
+    @include displayFlexRow;
+    flex-wrap: wrap;
+    gap: calc($defaultGap * 2);
+}
+
+.mediumMetricsContainer {
+    @include displayFlexRow;
+    gap: $defaultGap;
+}

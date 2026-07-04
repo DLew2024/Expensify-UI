@@ -1,0 +1,85 @@
+@use "/src/styles/index" as *;
+
+$photoSelectorSize: 6.5rem;
+$smallPhotoSelectorSize: 2.45rem;
+
+.profilePhotoSelector {
+    display: flex;
+    justify-content: center;
+    @include space(margin-bottom, 6);
+
+    &__input {
+        display: none;
+    }
+
+    // Placeholder for profile photo
+    &__placeholder {
+        position: relative;
+
+        display: flex;
+        align-items: center;
+        justify-content: center;
+
+        border-radius: 50%;
+
+        width: $photoSelectorSize;
+        height: $photoSelectorSize;
+        @include themify(background-color, primary, 0.5);
+    }
+
+    &__icon {
+        font-size: 3.25rem;
+        @include themify(color, primary);
+    }
+
+    &__chooseButton {
+        position: absolute;
+        bottom: -0.15rem;
+        right: -0.15rem;
+
+        width: $smallPhotoSelectorSize;
+        height: $smallPhotoSelectorSize;
+
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        padding: $defaultPadding;
+
+        @include themify(background-color, primary);
+        @include themify(color, white);
+        @include rounded(full);
+    }
+
+    // Preview of selected profile photo
+    &__previewContainer {
+        position: relative;
+        width: $photoSelectorSize;
+        height: $photoSelectorSize;
+    }
+
+    &__previewImage {
+        width: $photoSelectorSize;
+        height: $photoSelectorSize;
+        object-fit: cover;
+
+        @include rounded(full);
+    }
+
+    &__removeButton {
+        width: $smallPhotoSelectorSize;
+        height: $smallPhotoSelectorSize;
+
+        position: absolute;
+        bottom: -0.15rem;
+        right: -0.15rem;
+
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        padding: $defaultPadding;
+
+        @include themify(background-color, danger);
+        @include themify(color, white);
+        @include rounded(full);
+    }
+}

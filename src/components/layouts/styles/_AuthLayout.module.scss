@@ -1,0 +1,141 @@
+@use "/src/styles/index" as *;
+
+$borderRadius30px: 30px;
+
+.authLayoutContainer {
+    display: flex;
+
+    &__mainElement {
+        width: 100vw;
+        height: 100vh;
+
+        padding: 2rem 3rem 3rem 3rem;
+
+        @include respond-min-width(md) {
+            width: 60vw;
+        }
+
+        &__text {
+            @include font(medium);
+            @include themify(color, black);
+        }
+    }
+
+    &__imagesSection {
+        display: none;
+        width: 40vw;
+        height: 100vh;
+        background-size: cover;
+        background-repeat: no-repeat;
+        background-position: center;
+        overflow: hidden;
+        position: relative;
+        padding: calc($defaultPadding * 4);
+
+        @include respond_min_width(md) {
+            display: block;
+        }
+
+        .floatingElement1 {
+            position: absolute;
+            top: -2.25rem;
+            left: -2.25rem;
+            width: 12rem;
+            height: 13rem;
+
+            border-radius: $borderRadius30px;
+
+            @include themify(background-color, primary);
+        }
+
+        .floatingElement2 {
+            width: 12rem;
+            height: 14rem;
+
+            position: absolute;
+            top: 30%;
+            right: -10%;
+
+            border-radius: $borderRadius30px;
+            border: 20px solid;
+
+            @include themify(border-color, primary);
+        }
+
+        .floatingElement3 {
+            width: 13rem;
+            height: 12rem;
+
+            position: absolute;
+            bottom: -1.75rem;
+            left: -3.25rem;
+
+            border-radius: $borderRadius30px;
+
+            @include themify(background-color, primary);
+        }
+    }
+
+    .statsCardContainer {
+        display: grid;
+        grid-template-columns: repeat(1, minmax(0, 1fr));
+        z-index: 20;
+    }
+
+    .image {
+        position: absolute;
+        width: 16rem;
+
+        box-shadow:
+            0 10px 15px -3px theme-color(primary, 0.15),
+            0 4px 6px -2px theme-color(primary, 0.15);
+
+        bottom: 2.5rem;
+
+        @include respond_min_width(lg) {
+            width: 90%;
+        }
+    }
+}
+
+.statsInfoCard {
+    display: flex;
+    box-shadow:
+        0 4px 6px -1px theme-color(primary, 0.1),
+        0 2px 4px -2px theme-color(primary, 0.1);
+
+    border: 1px solid rgba(229, 231, 235, 0.5);
+    z-index: 10;
+
+    gap: calc($defaultGap * 3);
+    padding: calc($defaultPadding * 2);
+
+    @include rounded(xl);
+    @include themify(background-color, white);
+
+    &__icon {
+        display: flex;
+        align-items: center;
+        justify-content: center;
+
+        width: 3rem;
+        height: 3rem;
+
+        font-size: 1.625rem;
+
+        filter: drop-shadow(0 20px 13px theme-color(black, 0.25)) drop-shadow(0 8px 5px theme-color(black, 0.1));
+
+        @include rounded(full);
+        @include themify(color, white);
+        @include themify(background-color, primary);
+    }
+
+    &__body {
+        position: relative;
+
+        &__header {
+            margin-bottom: calc($defaultGap * 1.25);
+            @include themify(color, text-secondary);
+        }
+    }
+}

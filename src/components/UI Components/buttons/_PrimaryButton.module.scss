@@ -1,0 +1,27 @@
+@use "/src/styles/index" as *;
+
+.btn__primary {
+    width: 100%;
+
+    padding: 1rem;
+    margin: 0.25rem 0;
+
+    border: none;
+    box-shadow: 0 10px 15px -3px theme-color(primary, 0.5);
+
+    @include text(xl);
+    @include font(medium);
+    @include rounded(md);
+
+    @include themify(background-color, primary);
+    @include themify(color, white);
+
+    transition:
+        background-color 0.2s ease,
+        color 0.2s ease;
+
+    &:hover {
+        @include themify(background-color, primary, 0.15);
+        @include themify(color, primary-hover);
+    }
+}

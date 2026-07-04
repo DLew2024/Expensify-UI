@@ -1,0 +1,28 @@
+.list_item {
+    border: 1px solid;
+    border-top: none;
+    color: darkgray;
+    display: flex;
+    flex-direction: column;
+    padding: $defaultPadding;
+    text-decoration: none;
+    transition: background 0.3 ease;
+
+    &:hover {
+        background-color: whitesmoke;
+    }
+
+    @media (min-width: 1500px) {
+        flex-direction: row;
+        justify-content: space-between;
+        align-items: center;
+        padding: $defaultPadding;
+    }
+}
+
+.list_body {
+    margin-bottom: $defaultGap;
+    @media (min-width: 500px) {
+        margin-bottom: calc($defaultGap * 2);
+    }
+}
