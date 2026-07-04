@@ -4,6 +4,11 @@ interface SmallCardIconProps {
 }
 
 export const SmallCardIcon = (props: SmallCardIconProps) => {
-	
-	return <div>{'icon'}</div>;
+	const { icon, color } = props;
+	return (
+		<div>
+			{icon}
+			{color}
+		</div>
+	);
 };

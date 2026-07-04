@@ -1,15 +1,9 @@
 import type { ComponentType } from 'react';
-import AuthLayout from '../../components/layouts/AuthLayout';
-import AddExpensePage from '../../routes/AddExpensePage/AddExpensePage';
 import LoginPage from '../../routes/Auth/Login/LoginPage';
 import SignUpPage from '../../routes/Auth/SignUp/SignUpPage';
-import CreateBudgetPage from '../../routes/CreateBudgetPage/CreateBudgetPage';
 import Expense from '../../routes/Dashboard/Expense';
-import ExpenseDashBoardPage from '../../routes/Dashboard/ExpenseDashboard';
 import Home from '../../routes/Dashboard/Home';
 import Income from '../../routes/Dashboard/Income';
-import EditExpensePage from '../../routes/EditExpensePage/EditExpensePage';
-import HelpExpensePage from '../../routes/HelpPage/HelpPage';
 import NotFoundPage from '../../routes/NotFoundPage/NotFoundPage';
 import { NavigationRoutePaths } from './NavigationRoutePaths';
 

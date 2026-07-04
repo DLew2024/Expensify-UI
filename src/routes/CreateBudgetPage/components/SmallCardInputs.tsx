@@ -11,7 +11,7 @@ export interface SmallCardInputProps {
 }
 
 export const SmallCardInputs = ({ title, color, icon, cardType }: SmallCardInputProps) => {
-	const [cardAmount, setCardAmount] = useState<number>();
+	const [cardAmount] = useState<number>();
 
 	return (
 		<div className={styles.smallCardInputWrapper}>

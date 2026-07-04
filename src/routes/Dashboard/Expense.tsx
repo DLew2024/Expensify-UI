@@ -1,11 +1,5 @@
-import React from 'react'
-
 const Expense = () => {
-  return (
-    <div>
-      
-    </div>
-  )
-}
+	return <div></div>;
+};
 
-export default Expense
+export default Expense;

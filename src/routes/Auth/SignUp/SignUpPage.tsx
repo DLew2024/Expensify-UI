@@ -1,5 +1,5 @@
 import { useState } from 'react';
-import { Link, useNavigate } from 'react-router';
+import { Link } from 'react-router';
 import LabeledInput from '../../../components/Inputs/LabeledInput';
 import ProfilePhotoSelector from '../../../components/Inputs/ProfilePhotoSelector';
 import AuthLayout from '../../../components/layouts/AuthLayout';
@@ -15,13 +15,13 @@ const SignUpPage = () => {
 	const [fullName, setFullName] = useState<string>('');
 	const [email, setEmail] = useState<string>('');
 	const [password, setPassword] = useState<string>('');
-	const [confirmPassword, setConfirmPassword] = useState<string>('');
+	// const [confirmPassword, setConfirmPassword] = useState<string>('');
 	const [error, setError] = useState<string | null>(null);
 
 	const handleSignUp = async (e: React.FormEvent) => {
 		e.preventDefault();
 
-		const profilePictureUrl: string | null = null;
+		// const profilePictureUrl: string | null = null;
 
 		if (!fullName) {
 			setError('Full name is required');
