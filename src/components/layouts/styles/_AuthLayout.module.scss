@@ -16,7 +16,6 @@ $borderRadius30px: 30px;
         }
 
         &__text {
-            @include text(xl);
             @include font(medium);
             @include themify(color, black);
         }
@@ -128,17 +127,15 @@ $borderRadius30px: 30px;
 
         @include rounded(full);
         @include themify(color, white);
-        @include themify(background-color, black);
+        @include themify(background-color, primary);
     }
 
-    &__header {
-        margin-bottom: calc($defaultGap * 1.25);
+    &__body {
+        position: relative;
 
-        @include rounded(xl);
-        @include themify(color, text-secondary);
-    }
-
-    &__value {
-        font-size: text(xl);
+        &__header {
+            margin-bottom: calc($defaultGap * 1.25);
+            @include themify(color, text-secondary);
+        }
     }
 }

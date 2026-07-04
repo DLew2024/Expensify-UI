@@ -1,7 +1,10 @@
 @use "/src/styles/index" as *;
 
+$slateGrayColor: #f1f5f9;
+$slateGrayBorderColor: #e2e8f0;
+
 .labeledInput {
-    width: 100%;
+    position: relative;
 
     &__label {
         @include text(xl);
@@ -13,12 +16,9 @@
         justify-content: space-between;
         gap: $defaultGap;
 
-        background-color: #f1f5f9;
-
-        border: 1px solid #e2e8f0;
-
+        background-color: $slateGrayColor;
+        border: 1px solid $slateGrayBorderColor;
         padding: $defaultPadding calc($defaultPadding * 2);
-
         outline: none;
 
         @include themify(color, black);
@@ -38,7 +38,6 @@
         &__element {
             width: 100%;
             min-width: 0;
-
             flex: 1;
 
             border: none;

@@ -6,6 +6,7 @@ import { createNewGuid, EMPTY_GUID } from '../utils/DataTypes/Guid';
 import { dayjsToEpochSecondsSafeOrNowEpochSeconds } from '../utils/Functions/Conversions/DateUtils';
 import { AMOUNT_REGEX } from '../utils/Regex/RegexUtils';
 import { DateCalendar } from './DateCalendar';
+import styles from './styles/_ExpenseForm.module.scss';
 
 type ExpenseFormProps = {
 	expense?: Expense;
@@ -47,7 +48,7 @@ const ExpenseForm = ({ expense = EMPTY_EXPENSE, onSubmitForm }: ExpenseFormProps
 			<input
 				type="text"
 				placeholder="Description"
-				className="text_input"
+				className={styles.text_input}
 				value={descriptionText}
 				onChange={(e) => setDescriptionText(e.target.value)}
 			/>

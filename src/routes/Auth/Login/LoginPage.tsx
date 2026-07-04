@@ -1,5 +1,5 @@
 import { useState } from 'react';
-import { Link, useNavigate } from 'react-router';
+import { Link } from 'react-router';
 import LabeledInput from '../../../components/Inputs/LabeledInput';
 import AuthLayout from '../../../components/layouts/AuthLayout';
 import MainTextTypography from '../../../components/MainTextTypography';
@@ -10,8 +10,6 @@ import styles from './styles/_LoginPage.module.scss';
 
 // Add Google Auth Provider
 const LoginPage = () => {
-	const navigate = useNavigate();
-
 	const [email, setEmail] = useState<string>('');
 	const [password, setPassword] = useState<string>('');
 	const [error, setError] = useState<string | null>(null);
@@ -63,7 +61,7 @@ const LoginPage = () => {
 						/>
 
 						{error && (
-							<MainTextTypography variant="body" className={styles.errorText}>
+							<MainTextTypography variant="body" className={styles.error}>
 								{error}
 							</MainTextTypography>
 						)}

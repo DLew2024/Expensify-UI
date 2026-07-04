@@ -1,4 +1,4 @@
-import { PrimaryInput } from '../../../components/Input';
+import { PrimaryInput } from '../../../components/PrimaryInput';
 import styles from './styles/_CurrencyLabeledInput.module.scss';
 
 export const CurrencyLabeledInput = () => {

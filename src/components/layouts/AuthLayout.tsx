@@ -17,12 +17,10 @@ const StatsInfoCard = ({
 			<div className={styles.statsInfoCard__icon}>{icon}</div>
 
 			<div className={styles.statsInfoCard__body}>
-				<MainTextTypography variant="h6" className={styles.statsInfoCard__header}>
+				<MainTextTypography variant="h6" className={styles.statsInfoCard__body__header}>
 					{label}
 				</MainTextTypography>
-				<MainTextTypography variant="span" className={styles.statsInfoCard__value}>
-					$ {value}
-				</MainTextTypography>
+				<MainTextTypography variant="span">$ {value}</MainTextTypography>
 			</div>
 		</div>
 	);

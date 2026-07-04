@@ -26,6 +26,9 @@ const ProfilePhotoSelector = ({ image, setImage }: ProfilePhotoSelectorProps) =>
 	const handleRemoveImage = () => {
 		setImage(null);
 		setPreviewUrl(null);
+		if (inputRef.current) {
+			inputRef.current.value = '';
+		}
 	};
 
 	const onChooseFile = () => {
@@ -59,10 +62,11 @@ const ProfilePhotoSelector = ({ image, setImage }: ProfilePhotoSelectorProps) =>
 			) : (
 				<div className={styles.profilePhotoSelector__previewContainer}>
 					<img
-						alt="Profile Preview"
 						className={styles.profilePhotoSelector__previewImage}
+						alt="Profile Preview"
 						src={previewUrl || ''}
 					/>
+
 					<button
 						className={styles.profilePhotoSelector__removeButton}
 						onClick={handleRemoveImage}
