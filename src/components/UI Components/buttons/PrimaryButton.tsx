@@ -8,7 +8,7 @@ type PrimaryButtonProps = AppliedButtonProps;
 export const PrimaryButton = forwardRef<HTMLButtonElement, PrimaryButtonProps>(
 	function PrimaryButton({ className, children, ...otherProps }, ref) {
 		return (
-			<AppliedButton ref={ref} className={clsx(styles.button, className)} {...otherProps}>
+			<AppliedButton ref={ref} className={clsx(styles.btn__primary, className)} {...otherProps}>
 				{children}
 			</AppliedButton>
 		);

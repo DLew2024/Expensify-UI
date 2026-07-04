@@ -4,7 +4,7 @@ import { FaRegEye, FaRegEyeSlash } from 'react-icons/fa6';
 import MainTextTypography from '../MainTextTypography';
 import styles from './styles/_Input.module.scss';
 
-type InputProps = {
+type LabeledInputProps = {
 	label: string;
 	value: string;
 	placeholder?: string;
@@ -12,7 +12,13 @@ type InputProps = {
 	onChange: (value: string) => void;
 };
 
-const Input = ({ label, value, placeholder, type = 'text', onChange }: InputProps) => {
+const LabeledInput = ({
+	label,
+	value,
+	placeholder,
+	type = 'text',
+	onChange,
+}: LabeledInputProps) => {
 	const [shouldShowPassword, setShouldShowPassword] = useState<boolean>(false);
 
 	const togglePasswordVisibility = () => {
@@ -54,4 +60,4 @@ const Input = ({ label, value, placeholder, type = 'text', onChange }: InputProp
 	);
 };
 
-export default Input;
+export default LabeledInput;

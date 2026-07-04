@@ -1,7 +1,8 @@
 import type { ComponentType } from 'react';
-import LoginPage from '../../components/layouts/LoginPage';
+import AuthLayout from '../../components/layouts/AuthLayout';
 import AddExpensePage from '../../routes/AddExpensePage/AddExpensePage';
-import SignUp from '../../routes/Auth/SignUp/SignUp';
+import LoginPage from '../../routes/Auth/Login/LoginPage';
+import SignUpPage from '../../routes/Auth/SignUp/SignUpPage';
 import CreateBudgetPage from '../../routes/CreateBudgetPage/CreateBudgetPage';
 import Expense from '../../routes/Dashboard/Expense';
 import ExpenseDashBoardPage from '../../routes/Dashboard/ExpenseDashboard';
@@ -27,7 +28,7 @@ export const appRoutes: AppRoute[] = [
 	{
 		path: NavigationRoutePaths.SIGN_UP,
 		caseSensitive: true,
-		Component: SignUp,
+		Component: SignUpPage,
 	},
 	{
 		path: NavigationRoutePaths.DASHBOARD,

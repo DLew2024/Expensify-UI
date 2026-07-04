@@ -1,39 +1,7 @@
 import type { ReactNode } from 'react';
 import { LuTrendingUpDown } from 'react-icons/lu';
-import LoginMenu from '../../routes/Auth/Login/LoginMenu';
 import MainTextTypography from '../MainTextTypography';
-import styles from './styles/_LoginPage.module.scss';
-
-const LoginPage = () => {
-	return (
-		<div className={styles.root}>
-			<div className={styles.element}>
-				<MainTextTypography variant="h2" className={styles.text}>
-					Expense Tracker
-				</MainTextTypography>
-				<LoginMenu />
-			</div>
-
-			<div className={styles.imageContainer}>
-				<div className={styles.floatingElement1}></div>
-				<div className={styles.floatingElement2}></div>
-				<div className={styles.floatingElement3}></div>
-
-				<div className={styles.statsCardContainer}>
-					<StatsInfoCard
-						icon={<LuTrendingUpDown />}
-						label="Track Your Income & Expenses"
-						value="500,000"
-					/>
-				</div>
-
-				<img src="" className={styles.image} alt="" />
-			</div>
-		</div>
-	);
-};
-
-export default LoginPage;
+import styles from './styles/_AuthLayout.module.scss';
 
 const StatsInfoCard = ({
 	icon,
@@ -59,3 +27,38 @@ const StatsInfoCard = ({
 		</div>
 	);
 };
+
+interface AuthLayoutProps {
+	children?: ReactNode;
+}
+
+const AuthLayout = ({ children }: AuthLayoutProps) => {
+	return (
+		<div className={styles.root}>
+			<div className={styles.element}>
+				<MainTextTypography variant="h2" className={styles.text}>
+					Expense Tracker
+				</MainTextTypography>
+				{children}
+			</div>
+
+			<div className={styles.imageContainer}>
+				<div className={styles.floatingElement1}></div>
+				<div className={styles.floatingElement2}></div>
+				<div className={styles.floatingElement3}></div>
+
+				<div className={styles.statsCardContainer}>
+					<StatsInfoCard
+						icon={<LuTrendingUpDown />}
+						label="Track Your Income & Expenses"
+						value="500,000"
+					/>
+				</div>
+
+				<img src="" className={styles.image} alt="" />
+			</div>
+		</div>
+	);
+};
+
+export default AuthLayout;

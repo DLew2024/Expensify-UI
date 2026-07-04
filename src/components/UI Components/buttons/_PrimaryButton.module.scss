@@ -1,8 +1,28 @@
-.button {
+@use "/src/styles/index" as *;
+
+.btn__primary {
     width: 100%;
-    background-color: #8b5cf6;
+    font-size: 0.875rem;
+    font-weight: 500;
+
+    padding: 10px;
+    margin: 0.25rem 0;
+
     border: none;
-    border-radius: 8px;
-    padding: 1em;
-    color: white;
+    border-radius: 0.375rem;
+    cursor: pointer;
+
+    box-shadow: 0 10px 15px -3px themify(background-color, primary, 0.5);
+
+    @include themify(background-color, primary);
+    @include themify(color, white);
+
+    transition:
+        background-color 0.2s ease,
+        color 0.2s ease;
+
+    &:hover {
+        @include themify(background-color, primary, 0.15);
+        @include themify(color, primary-hover);
+    }
 }

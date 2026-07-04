@@ -1,4 +1,5 @@
 @use "sass:map";
+@use "sass:color";
 @use "variables" as *;
 @use "breakpoints" as *;
 
@@ -46,4 +47,20 @@
 
 @mixin apply($property, $value) {
     #{$property}: $value;
+}
+
+@mixin themify($property, $color-name, $opacity: 1, $important: false) {
+    $theme-color: map.get($theme-colors, $color-name);
+
+    @if $theme-color == null {
+        @error "Theme color '#{$color-name}' was not found.";
+    }
+
+    $value: color.change($theme-color, $alpha: $opacity);
+
+    @if $important {
+        #{$property}: $value !important;
+    } @else {
+        #{$property}: $value;
+    }
 }

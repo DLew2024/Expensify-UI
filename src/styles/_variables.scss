@@ -13,31 +13,32 @@ $font-family: "Poppins", sans-serif;
 $defaultGap: 0.5rem;
 $defaultPadding: 0.5rem;
 
-// === Brand colors ===
-$color-primary: #5c6ac4;
-$color-primary-hover: #4f5bb5;
+$theme-colors: (
+    // === Brand colors ===
+    primary: #5c6ac4,
+    primary-hover: #4f5bb5,
 
-$color-secondary: #47c1bf;
-$color-secondary-hover: #3bb3b0;
+    secondary: #47c1bf,
+    secondary-hover: #3bb3b0,
 
-// === UI colors ===
-$color-background: #f9fafb;
-$color-surface: #ffffff;
-$color-border: #e1e3e5;
+    // === UI colors ===
+    background: #f9fafb,
+    surface: #ffffff,
+    border: #e1e3e5,
 
-// === Text colors ===
-$color-text-primary: #202223;
-$color-text-secondary: #6d7175;
-$color-text-inverse: #ffffff;
+    // === Text colors ===
+    text-primary: #202223,
+    text-secondary: #6d7175,
+    text-inverse: #ffffff,
 
-// === Semantic ===
-$color-success: #008060;
-$color-warning: #ffc453;
-$color-danger: #d72c0d;
+    // === Semantic ===
+    success: #008060,
+    warning: #ffc453,
+    danger: #d72c0d,
 
-// Basic Colors
-$Just-Black: #000;
-$Just-White: #fff;
+    black: #000000,
+    white: #ffffff
+);
 
 //Border Styles;
 $defaultBorderRadius: 16px;
