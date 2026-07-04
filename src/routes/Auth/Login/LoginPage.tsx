@@ -61,7 +61,7 @@ const LoginPage = () => {
 						/>
 
 						{error && (
-							<MainTextTypography variant="body" className={styles.error}>
+							<MainTextTypography variant="body" className={styles.errorText}>
 								{error}
 							</MainTextTypography>
 						)}
