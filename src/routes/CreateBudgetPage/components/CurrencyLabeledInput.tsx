@@ -1,7 +1,7 @@
 import { PrimaryInput } from '../../../components/Input';
-import styles from './styles/_LabeledInput.module.scss';
+import styles from './styles/_CurrencyLabeledInput.module.scss';
 
-export const LabeledInput = () => {
+export const CurrencyLabeledInput = () => {
 	return (
 		<div className={styles.labeledInputContainer}>
 			<PrimaryInput

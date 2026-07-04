@@ -1,0 +1,77 @@
+@use "/src/styles/index" as *;
+
+.profilePhotoSelector {
+    display: flex;
+    justify-content: center;
+    @include space(margin-bottom, 6);
+
+    &__input {
+        display: none;
+    }
+
+    &__placeholder {
+        position: relative;
+
+        display: flex;
+        align-items: center;
+        justify-content: center;
+
+        border-radius: 50%;
+
+        @include space(width, 20);
+        @include space(height, 20);
+        @include themify(background-color, primary, 0.5);
+    }
+
+    &__icon {
+        font-size: 2.25rem;
+        @include themify(color, primary);
+    }
+
+    &__chooseButton {
+        position: absolute;
+        bottom: -0.15rem;
+        right: -0.15rem;
+
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        padding: $defaultPadding;
+
+        @include space(width, 8);
+        @include space(height, 8);
+        @include rounded(full);
+        @include themify(background-color, primary);
+        @include themify(color, white);
+    }
+
+    &__previewContainer {
+        position: relative;
+    }
+
+    &__previewImage {
+        object-fit: cover;
+
+        @include space(width, 20);
+        @include space(height, 20);
+        @include rounded(full);
+    }
+
+    &__removeButton {
+        display: flex;
+        align-items: center;
+        justify-content: center;
+
+        position: absolute;
+        padding: $defaultPadding;
+
+        bottom: -0.15rem;
+        right: -0.15rem;
+
+        @include space(width, 8);
+        @include space(height, 8);
+        @include themify(background-color, danger);
+        @include themify(color, white);
+        @include rounded(full);
+    }
+}

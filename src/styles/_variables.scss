@@ -13,6 +13,10 @@ $font-family: "Poppins", sans-serif;
 $defaultGap: 0.5rem;
 $defaultPadding: 0.5rem;
 
+// Border Styles;
+$defaultBorderRadius: 16px;
+$buttonBorderRadius: 8px;
+
 $theme-colors: (
     // === Brand colors ===
     primary: #5c6ac4,
@@ -23,7 +27,6 @@ $theme-colors: (
 
     // === UI colors ===
     background: #f9fafb,
-    surface: #ffffff,
     border: #e1e3e5,
 
     // === Text colors ===
@@ -40,11 +43,7 @@ $theme-colors: (
     white: #ffffff
 );
 
-//Border Styles;
-$defaultBorderRadius: 16px;
-$buttonBorderRadius: 8px;
-
-// Font sizes
+// Text Function
 $font-sizes: (
     xs: 0.75rem,
     sm: 0.875rem,
@@ -61,7 +60,7 @@ $font-sizes: (
     9xl: 8rem
 );
 
-//Font weights
+// Font Function
 $font-weights: (
     thin: 100,
     extra_light: 200,
@@ -111,6 +110,7 @@ $spacing: (
     96: 24rem
 );
 
+// Rounded function
 $radius: (
     none: 0,
     sm: 0.125rem,

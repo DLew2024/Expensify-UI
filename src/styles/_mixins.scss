@@ -37,26 +37,34 @@
     font-weight: map.get($font-weights, $weight);
 }
 
-@mixin space($property, $size) {
-    #{$property}: map.get($spacing, $size);
-}
-
 @mixin rounded($size) {
     border-radius: map.get($radius, $size);
+}
+
+@mixin space($property, $size) {
+    #{$property}: map.get($spacing, $size);
 }
 
 @mixin apply($property, $value) {
     #{$property}: $value;
 }
 
-@mixin themify($property, $color-name, $opacity: 1, $important: false) {
+@function theme-color($color-name, $opacity: 1) {
     $theme-color: map.get($theme-colors, $color-name);
 
     @if $theme-color == null {
-        @error "Theme color '#{$color-name}' was not found.";
+        @error "Unknown theme color '#{$color-name}'.";
     }
 
-    $value: color.change($theme-color, $alpha: $opacity);
+    @return color.change($theme-color, $alpha: $opacity);
+}
+
+@function negative($value) {
+    @return -$value;
+}
+
+@mixin themify($property, $color-name, $opacity: 1, $important: false) {
+    $value: theme-color($color-name, $opacity);
 
     @if $important {
         #{$property}: $value !important;

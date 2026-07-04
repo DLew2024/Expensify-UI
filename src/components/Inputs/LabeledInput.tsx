@@ -2,7 +2,7 @@ import type React from 'react';
 import { useState } from 'react';
 import { FaRegEye, FaRegEyeSlash } from 'react-icons/fa6';
 import MainTextTypography from '../MainTextTypography';
-import styles from './styles/_Input.module.scss';
+import styles from './styles/_LabeledInput.module.scss';
 
 type LabeledInputProps = {
 	label: string;
@@ -29,14 +29,14 @@ const LabeledInput = ({
 	const inputType = isPassword ? (shouldShowPassword ? 'text' : 'password') : type;
 
 	return (
-		<div className={styles.input}>
-			<MainTextTypography className={styles.input__label}>{label}</MainTextTypography>
+		<div className={styles.labeledInput}>
+			<MainTextTypography className={styles.labeledInput__label}>{label}</MainTextTypography>
 
-			<div className={styles.input__wrapper}>
+			<div className={styles.labeledInput__inputBox}>
 				<input
 					type={inputType}
 					placeholder={placeholder}
-					className={styles.input__element}
+					className={styles.labeledInput__inputBox__element}
 					value={value}
 					onChange={(e: React.ChangeEvent<HTMLInputElement>) => onChange(e.target.value)}
 				/>
@@ -45,13 +45,13 @@ const LabeledInput = ({
 					(shouldShowPassword ? (
 						<FaRegEye
 							size={22}
-							className={styles.input__eyeOpenIcon}
+							className={styles.labeledInput__eyeOpenIcon}
 							onClick={() => togglePasswordVisibility()}
 						/>
 					) : (
 						<FaRegEyeSlash
 							size={22}
-							className={styles.input__eyeClosedIcon}
+							className={styles.labeledInput__eyeClosedIcon}
 							onClick={() => togglePasswordVisibility()}
 						/>
 					))}

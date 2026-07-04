@@ -13,14 +13,14 @@ const StatsInfoCard = ({
 	value: string;
 }) => {
 	return (
-		<div className={styles.statsInfoCardIconContainer}>
-			<div className={styles.statsInfoCardIcon}>{icon}</div>
+		<div className={styles.statsInfoCard}>
+			<div className={styles.statsInfoCard__icon}>{icon}</div>
 
-			<div className="">
-				<MainTextTypography variant="h6" className={styles.statsInfoCardHeader}>
+			<div className={styles.statsInfoCard__body}>
+				<MainTextTypography variant="h6" className={styles.statsInfoCard__header}>
 					{label}
 				</MainTextTypography>
-				<MainTextTypography variant="span" className={styles.statsInfoCardValue}>
+				<MainTextTypography variant="span" className={styles.statsInfoCard__value}>
 					$ {value}
 				</MainTextTypography>
 			</div>
@@ -34,15 +34,15 @@ interface AuthLayoutProps {
 
 const AuthLayout = ({ children }: AuthLayoutProps) => {
 	return (
-		<div className={styles.root}>
-			<div className={styles.element}>
-				<MainTextTypography variant="h2" className={styles.text}>
+		<div className={styles.authLayoutContainer}>
+			<div className={styles.authLayoutContainer__mainElement}>
+				<MainTextTypography variant="h2" className={styles.authLayoutContainer__mainElement__text}>
 					Expense Tracker
 				</MainTextTypography>
 				{children}
 			</div>
 
-			<div className={styles.imageContainer}>
+			<div className={styles.authLayoutContainer__imagesSection}>
 				<div className={styles.floatingElement1}></div>
 				<div className={styles.floatingElement2}></div>
 				<div className={styles.floatingElement3}></div>

@@ -1,0 +1,63 @@
+@use "/src/styles/index" as *;
+
+.labeledInput {
+    width: 100%;
+
+    &__label {
+        @include text(xl);
+        @include themify(color, text-primary);
+    }
+
+    &__inputBox {
+        display: flex;
+        justify-content: space-between;
+        gap: $defaultGap;
+
+        background-color: #f1f5f9;
+
+        border: 1px solid #e2e8f0;
+
+        padding: $defaultPadding calc($defaultPadding * 2);
+
+        outline: none;
+
+        @include themify(color, black);
+        @include rounded(xl);
+        @include space(margin-top, 3);
+        @include space(margin-bottom, 4);
+
+        &:focus-within {
+            box-shadow: 0 0 0 2px theme-color(primary, 0.2);
+            @include themify(border-color, primary);
+        }
+
+        &::placeholder {
+            @include themify(color, text-secondary);
+        }
+
+        &__element {
+            width: 100%;
+            min-width: 0;
+
+            flex: 1;
+
+            border: none;
+            outline: none;
+            background-color: transparent;
+            box-sizing: border-box;
+        }
+    }
+
+    &__eyeOpenIcon {
+        @include themify(color, primary);
+    }
+
+    &__eyeClosedIcon {
+        @include themify(color, text-secondary);
+    }
+
+    &__eyeOpenIcon,
+    &__eyeClosedIcon {
+        cursor: pointer;
+    }
+}

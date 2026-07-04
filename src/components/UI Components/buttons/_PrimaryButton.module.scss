@@ -2,17 +2,16 @@
 
 .btn__primary {
     width: 100%;
-    font-size: 0.875rem;
-    font-weight: 500;
 
-    padding: 10px;
+    padding: 1rem;
     margin: 0.25rem 0;
 
     border: none;
-    border-radius: 0.375rem;
-    cursor: pointer;
+    box-shadow: 0 10px 15px -3px theme-color(primary, 0.5);
 
-    box-shadow: 0 10px 15px -3px themify(background-color, primary, 0.5);
+    @include text(xl);
+    @include font(medium);
+    @include rounded(md);
 
     @include themify(background-color, primary);
     @include themify(color, white);

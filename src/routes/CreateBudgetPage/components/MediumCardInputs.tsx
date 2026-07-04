@@ -1,7 +1,7 @@
 import MainTextTypography from '../../../components/MainTextTypography';
 import { AddLabeledInputButton } from './AddLabeledInputButton';
 import { CurrencyInput } from './CurrencyInput';
-import { LabeledInput } from './LabeledInput';
+import { CurrencyLabeledInput } from './CurrencyLabeledInput';
 import styles from './styles/_MediumCardInput.module.scss';
 
 interface MediumCardInputsProps {
@@ -11,12 +11,15 @@ interface MediumCardInputsProps {
 
 export const MediumCardInputs = ({ title, description }: MediumCardInputsProps) => {
 	const firstList = [
-		<LabeledInput key="input-1" />,
-		<LabeledInput key="input-2" />,
-		<LabeledInput key="input-3" />,
+		<CurrencyLabeledInput key="input-1" />,
+		<CurrencyLabeledInput key="input-2" />,
+		<CurrencyLabeledInput key="input-3" />,
 	];
 
-	const secondList = [<LabeledInput key="input-1" />, <LabeledInput key="input-2" />];
+	const secondList = [
+		<CurrencyLabeledInput key="input-1" />,
+		<CurrencyLabeledInput key="input-2" />,
+	];
 	return (
 		<div className={styles.mediumCardContainer}>
 			<div className={styles.mediumCardTitleContainer}>

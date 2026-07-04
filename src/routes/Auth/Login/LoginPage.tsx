@@ -1,6 +1,6 @@
 import { useState } from 'react';
 import { Link, useNavigate } from 'react-router';
-import LabeledInput from '../../../components/Inputs/Input';
+import LabeledInput from '../../../components/Inputs/LabeledInput';
 import AuthLayout from '../../../components/layouts/AuthLayout';
 import MainTextTypography from '../../../components/MainTextTypography';
 import { PrimaryButton } from '../../../components/UI Components/buttons/PrimaryButton';
@@ -36,11 +36,12 @@ const LoginPage = () => {
 
 	return (
 		<AuthLayout>
-			<div className={styles.container}>
-				<MainTextTypography variant="h3" className={styles.header}>
+			<div className={styles.login_container}>
+				<MainTextTypography variant="h3" className={styles.login_container__header}>
 					Welcome back!
 				</MainTextTypography>
-				<MainTextTypography variant="body" className={styles.text}>
+
+				<MainTextTypography variant="body" className={styles.login_container__subtitle}>
 					Please enter your credentials to access your account.
 				</MainTextTypography>
 
@@ -62,7 +63,7 @@ const LoginPage = () => {
 						/>
 
 						{error && (
-							<MainTextTypography variant="body" className={styles.error}>
+							<MainTextTypography variant="body" className={styles.errorText}>
 								{error}
 							</MainTextTypography>
 						)}
@@ -73,7 +74,7 @@ const LoginPage = () => {
 					</PrimaryButton>
 
 					<MainTextTypography variant="body" className={styles.signUpText}>
-						Don't have an account?
+						Don't have an account?{' '}
 						<Link className={styles.signUpLink} to={NavigationRoutePaths.SIGN_UP}>
 							Sign up
 						</Link>
