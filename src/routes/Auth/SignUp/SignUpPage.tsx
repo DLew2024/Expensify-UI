@@ -10,7 +10,6 @@ import { NavigationRoutePaths } from '../../../utils/Navigation/NavigationRouteP
 import styles from './styles/_SignUp.module.scss';
 
 const SignUpPage = () => {
-	const navigate = useNavigate();
 
 	const [profilePicture, setProfilePicture] = useState<File | null>(null);
 	const [fullName, setFullName] = useState<string>('');
@@ -78,14 +77,14 @@ const SignUpPage = () => {
 								placeholder="Minimum 8 characters"
 								type="password"
 							/>
+
+							{error && (
+								<MainTextTypography variant="body" className={styles.errorText}>
+									{error}
+								</MainTextTypography>
+							)}
 						</div>
 					</div>
-
-					{error && (
-						<MainTextTypography variant="body" className={styles.errorText}>
-							{error}
-						</MainTextTypography>
-					)}
 
 					<PrimaryButton aria-label="Sign Up Button" type="submit">
 						SIGN UP

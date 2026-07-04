@@ -35,8 +35,11 @@
 
     .form__inputContainer {
         display: grid;
-        grid-template-columns: 1fr;
+        grid-template-columns: 0.5fr 1fr;
+        grid-template-rows: 53.5px auto;
+
         gap: $defaultGap;
+        margin-bottom: 1rem;
 
         @include respond-min-width(md) {
             grid-template-columns: repeat(2, 1fr);
