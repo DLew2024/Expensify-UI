@@ -10,7 +10,6 @@ import { NavigationRoutePaths } from '../../../utils/Navigation/NavigationRouteP
 import styles from './styles/_SignUp.module.scss';
 
 const SignUpPage = () => {
-
 	const [profilePicture, setProfilePicture] = useState<File | null>(null);
 	const [fullName, setFullName] = useState<string>('');
 	const [email, setEmail] = useState<string>('');
