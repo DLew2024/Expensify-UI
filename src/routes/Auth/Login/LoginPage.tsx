@@ -1,18 +1,23 @@
 import { useState } from 'react';
-import { Link } from 'react-router';
+import { Link, useNavigate } from 'react-router';
 import LabeledInput from '../../../components/Inputs/LabeledInput';
 import AuthLayout from '../../../components/layouts/AuthLayout';
 import MainTextTypography from '../../../components/MainTextTypography';
 import { PrimaryButton } from '../../../components/UI Components/buttons/PrimaryButton';
+import { useUserContext } from '../../../context/userContext';
+import { loginUser } from '../../../services/authService';
 import { validateEmail } from '../../../utils/Functions/Utility/ValidationFunctions';
 import { NavigationRoutePaths } from '../../../utils/Navigation/NavigationRoutePaths';
 import styles from './styles/_LoginPage.module.scss';
 
 // Add Google Auth Provider
 const LoginPage = () => {
+	const navigate = useNavigate();
 	const [email, setEmail] = useState<string>('');
 	const [password, setPassword] = useState<string>('');
 	const [error, setError] = useState<string | null>(null);
+
+	const { updateUser } = useUserContext();
 
 	const handleLogin = async (e: React.FormEvent) => {
 		e.preventDefault();
@@ -30,6 +35,17 @@ const LoginPage = () => {
 		setError(null);
 
 		// Login API call logic here
+		try {
+			const { token, user } = await loginUser({ email, password });
+
+			localStorage.setItem('token', token);
+			updateUser(user);
+			navigate(NavigationRoutePaths.DASHBOARD);
+		} catch (error) {
+			setError(
+				error instanceof Error ? error.message : 'Something went wrong. Please try again later.',
+			);
+		}
 	};
 
 	return (

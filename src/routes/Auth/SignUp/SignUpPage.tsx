@@ -1,26 +1,30 @@
 import { useState } from 'react';
-import { Link } from 'react-router';
+import { Link, useNavigate } from 'react-router';
 import LabeledInput from '../../../components/Inputs/LabeledInput';
 import ProfilePhotoSelector from '../../../components/Inputs/ProfilePhotoSelector';
 import AuthLayout from '../../../components/layouts/AuthLayout';
 import MainTextTypography from '../../../components/MainTextTypography';
 import PrimaryButton from '../../../components/UI Components/buttons/PrimaryButton';
+import { useUserContext } from '../../../context/userContext';
+import { registerUser } from '../../../services/authService';
 import { validateEmail } from '../../../utils/Functions/Utility/ValidationFunctions';
 import { NavigationRoutePaths } from '../../../utils/Navigation/NavigationRoutePaths';
 import styles from './styles/_SignUp.module.scss';
 
 const SignUpPage = () => {
+	const navigate = useNavigate();
+
 	const [profilePicture, setProfilePicture] = useState<File | null>(null);
 	const [fullName, setFullName] = useState<string>('');
 	const [email, setEmail] = useState<string>('');
 	const [password, setPassword] = useState<string>('');
-	// const [confirmPassword, setConfirmPassword] = useState<string>('');
+
 	const [error, setError] = useState<string | null>(null);
+
+	const { updateUser } = useUserContext();
 
 	const handleSignUp = async (e: React.FormEvent) => {
 		e.preventDefault();
-
-		// const profilePictureUrl: string | null = null;
 
 		if (!fullName) {
 			setError('Full name is required');
@@ -40,6 +44,22 @@ const SignUpPage = () => {
 		setError(null);
 
 		//Signup API call here
+		try {
+			const { token, user } = await registerUser({
+				fullName,
+				email,
+				password,
+				profilePicture,
+			});
+
+			localStorage.setItem('token', token);
+			updateUser(user);
+			navigate(NavigationRoutePaths.DASHBOARD);
+		} catch (error) {
+			setError(
+				error instanceof Error ? error.message : 'Something went wrong. Please try again later.',
+			);
+		}
 	};
 
 	return (
