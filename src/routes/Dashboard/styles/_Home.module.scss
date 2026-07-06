@@ -1,0 +1,8 @@
+@use "/src/styles/index" as *;
+
+.home_container {
+    margin: 0 auto;
+
+    @include space(margin-bottom, 5);
+    @include space(margin-top, 5);
+}

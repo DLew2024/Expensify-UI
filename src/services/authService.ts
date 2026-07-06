@@ -38,29 +38,26 @@ export interface RegisterResponse {
 }
 
 export const registerUser = async ({
-    fullName,
-    email,
-    password,
-    profilePicture,
+	fullName,
+	email,
+	password,
+	profilePicture,
 }: RegisterRequest): Promise<RegisterResponse> => {
-    let profilePictureUrl = "";
+	let profilePictureUrl = '';
 
-    if (profilePicture) {
-        const { imageUrl } = await uploadImage(profilePicture);
-        profilePictureUrl = imageUrl ?? "";
-    }
+	if (profilePicture) {
+		const { imageUrl } = await uploadImage(profilePicture);
+		profilePictureUrl = imageUrl ?? '';
+	}
 
-    const { data } = await axiosInstance.post<RegisterResponse>(
-        API_PATHS.AUTH.REGISTER,
-        {
-            fullName,
-            email,
-            password,
-            profilePictureUrl,
-        }
-    );
+	const { data } = await axiosInstance.post<RegisterResponse>(API_PATHS.AUTH.REGISTER, {
+		fullName,
+		email,
+		password,
+		profilePictureUrl,
+	});
 
-    return data;
+	return data;
 };
 
 export const handleApiRequest = async <T>(request: () => Promise<{ data: T }>): Promise<T> => {

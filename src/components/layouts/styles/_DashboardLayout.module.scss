@@ -1,0 +1,25 @@
+@use "/src/styles/index" as *;
+
+.dashboard_layout {
+    margin: 0 auto;
+
+    @include space(margin-bottom, 5);
+    @include space(margin-top, 5);
+
+    &__container {
+        display: flex;
+    }
+
+    &__sideMenu_container {
+        @include respond-max-width(lg) {
+            display: none;
+        }
+    }
+
+    &__main_container {
+        flex-grow: 1;
+        padding: 0 10px;
+        @include space(margin-bottom, 5);
+        @include space(margin-top, 5);
+    }
+}

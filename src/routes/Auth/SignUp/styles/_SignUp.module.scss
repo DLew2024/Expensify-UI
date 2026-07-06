@@ -16,7 +16,7 @@
     }
 
     @include respond_min_width(lg) {
-        width: 100%;
+        width: 45%;
     }
 
     &__title {

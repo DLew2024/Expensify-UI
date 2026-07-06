@@ -29,6 +29,12 @@
     }
 }
 
+@mixin respond-max-width($breakpoint) {
+    @media (max-width: map.get($breakpoints, $breakpoint)) {
+        @content;
+    }
+}
+
 @mixin text($size) {
     font-size: map.get($font-sizes, $size);
 }

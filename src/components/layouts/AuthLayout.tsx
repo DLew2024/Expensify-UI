@@ -35,7 +35,7 @@ const AuthLayout = ({ children }: AuthLayoutProps) => {
 		<div className={styles.authLayoutContainer}>
 			<div className={styles.authLayoutContainer__mainElement}>
 				<MainTextTypography variant="h2" className={styles.authLayoutContainer__mainElement__text}>
-					Expense Tracker
+					Expensify
 				</MainTextTypography>
 				{children}
 			</div>

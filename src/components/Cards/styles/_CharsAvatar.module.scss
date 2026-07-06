@@ -1,0 +1,12 @@
+@use "/src/styles/index" as *;
+
+.charAvatarContainer {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+
+    @include themify(color, text-secondary);
+    @include themify(background-color, text-secondary, 0.5);
+    @include font(medium);
+    @include rounded(full);
+}

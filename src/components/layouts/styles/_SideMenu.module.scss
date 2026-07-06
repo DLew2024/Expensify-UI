@@ -1,0 +1,68 @@
+@use "/src/styles/index" as *;
+
+.sidebar {
+    width: 20rem;
+    height: calc(100vh - 61px);
+
+    border-right: 1px solid;
+
+    padding: calc($defaultPadding * 3);
+
+    position: sticky;
+    top: 61px;
+    z-index: 20;
+
+    @include themify(background-color, white);
+    @include themify(border-right-color, border-color, 0.5);
+
+    &__profilePictureContainer {
+        display: flex;
+        flex-direction: column;
+        align-items: center;
+        justify-content: center;
+        gap: calc($defaultGap * 3);
+        margin-top: 30px;
+        margin-bottom: 30px;
+
+        &__image {
+            width: 20px;
+            height: 20px;
+
+            @include themify(background-color, text-secondary);
+            @include rounded(full);
+        }
+
+        &__defaultIcon {
+            width: 60px;
+            height: 60px;
+            @include text(4xl);
+        }
+
+        &__header {
+            line-height: 2.4rem;
+            @include font(medium);
+            @include themify(color, black);
+        }
+    }
+}
+
+.menu_item {
+    width: 100%;
+    display: flex;
+    align-items: center;
+    gap: calc($defaultGap * 4);
+    font-size: 1.5rem;
+    padding: $defaultPadding $defaultPadding;
+    margin-bottom: $defaultGap;
+
+    @include rounded(lg);
+
+    &__icon {
+        @include text(4xl);
+    }
+}
+
+.selectedMenuItem {
+    @include themify(color, white);
+    @include themify(background-color, primary);
+}

@@ -1,6 +1,7 @@
 export const NavigationRoutePaths = {
 	ROOT: '/',
 	LOGIN: '/login',
+	LOGOUT: '/logout',
 	SIGN_UP: '/signUp',
 	DASHBOARD: '/dashboard',
 	INCOME: '/income',

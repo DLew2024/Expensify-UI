@@ -1,0 +1,50 @@
+@use "/src/styles/index" as *;
+
+$header_size: 65.2px;
+
+.navbar_container {
+    display: flex;
+    align-items: center;
+    border-bottom: 1px solid;
+
+    -webkit-backdrop-filter: blur(2px);
+    backdrop-filter: blur(2px);
+
+    padding: calc($defaultPadding * 3) calc($defaultPadding * 5);
+
+    position: sticky;
+    top: 0;
+    z-index: 30;
+
+    @include space(gap, 5);
+    @include themify(background-color, white);
+    @include themify(border-bottom-color, border-color, 0.5);
+
+    &__header {
+        @include text(4xl);
+        @include font(medium);
+    }
+
+    &__sideMenuContainer {
+        position: fixed;
+        top: $header_size;
+        margin-left: -23px;
+        @include themify(background-color, white);
+    }
+}
+
+.sideMenuButton {
+    display: inline-block;
+    height: 22px;
+    line-height: 16px;
+
+    @include themify(color, black);
+    @include respond_min_width(lg) {
+        display: none;
+    }
+}
+
+.menuIcon {
+    align-self: center;
+    @include text(4xl);
+}
