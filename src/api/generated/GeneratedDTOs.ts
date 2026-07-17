@@ -3,6 +3,8 @@
  * Do not make direct changes to the file.
  */
 
+import type { Guid } from '../../utils/DataTypes/Guid';
+
 export interface paths {
     "/api/auth/change-password": {
         parameters: {
@@ -367,7 +369,7 @@ export interface components {
         };
         TransactionDTO: {
             /** Format: uuid */
-            id?: string;
+            id?: Guid;
             /** Format: double */
             amount?: number | string;
             /** Format: int64 */
@@ -379,23 +381,24 @@ export interface components {
             type?: components["schemas"]["TransactionType"];
             status?: components["schemas"]["TransactionStatus"];
             /** Format: uuid */
-            categoryId?: string;
+            categoryId?: Guid;
             categoryName?: string;
             isRecurring?: boolean;
             /** Format: uuid */
-            recurringTransactionId?: string;
+            recurringTransactionId?: Guid;
             tags?: string[];
         };
         TransactionStatus: number;
         TransactionType: number;
         UserResponseDTO: {
+            /** Format: uuid */
+            id: Guid;
             fullName: string;
             email: string;
-            profileImageURl?: string;
+            profileImageUrl: string;
         };
         UserTokenResponseDTO: {
-            /** Format: uuid */
-            userId?: string;
+            user: components["schemas"]["UserResponseDTO"];
             token: string;
         };
     };
