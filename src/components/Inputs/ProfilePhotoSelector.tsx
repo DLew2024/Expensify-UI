@@ -4,8 +4,8 @@ import { LuTrash, LuUpload, LuUser } from 'react-icons/lu';
 import styles from './styles/_ProfilePhotoSelector.module.scss';
 
 interface ProfilePhotoSelectorProps {
-	image: File | null;
-	setImage: (file: File | null) => void;
+	image?: File;
+	setImage: (file?: File) => void;
 }
 
 const ProfilePhotoSelector = ({ image, setImage }: ProfilePhotoSelectorProps) => {
@@ -24,7 +24,7 @@ const ProfilePhotoSelector = ({ image, setImage }: ProfilePhotoSelectorProps) =>
 	};
 
 	const handleRemoveImage = () => {
-		setImage(null);
+		setImage(undefined);
 		setPreviewUrl(null);
 		if (inputRef.current) {
 			inputRef.current.value = '';

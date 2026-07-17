@@ -14,7 +14,7 @@ import styles from './styles/_SignUp.module.scss';
 const SignUpPage = () => {
 	const navigate = useNavigate();
 
-	const [profilePictureURL, setProfilePictureURL] = useState<File | null>(null);
+	const [profilePictureURL, setProfilePictureURL] = useState<File | undefined>(undefined);
 	const [fullName, setFullName] = useState<string>('');
 	const [email, setEmail] = useState<string>('');
 	const [password, setPassword] = useState<string>('');
@@ -31,6 +31,12 @@ const SignUpPage = () => {
 			return;
 		}
 
+		const [firstName, ...lastNameParts] = fullName.trim().split(/\s+/);
+
+		if (lastNameParts.length === 0) {
+			setError('Please enter both a first and last name.');
+		}
+
 		if (!validateEmail(email)) {
 			setError('Please enter a valid email address');
 			return;
@@ -44,16 +50,18 @@ const SignUpPage = () => {
 		setError(null);
 
 		try {
-			const { token, user } = await registerUser({
-				fullName,
+			const { token, userId } = await registerUser({
+				firstName,
+				lastName: lastNameParts.join(' '),
 				email,
 				password,
-				profilePictureURL,
+				profileImage: profilePictureURL,
 			});
+			console.log('🚀 ~ handleSignUp ~ userId:', userId);
 
 			localStorage.setItem('token', token);
-			updateUser(user);
-			navigate(NavigationRoutePaths.DASHBOARD);
+			// updateUser(userId);
+			// navigate(NavigationRoutePaths.DASHBOARD);
 		} catch (error) {
 			setError(
 				error instanceof Error ? error.message : 'Something went wrong. Please try again later.',

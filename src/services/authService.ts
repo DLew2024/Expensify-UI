@@ -1,4 +1,5 @@
 import axios from 'axios';
+import type { RegisterUserDTO, UserTokenResponseDTO } from '../api/generated/ApiDTOs';
 import { API_PATHS } from '../utils/apiPaths';
 import axiosInstance from '../utils/axiosInstance';
 import { uploadImage } from '../utils/Functions/Utility/UploadImage';
@@ -37,25 +38,33 @@ export interface RegisterResponse {
 	user: User;
 }
 
+interface RegisterUserRequest extends Omit<RegisterUserDTO, 'profileImageUrl'> {
+	profileImage?: File;
+}
+
 export const registerUser = async ({
-	fullName,
+	firstName,
+	lastName,
 	email,
 	password,
-	profilePictureURL,
-}: RegisterRequest): Promise<RegisterResponse> => {
-	let profilePictureUrl = '';
+	profileImage,
+}: RegisterUserRequest): Promise<UserTokenResponseDTO> => {
+	let profileImageUrl = '';
 
-	if (profilePictureURL) {
-		const { imageUrl } = await uploadImage(profilePictureURL);
-		profilePictureUrl = imageUrl ?? '';
+	if (profileImage) {
+		const { imageUrl } = await uploadImage(profileImage);
+		profileImageUrl = imageUrl ?? '';
 	}
 
-	const { data } = await axiosInstance.post<RegisterResponse>(API_PATHS.AUTH.REGISTER, {
-		fullName,
+	const request: RegisterUserDTO = {
+		firstName,
+		lastName,
 		email,
 		password,
-		profilePictureUrl,
-	});
+		profileImageURl: profileImageUrl,
+	};
+
+	const { data } = await axiosInstance.post<UserTokenResponseDTO>(API_PATHS.AUTH.REGISTER, request);
 
 	return data;
 };
