@@ -9,6 +9,7 @@ import { useUserContext } from '../../../context/userContext';
 import { registerUser } from '../../../services/authService';
 import { validateEmail } from '../../../utils/Functions/Utility/ValidationFunctions';
 import { NavigationRoutePaths } from '../../../utils/Navigation/NavigationRoutePaths';
+import { WHITE_SPACE_REGEX } from '../../../utils/Regex/RegexUtils';
 import styles from './styles/_SignUp.module.scss';
 
 const SignUpPage = () => {
@@ -31,7 +32,7 @@ const SignUpPage = () => {
 			return;
 		}
 
-		const [firstName, ...lastNameParts] = fullName.trim().split(/\s+/);
+		const [firstName, ...lastNameParts] = fullName.trim().split(WHITE_SPACE_REGEX);
 
 		if (lastNameParts.length === 0) {
 			setError('Please enter both a first and last name.');
