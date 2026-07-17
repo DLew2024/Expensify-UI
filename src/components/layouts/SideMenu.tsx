@@ -33,10 +33,10 @@ const SideMenu = ({ activeMenu }: SideMenuProps) => {
 	return (
 		<div className={styles.sidebar}>
 			<div className={styles.sidebar__profilePictureContainer}>
-				{user?.profilePictureUrl ? (
+				{user?.profileImageUrl ? (
 					<img
 						className={styles.sidebar__profilePictureContainer__image}
-						src={user.profilePictureUrl || ''}
+						src={user.profileImageUrl || ''}
 						alt="Profile Photograph"
 					/>
 				) : (

@@ -1,9 +1,9 @@
 import { createContext, type ReactNode, useContext, useState } from 'react';
-import type { User } from '../services/authService';
+import type { UserResponseDTO } from '../api/generated/ApiDTOs';
 
 interface UserContextType {
-	user: User | null;
-	updateUser: (user: User) => void;
+	user: UserResponseDTO | null;
+	updateUser: (user: UserResponseDTO) => void;
 	clearUser: () => void;
 }
 
@@ -14,9 +14,9 @@ interface UserProviderProps {
 }
 
 const UserProvider = ({ children }: UserProviderProps) => {
-	const [user, setUser] = useState<User | null>(null);
+	const [user, setUser] = useState<UserResponseDTO | null>(null);
 
-	const updateUser = (userData: User) => {
+	const updateUser = (userData: UserResponseDTO) => {
 		setUser(userData);
 	};
 

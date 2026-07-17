@@ -29,7 +29,6 @@ const Home = () => {
 		}
 	};
 
-	// biome-ignore lint/correctness/useExhaustiveDependencies: <Only need this to run for first render>
 	useEffect(() => {
 		fetchDashboardData();
 		return () => {};

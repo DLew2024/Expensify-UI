@@ -1,5 +1,5 @@
 import axios from 'axios';
-import type { RegisterUserDTO, UserTokenResponseDTO } from '../api/generated/ApiDTOs';
+import type { LoginUserDTO, RegisterUserDTO, UserTokenResponseDTO } from '../api/generated/ApiDTOs';
 import { API_PATHS } from '../utils/apiPaths';
 import axiosInstance from '../utils/axiosInstance';
 import { uploadImage } from '../utils/Functions/Utility/UploadImage';
@@ -21,8 +21,12 @@ export interface LoginResponse {
 	user: User;
 }
 
-export const loginUser = async (credentials: LoginRequest): Promise<LoginResponse> => {
-	const { data } = await axiosInstance.post<LoginResponse>(API_PATHS.AUTH.LOGIN, credentials);
+export const loginUser = async (credentials: LoginUserDTO): Promise<UserTokenResponseDTO> => {
+	const { data } = await axiosInstance.post<UserTokenResponseDTO>(
+		API_PATHS.AUTH.LOGIN,
+		credentials,
+	);
+
 	return data;
 };
 

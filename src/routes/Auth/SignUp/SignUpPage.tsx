@@ -50,18 +50,17 @@ const SignUpPage = () => {
 		setError(null);
 
 		try {
-			const { token, userId } = await registerUser({
+			const { token, user } = await registerUser({
 				firstName,
 				lastName: lastNameParts.join(' '),
 				email,
 				password,
 				profileImage: profilePictureURL,
 			});
-			console.log('🚀 ~ handleSignUp ~ userId:', userId);
 
 			localStorage.setItem('token', token);
-			// updateUser(userId);
-			// navigate(NavigationRoutePaths.DASHBOARD);
+			updateUser(user);
+			navigate(NavigationRoutePaths.DASHBOARD);
 		} catch (error) {
 			setError(
 				error instanceof Error ? error.message : 'Something went wrong. Please try again later.',
