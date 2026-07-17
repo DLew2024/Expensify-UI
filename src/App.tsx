@@ -1,3 +1,4 @@
+import { useEffect, useState } from 'react';
 import { Navigate, Route, Routes } from 'react-router';
 import UserProvider from './context/userContext';
 import { appRoutes } from './utils/Navigation/AppRoutes';
@@ -19,13 +20,21 @@ function App() {
 }
 
 const Root = () => {
-	// Check if token exists in local storage or any other authentication logic
-	const isAuthenticated = typeof window !== 'undefined' && !!localStorage.getItem('token');
+	const [isAuthenticated, setIsAuthenticated] = useState<boolean | null>(null);
 
-	return isAuthenticated ? (
-		<Navigate to={NavigationRoutePaths.DASHBOARD} />
-	) : (
-		<Navigate to={NavigationRoutePaths.LOGIN} />
+	useEffect(() => {
+		setIsAuthenticated(Boolean(localStorage.getItem('token')));
+	}, []);
+
+	if (isAuthenticated === null) {
+		return null;
+	}
+
+	return (
+		<Navigate
+			to={isAuthenticated ? NavigationRoutePaths.DASHBOARD : NavigationRoutePaths.SIGN_UP}
+			replace
+		/>
 	);
 };
 

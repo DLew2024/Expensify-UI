@@ -31,6 +31,7 @@ interface AuthLayoutProps {
 }
 
 const AuthLayout = ({ children }: AuthLayoutProps) => {
+	const imageUrl = '';
 	return (
 		<div className={styles.authLayoutContainer}>
 			<div className={styles.authLayoutContainer__mainElement}>
@@ -53,7 +54,7 @@ const AuthLayout = ({ children }: AuthLayoutProps) => {
 					/>
 				</div>
 
-				<img src="" className={styles.image} alt="" />
+				{imageUrl && <img src={imageUrl} className={styles.image} alt="" />}
 			</div>
 		</div>
 	);

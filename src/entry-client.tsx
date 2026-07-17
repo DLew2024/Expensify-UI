@@ -1,12 +1,17 @@
 import { StrictMode } from 'react';
-import { hydrateRoot } from 'react-dom/client';
+import { createRoot } from 'react-dom/client';
 import { Provider } from 'react-redux';
 import { BrowserRouter } from 'react-router';
 import App from './App';
 import { store } from './store/store';
 
-hydrateRoot(
-	document.getElementById('root') as HTMLElement,
+const rootElement = document.getElementById('root');
+
+if (!rootElement) {
+	throw new Error('Root element was not found.');
+}
+
+createRoot(rootElement).render(
 	<StrictMode>
 		<Provider store={store}>
 			<BrowserRouter>
