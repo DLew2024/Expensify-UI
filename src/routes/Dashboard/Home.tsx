@@ -8,7 +8,7 @@ import styles from './styles/_Home.module.scss';
 const Home = () => {
 	useUserAuth();
 
-	const [dashboardData, setDashboardData] = useState(null);
+	const [dashboardData, setDashboardData] = useState<any>(null);
 	const [isLoading, setIsLoading] = useState<boolean>(false);
 
 	const fetchDashboardData = async () => {
@@ -16,19 +16,23 @@ const Home = () => {
 
 		setIsLoading(true);
 
-		try {
-			const { data } = await axiosInstance.get(`${API_PATHS.DASHBOARD.GET_DATA}`);
+		// Implement to return Dashboard Data
+		// try {
+		// 	const { data } = await axiosInstance.get(`${API_PATHS.DASHBOARD.GET_DATA}`);
 
-			if (data) {
-				setDashboardData(data);
-			}
-		} catch (error) {
-			console.log('Something went wrong. Please try again.', error);
-		} finally {
-			setIsLoading(false);
-		}
+		// 	if (data) {
+		// 		setDashboardData(data);
+		// 	}
+		// } catch (error) {
+		// 	console.log('Something went wrong. Please try again.', error);
+		// } finally {
+		// 	setIsLoading(false);
+		// }
+
+		setIsLoading(false);
 	};
 
+	// biome-ignore lint/correctness/useExhaustiveDependencies: <Don't need deps>
 	useEffect(() => {
 		fetchDashboardData();
 		return () => {};
@@ -37,6 +41,7 @@ const Home = () => {
 	return (
 		<DashboardLayout activeMenu="Dashboard">
 			<div className={styles.home_container}>Home</div>
+			<div className={styles.home_container}>{dashboardData}</div>
 		</DashboardLayout>
 	);
 };
