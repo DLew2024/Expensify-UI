@@ -1,57 +1,127 @@
-import axios, { type AxiosRequestConfig, type AxiosResponse, type CancelToken } from 'axios';
+import axios, {
+	type AxiosRequestConfig,
+	type AxiosResponse,
+	type CancelToken,
+	type InternalAxiosRequestConfig,
+} from 'axios';
 import { withCancelToken } from './utils/withCancel';
 
-const baseUrl: string =
-	import.meta.env.MODE === 'production' ? '' : import.meta.env.VITE_API_DEVELOPMENT_URL;
-const authConfigs = undefined;
-
-const auth = authConfigs === undefined ? undefined : undefined;
-
-export async function getAuthenticationToken(): Promise<string> {
-	if (auth === undefined) {
-		return '';
-	}
-
-	return '';
+interface ErrorResponse {
+	message: string;
 }
 
-/**
- * Builds an Axios config object containing the Authorization header for the current authenticated user
- */
-async function buildAxiosConfig(
-	signal?: AbortSignal,
-	// eslint-disable-next-line @typescript-eslint/no-explicit-any
-	params?: any,
-	configs?: AxiosRequestConfig,
-): Promise<AxiosRequestConfig> {
-	// get authentication token
-	const jwtToken = await getAuthenticationToken();
+const baseUrl =
+	import.meta.env.MODE === 'production' ? '' : import.meta.env.VITE_API_DEVELOPMENT_URL;
 
-	if (signal) {
-		return {
-			headers: {
-				Authorization: `Bearer ${jwtToken}`,
-			},
-			signal: signal,
-			params,
-			...configs,
-		};
-	}
-	if (params?.headers) {
-		return {
-			headers: {
-				Authorization: `Bearer ${jwtToken}`,
-				...params.headers,
-			},
-			...configs,
-		};
-	}
+const axiosInstance = axios.create({
+	baseURL: baseUrl,
+	timeout: 10000,
+	headers: {
+		Accept: 'application/json',
+		'Content-Type': 'application/json',
+	},
+});
+
+/**
+ * Returns the current JWT access token.
+ */
+export async function getAuthenticationToken(): Promise<string> {
+	return localStorage.getItem('token') ?? '';
+}
+
+const isErrorResponse = (value: unknown): value is ErrorResponse => {
+	return (
+		typeof value === 'object' &&
+		value !== null &&
+		'message' in value &&
+		typeof value.message === 'string'
+	);
+};
+
+const isAuthenticationRequest = (requestUrl: string): boolean => {
+	const authenticationEndpoints = ['/login', '/register', '/refresh-token'];
+
+	return authenticationEndpoints.some((endpoint) => requestUrl.includes(endpoint));
+};
+
+/**
+ * Adds the current JWT token to every outgoing request.
+ */
+axiosInstance.interceptors.request.use(
+	async (config: InternalAxiosRequestConfig) => {
+		const jwtToken = await getAuthenticationToken();
+
+		if (jwtToken) {
+			config.headers.Authorization = `Bearer ${jwtToken}`;
+		}
+
+		return config;
+	},
+	(error: unknown) => Promise.reject(error),
+);
+
+/**
+ * Converts Axios failures into consistent Error objects.
+ */
+axiosInstance.interceptors.response.use(
+	(response) => response,
+	(error: unknown) => {
+		if (!axios.isAxiosError(error)) {
+			return Promise.reject(new Error('Something went wrong. Please try again later.'));
+		}
+
+		if (error.code === 'ECONNABORTED') {
+			return Promise.reject(new Error('Request timed out. Please try again.'));
+		}
+
+		if (!error.response) {
+			return Promise.reject(
+				new Error('Unable to connect to the server. Please check your internet connection.'),
+			);
+		}
+
+		const requestUrl = error.config?.url ?? '';
+		const isAuthRequest = isAuthenticationRequest(requestUrl);
+
+		if (error.response.status === 401 && !isAuthRequest) {
+			localStorage.removeItem('token');
+			window.location.assign('/login');
+		}
+
+		if (error.response.status >= 500) {
+			console.error('Server error:', error.response.data);
+		}
+
+		const responseData: unknown = error.response.data;
+
+		const errorMessage =
+			typeof responseData === 'string'
+				? responseData
+				: isErrorResponse(responseData)
+					? responseData.message
+					: 'Something went wrong. Please try again later.';
+
+		return Promise.reject(new Error(errorMessage));
+	},
+);
+
+/**
+ * Builds the Axios request configuration.
+ */
+function buildAxiosConfig(
+	signal?: AbortSignal,
+	params?: AxiosRequestConfig['params'],
+	configs?: AxiosRequestConfig,
+	cancelToken?: CancelToken,
+): AxiosRequestConfig {
 	return {
-		headers: {
-			Authorization: `Bearer ${jwtToken}`,
-		},
-		params,
 		...configs,
+		params: params ?? configs?.params,
+		signal: signal ?? configs?.signal,
+		cancelToken: cancelToken ?? configs?.cancelToken,
+		headers: {
+			...configs?.headers,
+		},
 	};
 }
 
@@ -66,38 +136,29 @@ async function buildAxiosCallBase<R, T>(
 	method: 'GET' | 'POST' | 'PUT' | 'DELETE' | 'PATCH',
 	endpoint: string,
 	data?: T,
-	// eslint-disable-next-line @typescript-eslint/no-explicit-any
-	params?: any,
+	params?: AxiosRequestConfig['params'],
 	signal?: AbortSignal,
 	configs?: AxiosRequestConfig,
 	cancelToken?: CancelToken,
 ): Promise<AxiosResponse<R>> {
-	// build url
-	const url = `${baseUrl}${endpoint}`;
-
-	// build config object
-	const config = await buildAxiosConfig(signal, params, configs);
-
-	const correctedConfig = {
-		...config,
-		cancelToken: cancelToken,
-	};
+	const config = buildAxiosConfig(signal, params, configs, cancelToken);
 
 	switch (method) {
 		case 'GET':
 		default:
-			return axios.get<R>(url, correctedConfig);
+			return axiosInstance.get<R>(endpoint, config);
 		case 'POST':
-			return axios.post<T, AxiosResponse<R>>(url, data, correctedConfig);
+			return axiosInstance.post<R, AxiosResponse<R>, T>(endpoint, data, config);
 		case 'PUT':
-			return axios.put<T, AxiosResponse<R>>(url, data, correctedConfig);
+			return axiosInstance.put<R, AxiosResponse<R>, T>(endpoint, data, config);
 		case 'DELETE':
-			return axios.delete<R>(url, {
-				...correctedConfig,
+			return axiosInstance.delete<R>(endpoint, {
+				...config,
 				data,
 			});
+
 		case 'PATCH':
-			return axios.patch<T, AxiosResponse<R>>(url, data, correctedConfig);
+			return axiosInstance.patch<R, AxiosResponse<R>, T>(endpoint, data, config);
 	}
 }
 
