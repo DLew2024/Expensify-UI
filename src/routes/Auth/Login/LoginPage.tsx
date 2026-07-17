@@ -5,7 +5,8 @@ import AuthLayout from '../../../components/layouts/AuthLayout';
 import MainTextTypography from '../../../components/MainTextTypography';
 import { PrimaryButton } from '../../../components/UI Components/buttons/PrimaryButton';
 import { useUserContext } from '../../../context/userContext';
-import { loginUser } from '../../../services/authService';
+import { loginUser } from '../../../store/services/AuthService';
+import { dispatch } from '../../../store/store';
 import { validateEmail } from '../../../utils/Functions/Utility/ValidationFunctions';
 import { NavigationRoutePaths } from '../../../utils/Navigation/NavigationRoutePaths';
 import styles from './styles/_LoginPage.module.scss';
@@ -35,7 +36,7 @@ const LoginPage = () => {
 		setError(null);
 
 		try {
-			const { token, user } = await loginUser({ email, password });
+			const { token, user } = await dispatch(loginUser({ email, password })).unwrap();
 
 			localStorage.setItem('token', token);
 			updateUser(user);

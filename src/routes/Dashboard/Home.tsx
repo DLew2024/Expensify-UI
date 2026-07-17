@@ -1,14 +1,12 @@
 import { useEffect, useState } from 'react';
 import DashboardLayout from '../../components/layouts/DashboardLayout';
 import { useUserAuth } from '../../hooks/useUserAuth';
-import { API_PATHS } from '../../utils/apiPaths';
-import axiosInstance from '../../utils/axiosInstance';
 import styles from './styles/_Home.module.scss';
 
 const Home = () => {
 	useUserAuth();
 
-	const [dashboardData, setDashboardData] = useState<any>(null);
+	// const [dashboardData, setDashboardData] = useState<any>(null);
 	const [isLoading, setIsLoading] = useState<boolean>(false);
 
 	const fetchDashboardData = async () => {
@@ -18,7 +16,7 @@ const Home = () => {
 
 		// Implement to return Dashboard Data
 		// try {
-		// 	const { data } = await axiosInstance.get(`${API_PATHS.DASHBOARD.GET_DATA}`);
+		// 	const { data } = await dispatch(getUserDashboardData).unwrap();
 
 		// 	if (data) {
 		// 		setDashboardData(data);
@@ -41,7 +39,6 @@ const Home = () => {
 	return (
 		<DashboardLayout activeMenu="Dashboard">
 			<div className={styles.home_container}>Home</div>
-			<div className={styles.home_container}>{dashboardData}</div>
 		</DashboardLayout>
 	);
 };

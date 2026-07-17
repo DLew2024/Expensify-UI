@@ -6,7 +6,8 @@ import AuthLayout from '../../../components/layouts/AuthLayout';
 import MainTextTypography from '../../../components/MainTextTypography';
 import PrimaryButton from '../../../components/UI Components/buttons/PrimaryButton';
 import { useUserContext } from '../../../context/userContext';
-import { registerUser } from '../../../services/authService';
+import { registerUser } from '../../../store/services/AuthService';
+import { dispatch } from '../../../store/store';
 import { validateEmail } from '../../../utils/Functions/Utility/ValidationFunctions';
 import { NavigationRoutePaths } from '../../../utils/Navigation/NavigationRoutePaths';
 import { WHITE_SPACE_REGEX } from '../../../utils/Regex/RegexUtils';
@@ -51,13 +52,15 @@ const SignUpPage = () => {
 		setError(null);
 
 		try {
-			const { token, user } = await registerUser({
-				firstName,
-				lastName: lastNameParts.join(' '),
-				email,
-				password,
-				profileImage: profilePictureURL,
-			});
+			const { token, user } = await dispatch(
+				registerUser({
+					firstName,
+					lastName: lastNameParts.join(' '),
+					email,
+					password,
+					profileImage: profilePictureURL,
+				}),
+			).unwrap();
 
 			localStorage.setItem('token', token);
 			updateUser(user);
