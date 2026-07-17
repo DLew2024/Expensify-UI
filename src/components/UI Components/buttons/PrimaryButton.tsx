@@ -6,7 +6,7 @@ import styles from './_PrimaryButton.module.scss';
 type PrimaryButtonProps = AppliedButtonProps;
 
 export const PrimaryButton = forwardRef<HTMLButtonElement, PrimaryButtonProps>(
-	function PrimaryButton({ className, children, ...otherProps }, ref) {
+	function PrimaryButton({ className, type = 'button', children, ...otherProps }, ref) {
 		return (
 			<AppliedButton ref={ref} className={clsx(styles.btn__primary, className)} {...otherProps}>
 				{children}

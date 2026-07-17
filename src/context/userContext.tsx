@@ -27,7 +27,6 @@ const UserProvider = ({ children }: UserProviderProps) => {
 	return (
 		<UserContext.Provider
 			value={{
-				// Remove data after development
 				user,
 				updateUser,
 				clearUser,

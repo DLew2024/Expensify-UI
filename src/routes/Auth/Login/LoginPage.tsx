@@ -58,7 +58,7 @@ const LoginPage = () => {
 					Please enter your credentials to access your account.
 				</MainTextTypography>
 
-				<form onSubmit={handleLogin} action="" className={styles.form}>
+				<form onSubmit={handleLogin} className={styles.form}>
 					<div className={styles.form__inputContainer}>
 						<LabeledInput
 							value={email}
