@@ -14,7 +14,7 @@ import styles from './styles/_SignUp.module.scss';
 const SignUpPage = () => {
 	const navigate = useNavigate();
 
-	const [profilePicture, setProfilePicture] = useState<File | null>(null);
+	const [profilePictureURL, setProfilePictureURL] = useState<File | null>(null);
 	const [fullName, setFullName] = useState<string>('');
 	const [email, setEmail] = useState<string>('');
 	const [password, setPassword] = useState<string>('');
@@ -43,13 +43,12 @@ const SignUpPage = () => {
 
 		setError(null);
 
-		//Signup API call here
 		try {
 			const { token, user } = await registerUser({
 				fullName,
 				email,
 				password,
-				profilePicture,
+				profilePictureURL,
 			});
 
 			localStorage.setItem('token', token);
@@ -71,7 +70,7 @@ const SignUpPage = () => {
 				</p>
 
 				<form onSubmit={handleSignUp} action="">
-					<ProfilePhotoSelector image={profilePicture} setImage={setProfilePicture} />
+					<ProfilePhotoSelector image={profilePictureURL} setImage={setProfilePictureURL} />
 
 					<div className={styles.form__inputContainer}>
 						<LabeledInput

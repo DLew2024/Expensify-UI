@@ -4,7 +4,9 @@
 	"version": "0.0.0",
 	"type": "module",
 	"scripts": {
-		"dev": "node server",
+		"generate:types": "openapi-typescript http://localhost:5073/openapi/v1.json -o src/api/generated/GeneratedDTOs.ts",
+		"predev": "npm run generate:types",
+		"dev": "vite --port 3000 --strictPort",
 		"format": "biome format .",
 		"check": "biome check .",
 		"pretty": "biome check --write .",
@@ -52,6 +54,7 @@
 		"@types/react-dom": "^19.2.3",
 		"@vitejs/plugin-react-swc": "^4.2.2",
 		"cross-env": "^10.1.0",
+		"openapi-typescript": "^7.13.0",
 		"typescript": "~5.9.3",
 		"vite": "^7.2.7"
 	}

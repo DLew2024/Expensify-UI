@@ -34,7 +34,6 @@ const LoginPage = () => {
 
 		setError(null);
 
-		// Login API call logic here
 		try {
 			const { token, user } = await loginUser({ email, password });
 

@@ -29,7 +29,7 @@ export interface RegisterRequest {
 	fullName: string;
 	email: string;
 	password: string;
-	profilePicture?: File | null;
+	profilePictureURL?: File | null;
 }
 
 export interface RegisterResponse {
@@ -41,12 +41,12 @@ export const registerUser = async ({
 	fullName,
 	email,
 	password,
-	profilePicture,
+	profilePictureURL,
 }: RegisterRequest): Promise<RegisterResponse> => {
 	let profilePictureUrl = '';
 
-	if (profilePicture) {
-		const { imageUrl } = await uploadImage(profilePicture);
+	if (profilePictureURL) {
+		const { imageUrl } = await uploadImage(profilePictureURL);
 		profilePictureUrl = imageUrl ?? '';
 	}
 

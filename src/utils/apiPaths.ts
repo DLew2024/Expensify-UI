@@ -1,6 +1,5 @@
 import type { Guid } from './DataTypes/Guid';
 
-export const BASE_URL = 'http://localhost:8000';
 
 export const API_PATHS = {
 	AUTH: {
