@@ -10,8 +10,7 @@ interface ErrorResponse {
 	message: string;
 }
 
-const baseUrl =
-	import.meta.env.MODE === 'production' ? '' : import.meta.env.VITE_API_DEVELOPMENT_URL;
+const baseUrl = import.meta.env.MODE === 'production' ? '' : 'http://localhost:5073';
 
 const axiosInstance = axios.create({
 	baseURL: baseUrl,
