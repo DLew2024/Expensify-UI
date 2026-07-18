@@ -1,0 +1,38 @@
+@use "/src/styles/index" as *;
+
+.customBarChart {
+    &__tooltip {
+        padding: 0.5rem;
+        background-color: #fff;
+        border: 1px solid #d1d5db;
+        border-radius: 0.5rem;
+        box-shadow: 0 4px 6px rgb(0 0 0 / 0.1);
+    }
+
+    &__tooltipTitle {
+        margin-bottom: 0.25rem;
+        font-size: 0.75rem;
+        font-weight: 600;
+        color: #6d28d9;
+    }
+
+    &__tooltipText {
+        font-size: 0.875rem;
+        color: #4b5563;
+    }
+
+    &__tooltipValue {
+        font-size: 0.875rem;
+        font-weight: 500;
+        color: #111827;
+    }
+}
+
+.customBarChart {
+    margin-top: 1.5rem;
+    padding: 1.5rem;
+    background-color: #fff;
+    border: 1px solid rgb(229 231 235 / 50%);
+    border-radius: 1rem;
+    box-shadow: 0 4px 6px rgb(0 0 0 / 0.05);
+}

@@ -1,0 +1,15 @@
+@use "/src/styles/index" as *;
+
+.financeOverview {
+    position: relative;
+
+    &__header {
+        display: flex;
+        align-items: center;
+        justify-content: space-between;
+    }
+
+    &__title {
+        font-size: 1.125rem;
+    }
+}

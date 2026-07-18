@@ -1,8 +1,26 @@
 @use "/src/styles/index" as *;
 
-.home_container {
-    margin: 0 auto;
+.dashboard {
+    margin: 1.25rem auto;
 
-    @include space(margin-bottom, 5);
-    @include space(margin-top, 5);
+    &__cards {
+        display: grid;
+        grid-template-columns: 1fr;
+        gap: 1.5rem;
+
+        @media (min-width: 768px) {
+            grid-template-columns: repeat(3, minmax(0, 1fr));
+        }
+    }
+
+    &__contentGrid {
+        display: grid;
+        grid-template-columns: 1fr;
+        gap: 1.5rem;
+        margin-top: 1.5rem;
+
+        @media (min-width: 768px) {
+            grid-template-columns: repeat(2, minmax(0, 1fr));
+        }
+    }
 }

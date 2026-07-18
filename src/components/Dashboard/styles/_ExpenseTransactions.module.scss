@@ -1,0 +1,26 @@
+@use "/src/styles/index" as *;
+
+.expensesCard {
+    // Add card styles
+    position: relative;
+
+    &__header {
+        display: flex;
+        align-items: center;
+        justify-content: space-between;
+    }
+
+    &__button {
+        display: flex;
+        align-items: center;
+        gap: 0.75rem;
+    }
+
+    &__buttonIcon {
+        font-size: 1rem;
+    }
+
+    &__list {
+        margin-top: 1.5rem;
+    }
+}
