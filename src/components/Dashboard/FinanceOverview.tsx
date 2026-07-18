@@ -1,4 +1,5 @@
 import CustomPieChart from '../Charts/CustomPieChart';
+import WrapperCard from '../common/WrapperCard';
 import MainTextTypography from '../MainTextTypography';
 import styles from './styles/_FinanceOverview.module.scss';
 
@@ -18,7 +19,7 @@ const FinanceOverview = ({ totalBalance, totalIncome, totalExpenses }: FinanceOv
 	];
 
 	return (
-		<div className={styles.financeOverview}>
+		<WrapperCard>
 			<div className={styles.financeOverview__header}>
 				<MainTextTypography className={styles.financeOverview__title} variant="h5">
 					Financial Overview
@@ -32,7 +33,7 @@ const FinanceOverview = ({ totalBalance, totalIncome, totalExpenses }: FinanceOv
 				colors={COLORS}
 				showAnchorText
 			/>
-		</div>
+		</WrapperCard>
 	);
 };
 

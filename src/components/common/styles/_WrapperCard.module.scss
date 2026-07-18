@@ -1,0 +1,9 @@
+@use "/src/styles/index" as *;
+
+.wrapperCard {
+    background-color: #fff;
+    padding: 1.5rem;
+    border-radius: 1rem;
+    border: 1px solid rgb(229 231 235 / 50%);
+    box-shadow: 0 4px 6px rgb(0 0 0 / 0.05);
+}

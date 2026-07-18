@@ -1,6 +1,8 @@
 import moment from 'moment';
 import { LuArrowRight } from 'react-icons/lu';
 import TransactionInfoCard from '../Cards/TransactionInfoCard';
+import CardButton from '../common/CardButton';
+import WrapperCard from '../common/WrapperCard';
 import MainTextTypography from '../MainTextTypography';
 import styles from './styles/_RecentTransactions.module.scss';
 
@@ -22,16 +24,15 @@ interface RecentTransactionsProps {
 
 const RecentTransactions = ({ transactions, onSeeMore }: RecentTransactionsProps) => {
 	return (
-		<div className={styles.recentTransactions}>
+		<WrapperCard>
 			<div className={styles.recentTransactions__header}>
 				<MainTextTypography className={styles.recentTransactions__title} variant="h5">
 					Recent Transactions
 				</MainTextTypography>
 
-				<button type="button" className={styles.recentTransactions__seeAllButton}>
+				<CardButton icon={<LuArrowRight className={styles.recentTransactions__seeAllIcon} />}>
 					See All
-					<LuArrowRight className={styles.recentTransactions__seeAllIcon} />
-				</button>
+				</CardButton>
 			</div>
 
 			<div className={styles.recentTransactions__list}>
@@ -47,7 +48,7 @@ const RecentTransactions = ({ transactions, onSeeMore }: RecentTransactionsProps
 					/>
 				))}
 			</div>
-		</div>
+		</WrapperCard>
 	);
 };
 

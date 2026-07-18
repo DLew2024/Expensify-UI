@@ -1,9 +1,7 @@
-import { useEffect, useState } from 'react';
-import {
-	type ExpenseBarChartDataItem,
-	prepareExpenseBarChartData,
-} from '../../utils/Functions/Conversions/NumberUtils';
+import { useState } from 'react';
+import type { ExpenseBarChartDataItem } from '../../utils/Functions/Conversions/NumberUtils';
 import CustomBarChart from '../Charts/CustomBarChart';
+import WrapperCard from '../common/WrapperCard';
 import MainTextTypography from '../MainTextTypography';
 import styles from './styles/_Last30DaysExpenses.module.scss';
 
@@ -23,7 +21,7 @@ const Last30DaysExpenses = ({ data, onSeeMore }: Last30DaysExpensesProps) => {
 	// }, [data]);
 
 	return (
-		<div className={styles.expenseChart}>
+		<WrapperCard className={styles.expenseChart}>
 			<div className={styles.expenseChart__header}>
 				<MainTextTypography variant="h5" className={styles.expenseChart__title}>
 					Last 30 Days Expenses
@@ -31,7 +29,7 @@ const Last30DaysExpenses = ({ data, onSeeMore }: Last30DaysExpensesProps) => {
 			</div>
 
 			<CustomBarChart data={chartData} />
-		</div>
+		</WrapperCard>
 	);
 };
 

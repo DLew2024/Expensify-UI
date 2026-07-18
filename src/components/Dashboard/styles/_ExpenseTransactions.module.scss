@@ -1,9 +1,6 @@
 @use "/src/styles/index" as *;
 
 .expensesCard {
-    // Add card styles
-    position: relative;
-
     &__header {
         display: flex;
         align-items: center;

@@ -1,6 +1,7 @@
 import moment from 'moment';
 import { LuArrowRight } from 'react-icons/lu';
 import TransactionInfoCard from '../Cards/TransactionInfoCard';
+import WrapperCard from '../common/WrapperCard';
 import MainTextTypography from '../MainTextTypography';
 import styles from './styles/_ExpenseTransactions.module.scss';
 
@@ -22,7 +23,7 @@ interface RecentTransactionsProps {
 
 const ExpenseTransactions = ({ transactions, onSeeMore }: RecentTransactionsProps) => {
 	return (
-		<div className={styles.expensesCard}>
+		<WrapperCard>
 			<div className={styles.expensesCard__header}>
 				<MainTextTypography variant="h5">Expenses</MainTextTypography>
 
@@ -45,7 +46,7 @@ const ExpenseTransactions = ({ transactions, onSeeMore }: RecentTransactionsProp
 					/>
 				))}
 			</div>
-		</div>
+		</WrapperCard>
 	);
 };
 

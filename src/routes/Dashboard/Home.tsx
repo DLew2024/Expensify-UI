@@ -5,12 +5,14 @@ import { useNavigate } from 'react-router';
 import InfoCard from '../../components/Cards/InfoCard';
 import ExpenseTransactions from '../../components/Dashboard/ExpenseTransactions';
 import FinanceOverview from '../../components/Dashboard/FinanceOverview';
+import Last30DaysExpenses from '../../components/Dashboard/Last30DaysExpenses';
+import RecentIncome from '../../components/Dashboard/RecentIncome';
+import RecentIncomeWithChart from '../../components/Dashboard/RecentIncomeWithChart';
 import RecentTransactions from '../../components/Dashboard/RecentTransactions';
 import DashboardLayout from '../../components/layouts/DashboardLayout';
 import { useUserAuth } from '../../hooks/useUserAuth';
 import { addThousandsSeparator } from '../../utils/Functions/Conversions/NumberUtils';
 import styles from './styles/_Home.module.scss';
-import Last30DaysExpenses from '../../components/Dashboard/Last30DaysExpenses';
 
 const Home = () => {
 	useUserAuth();
@@ -49,7 +51,7 @@ const Home = () => {
 	return (
 		<DashboardLayout activeMenu="Dashboard">
 			<div className={styles.dashboard}>
-				{/* <div className={styles.dashboard__cards}>
+				<div className={styles.dashboard__cards}>
 					<InfoCard
 						icon={<IoMdCard />}
 						label="Total Balance"
@@ -70,10 +72,10 @@ const Home = () => {
 						value={addThousandsSeparator(dashboardData?.totalExpense)}
 						variant="danger"
 					/>
-				</div> */}
+				</div>
 
 				<div className={styles.dashboard__contentGrid}>
-					{/* <RecentTransactions
+					<RecentTransactions
 						transactions={dashboardData?.recentTransaction}
 						onSeeMore={() => navigate('/expense')}
 					/>
@@ -82,7 +84,7 @@ const Home = () => {
 						totalBalance={dashboardData?.totalBalance || 0}
 						totalIncome={dashboardData?.totalIncome || 0}
 						totalExpenses={dashboardData?.totalExpense || 0}
-					/> */}
+					/>
 
 					<ExpenseTransactions
 						transactions={dashboardData?.last30DaysExpenses?.transactions || 0}
@@ -92,6 +94,16 @@ const Home = () => {
 					<Last30DaysExpenses
 						data={dashboardData?.last30DaysExpenses?.transactions || []}
 						onSeeMore={() => navigate('/expense')}
+					/>
+
+					<RecentIncomeWithChart
+						data={dashboardData?.last60DaysIncome?.transactions?.slice(0, 4) || []}
+						totalIncome={dashboardData?.totalIncome || 0}
+					/>
+
+					<RecentIncome
+						transactions={dashboardData?.last60DaysIncome?.transactions || []}
+						onSeeMore={() => navigate('/income')}
 					/>
 				</div>
 			</div>

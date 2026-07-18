@@ -1,7 +1,6 @@
 @use "/src/styles/index" as *;
 
 .expenseChart {
-    position: relative;
     grid-column: span 1 / span 1;
 
     &__header {
