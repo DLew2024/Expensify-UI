@@ -1,0 +1,9 @@
+@use "/src/styles/index" as *;
+
+.addExpenseForm {
+    &__actions {
+        display: flex;
+        justify-content: flex-end;
+        margin-top: 1.5rem;
+    }
+}

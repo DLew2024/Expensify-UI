@@ -3,6 +3,7 @@ import type { AddExpenseTransactionDTO } from '../../api/GeneratedDTOs';
 import FillButton from '../common/FillButton';
 import EmojiPickerPopup from '../EmojiPickerPopup';
 import LabeledInput from '../Inputs/LabeledInput';
+import styles from './styles/_AddExpenseForm.module.scss';
 
 interface AddExpenseFormProps {
 	onAddExpense: (expense: AddExpenseTransactionDTO) => void;
@@ -29,7 +30,7 @@ const AddExpenseForm = ({ onAddExpense }: AddExpenseFormProps) => {
 	};
 
 	return (
-		<div>
+		<div className={styles.addExpenseForm}>
 			<EmojiPickerPopup
 				icon={expense.icon}
 				onSelect={(selectedIcon) => handleChange('icon', selectedIcon)}
@@ -56,7 +57,7 @@ const AddExpenseForm = ({ onAddExpense }: AddExpenseFormProps) => {
 				type="date"
 			/>
 
-			<div className="flex justify-end mt-6">
+			<div className={styles.addExpenseForm__actions}>
 				<FillButton onClick={() => onAddExpense(expense)}>Add Expense</FillButton>
 			</div>
 		</div>

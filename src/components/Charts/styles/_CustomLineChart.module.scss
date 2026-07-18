@@ -1,0 +1,33 @@
+@use "/src/styles/index" as *;
+
+.customLineChart {
+    background-color: #fff;
+
+    &__tooltip {
+        padding: 0.5rem;
+        background-color: #fff;
+        border: 1px solid #d1d5db;
+        border-radius: 0.5rem;
+        box-shadow:
+            0 4px 6px -1px rgb(0 0 0 / 10%),
+            0 2px 4px -2px rgb(0 0 0 / 10%);
+    }
+
+    &__tooltipCategory {
+        margin-bottom: 0.25rem;
+        color: #6b21a8;
+        font-size: 0.75rem;
+        font-weight: 600;
+    }
+
+    &__tooltipAmount {
+        color: #4b5563;
+        font-size: 0.875rem;
+    }
+
+    &__tooltipAmountValue {
+        color: #111827;
+        font-size: 0.875rem;
+        font-weight: 500;
+    }
+}

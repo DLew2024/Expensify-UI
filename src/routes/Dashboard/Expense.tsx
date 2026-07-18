@@ -19,15 +19,21 @@ import type { Guid } from '../../utils/DataTypes/Guid';
 import { handleApiError } from '../../utils/Functions/Utility/ApiFunctions';
 import styles from './styles/_Expense.module.scss';
 
+interface DeleteAlertState {
+	show: boolean;
+	data: Guid | null;
+}
+
 const Expense = () => {
 	useUserAuth();
+
 	const [expenseData, setExpenseData] = useState<TransactionDTO[]>([]);
-	const [isLoading, setIsLoading] = useState<boolean>(false);
-	const [openDeleteAlert, setOpenDeleteAlert] = useState<{ show: boolean; data: any }>({
+	const [isLoading, setIsLoading] = useState(false);
+	const [openDeleteAlert, setOpenDeleteAlert] = useState<DeleteAlertState>({
 		show: false,
 		data: null,
 	});
-	const [openAddExpenseModal, setOpenAddExpenseModal] = useState<boolean>(false);
+	const [openAddExpenseModal, setOpenAddExpenseModal] = useState(false);
 
 	const fetchExpenseDetails = async () => {
 		if (isLoading) return;
@@ -40,8 +46,8 @@ const Expense = () => {
 			if (response) {
 				setExpenseData(response);
 			}
-		} catch (error) {
-			console.log('Something went wrong. Please try again.', error);
+		} catch (error: unknown) {
+			handleApiError(error, 'Error fetching expense details:');
 		} finally {
 			setIsLoading(false);
 		}
@@ -55,23 +61,23 @@ const Expense = () => {
 			return;
 		}
 
-		if (!amount || Number.isNaN(amount) || Number(amount) <= 0) {
+		if (!amount || Number.isNaN(amount) || amount <= 0) {
 			toast.error('Amount should be a valid number greater than 0.');
 			return;
 		}
 
 		if (!date) {
-			toast.error('Date is required');
+			toast.error('Date is required.');
 			return;
 		}
 
 		try {
-			await dispatch(addExpense(expense));
+			await dispatch(addExpense(expense)).unwrap();
 
 			setOpenAddExpenseModal(false);
-			toast.success('Expense added successfully');
+			toast.success('Expense added successfully.');
 
-			fetchExpenseDetails();
+			await fetchExpenseDetails();
 		} catch (error: unknown) {
 			handleApiError(error, 'Error adding expense:');
 		}
@@ -81,9 +87,14 @@ const Expense = () => {
 		try {
 			await dispatch(deleteExpense(expenseId)).unwrap();
 
-			setOpenDeleteAlert({ show: false, data: null });
+			setOpenDeleteAlert({
+				show: false,
+				data: null,
+			});
+
 			toast.success('Expense deleted successfully.');
-			fetchExpenseDetails();
+
+			await fetchExpenseDetails();
 		} catch (error: unknown) {
 			handleApiError(error, 'Error deleting expense:');
 		}
@@ -104,24 +115,22 @@ const Expense = () => {
 			link.remove();
 
 			window.URL.revokeObjectURL(url);
-		} catch (error) {
-			console.error('Error downloading expense details:', error);
+		} catch (error: unknown) {
+			handleApiError(error, 'Error downloading expense details:');
 			toast.error('Failed to download expense details. Please try again later.');
 		}
 	};
 
-	// biome-ignore lint/correctness/useExhaustiveDependencies: <Initial Render Only>
+	// biome-ignore lint/correctness/useExhaustiveDependencies: Initial render only.
 	useEffect(() => {
 		fetchExpenseDetails();
-
-		return () => {};
 	}, []);
 
 	return (
 		<DashboardLayout activeMenu="Expense">
 			<div className={styles.expenseDashboard}>
-				<div className="grid grid-cols-1 gap-6">
-					<div className="">
+				<div className={styles.expenseDashboard__content}>
+					<div className={styles.expenseDashboard__overview}>
 						<ExpenseOverview
 							transactions={expenseData}
 							onExpenseIncome={() => setOpenAddExpenseModal(true)}
@@ -130,7 +139,12 @@ const Expense = () => {
 
 					<ExpenseList
 						transactions={expenseData}
-						onDelete={(id) => setOpenDeleteAlert({ show: true, data: id })}
+						onDelete={(id) =>
+							setOpenDeleteAlert({
+								show: true,
+								data: id,
+							})
+						}
 						onDownload={handleDownloadExpenseDetails}
 					/>
 				</div>
@@ -145,12 +159,21 @@ const Expense = () => {
 
 				<Modal
 					isOpen={openDeleteAlert.show}
-					onClose={() => setOpenDeleteAlert({ show: false, data: null })}
+					onClose={() =>
+						setOpenDeleteAlert({
+							show: false,
+							data: null,
+						})
+					}
 					title="Delete Expense"
 				>
 					<DeleteAlert
 						content="Are you sure you want to delete this expense detail?"
-						onDelete={() => handleDeleteExpense(openDeleteAlert.data)}
+						onDelete={() => {
+							if (openDeleteAlert.data) {
+								handleDeleteExpense(openDeleteAlert.data);
+							}
+						}}
 					/>
 				</Modal>
 			</div>

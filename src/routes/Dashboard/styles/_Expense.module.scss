@@ -1,5 +1,13 @@
 @use "/src/styles/index" as *;
 
 .expenseDashboard {
-    margin: 1.25rem auto;
+    &__content {
+        display: grid;
+        grid-template-columns: minmax(0, 1fr);
+        gap: 1.5rem;
+    }
+
+    &__overview {
+        width: 100%;
+    }
 }

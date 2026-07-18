@@ -19,16 +19,21 @@ import type { Guid } from '../../utils/DataTypes/Guid';
 import { handleApiError } from '../../utils/Functions/Utility/ApiFunctions';
 import styles from './styles/_Income.module.scss';
 
+interface DeleteAlertState {
+	show: boolean;
+	data: Guid | null;
+}
+
 const Income = () => {
 	useUserAuth();
 
 	const [incomeData, setIncomeData] = useState<TransactionDTO[]>([]);
-	const [isLoading, setIsLoading] = useState<boolean>(false);
-	const [openDeleteAlert, setOpenDeleteAlert] = useState<{ show: boolean; data: any }>({
+	const [isLoading, setIsLoading] = useState(false);
+	const [openDeleteAlert, setOpenDeleteAlert] = useState<DeleteAlertState>({
 		show: false,
 		data: null,
 	});
-	const [openAddIncomeModal, setOpenAddIncomeModal] = useState<boolean>(false);
+	const [openAddIncomeModal, setOpenAddIncomeModal] = useState(false);
 
 	const fetchIncomeDetails = async () => {
 		if (isLoading) return;
@@ -41,8 +46,8 @@ const Income = () => {
 			if (response) {
 				setIncomeData(response);
 			}
-		} catch (error) {
-			console.log('Something went wrong. Please try again.', error);
+		} catch (error: unknown) {
+			handleApiError(error, 'Error fetching income details:');
 		} finally {
 			setIsLoading(false);
 		}
@@ -56,23 +61,23 @@ const Income = () => {
 			return;
 		}
 
-		if (!amount || Number.isNaN(amount) || Number(amount) <= 0) {
+		if (!amount || Number.isNaN(amount) || amount <= 0) {
 			toast.error('Amount should be a valid number greater than 0.');
 			return;
 		}
 
 		if (!transactionDate) {
-			toast.error('Date is required');
+			toast.error('Date is required.');
 			return;
 		}
 
 		try {
-			await dispatch(addIncome(income));
+			await dispatch(addIncome(income)).unwrap();
 
 			setOpenAddIncomeModal(false);
-			toast.success('Income added successfully');
+			toast.success('Income added successfully.');
 
-			fetchIncomeDetails();
+			await fetchIncomeDetails();
 		} catch (error: unknown) {
 			handleApiError(error, 'Error adding income:');
 		}
@@ -82,10 +87,14 @@ const Income = () => {
 		try {
 			await dispatch(deleteIncome(incomeId)).unwrap();
 
-			setOpenDeleteAlert({ show: false, data: null });
+			setOpenDeleteAlert({
+				show: false,
+				data: null,
+			});
+
 			toast.success('Income details deleted successfully.');
 
-			fetchIncomeDetails();
+			await fetchIncomeDetails();
 		} catch (error: unknown) {
 			handleApiError(error, 'Error deleting income:');
 		}
@@ -112,29 +121,30 @@ const Income = () => {
 		}
 	};
 
-	// biome-ignore lint/correctness/useExhaustiveDependencies: <Initial Render Only>
+	// biome-ignore lint/correctness/useExhaustiveDependencies: Initial render only.
 	useEffect(() => {
 		fetchIncomeDetails();
-
-		return () => {};
 	}, []);
 
 	return (
 		<DashboardLayout activeMenu="Income">
 			<div className={styles.incomeDashboard}>
-				<div className="grid grid-cols-1 gap-6">
-					<div className="">
-						<IncomeOverview
-							transactions={incomeData}
-							onAddIncome={() => setOpenAddIncomeModal(true)}
-						/>
+				<div className={styles.incomeDashboard__content}>
+					<IncomeOverview
+						transactions={incomeData}
+						onAddIncome={() => setOpenAddIncomeModal(true)}
+					/>
 
-						<IncomeList
-							transactions={incomeData}
-							onDelete={(id) => setOpenDeleteAlert({ show: true, data: id })}
-							onDownload={handleDownloadIncomeDetails}
-						/>
-					</div>
+					<IncomeList
+						transactions={incomeData}
+						onDelete={(id) =>
+							setOpenDeleteAlert({
+								show: true,
+								data: id,
+							})
+						}
+						onDownload={handleDownloadIncomeDetails}
+					/>
 				</div>
 
 				<Modal
@@ -142,17 +152,26 @@ const Income = () => {
 					onClose={() => setOpenAddIncomeModal(false)}
 					title="Add Income"
 				>
-					<AddIncomeForm onAddIncome={handleAddIncome}></AddIncomeForm>
+					<AddIncomeForm onAddIncome={handleAddIncome} />
 				</Modal>
 
 				<Modal
 					isOpen={openDeleteAlert.show}
-					onClose={() => setOpenDeleteAlert({ show: false, data: null })}
+					onClose={() =>
+						setOpenDeleteAlert({
+							show: false,
+							data: null,
+						})
+					}
 					title="Delete Income"
 				>
 					<DeleteAlert
 						content="Are you sure you want to delete this income detail?"
-						onDelete={() => handleDeleteIncome(openDeleteAlert.data)}
+						onDelete={() => {
+							if (openDeleteAlert.data) {
+								handleDeleteIncome(openDeleteAlert.data);
+							}
+						}}
 					/>
 				</Modal>
 			</div>

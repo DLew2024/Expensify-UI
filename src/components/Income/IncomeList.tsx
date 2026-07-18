@@ -1,40 +1,46 @@
 import moment from 'moment';
 import { LuDownload } from 'react-icons/lu';
 import type { TransactionDTO } from '../../api/GeneratedDTOs';
+import type { Guid } from '../../utils/DataTypes/Guid';
 import TransactionInfoCard from '../Cards/TransactionInfoCard';
 import CardButton from '../common/CardButton';
 import WrapperCard from '../common/WrapperCard';
 import MainTextTypography from '../MainTextTypography';
+import styles from './styles/_IncomeList.module.scss';
 
 interface IncomeListProps {
 	transactions: TransactionDTO[];
-	onDelete: (id: string) => void;
+	onDelete: (id: Guid) => void;
 	onDownload: () => void;
 }
 
 const IncomeList = ({ transactions, onDelete, onDownload }: IncomeListProps) => {
 	return (
 		<WrapperCard>
-			<div className="flex item-center justify-between">
-				<MainTextTypography className="text-lg" variant="h5">
+			<div className={styles.incomeList__header}>
+				<MainTextTypography className={styles.incomeList__title} variant="h5">
 					Income Sources
 				</MainTextTypography>
 
 				<CardButton onClick={onDownload}>
-					<LuDownload className="text-base" />
+					<LuDownload className={styles.incomeList__downloadIcon} />
 				</CardButton>
 			</div>
 
-			<div className="grid grid-cols-1 md:grid-cols-2">
-				{transactions?.map((income) => (
+			<div className={styles.incomeList__grid}>
+				{transactions.map((income) => (
 					<TransactionInfoCard
 						key={income.id}
-						title={income.category.name}
+						title={income.category.name ?? ''}
 						icon={income.icon}
 						date={moment(income.transactionDate).format('Do MMM YYYY')}
 						amount={income.amount}
 						type={income.type}
-						onDelete={() => onDelete(income.id)}
+						onDelete={() => {
+							if (income.id) {
+								onDelete(income.id);
+							}
+						}}
 					/>
 				))}
 			</div>

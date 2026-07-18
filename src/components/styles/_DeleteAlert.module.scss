@@ -1,0 +1,13 @@
+@use "/src/styles/index" as *;
+
+.deleteAlert {
+    &__content {
+        font-size: 0.875rem;
+    }
+
+    &__actions {
+        display: flex;
+        justify-content: flex-end;
+        margin-top: 1.5rem;
+    }
+}

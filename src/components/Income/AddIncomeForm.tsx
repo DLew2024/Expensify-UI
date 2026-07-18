@@ -1,28 +1,37 @@
 import { useState } from 'react';
 import type { AddIncomeTransactionDTO } from '../../api/GeneratedDTOs';
 import FillButton from '../common/FillButton';
-import type { IncomeProperties } from '../Dashboard/types/DashboardTypes';
 import EmojiPickerPopup from '../EmojiPickerPopup';
 import LabeledInput from '../Inputs/LabeledInput';
+import styles from './styles/_AddIncomeForm.module.scss';
 
 interface AddIncomeFormProps {
-	onAddIncome: (expense: AddIncomeTransactionDTO) => void;
+	onAddIncome: (income: AddIncomeTransactionDTO) => void;
 }
 
 const emptyIncomeTransaction: AddIncomeTransactionDTO = {
 	description: '',
 	source: '',
+	amount: 0,
+	transactionDate: 0,
+	icon: '',
 };
 
 const AddIncomeForm = ({ onAddIncome }: AddIncomeFormProps) => {
 	const [income, setIncome] = useState<AddIncomeTransactionDTO>(emptyIncomeTransaction);
 
-	const handleChange = <K extends keyof IncomeProperties>(key: K, value: IncomeProperties[K]) => {
-		setIncome({ ...income, [key]: value });
+	const handleChange = <K extends keyof AddIncomeTransactionDTO>(
+		key: K,
+		value: AddIncomeTransactionDTO[K],
+	) => {
+		setIncome((prevIncome) => ({
+			...prevIncome,
+			[key]: value,
+		}));
 	};
 
 	return (
-		<div>
+		<div className={styles.addIncomeForm}>
 			<EmojiPickerPopup
 				icon={income.icon}
 				onSelect={(selectedIcon) => handleChange('icon', selectedIcon)}
@@ -36,22 +45,20 @@ const AddIncomeForm = ({ onAddIncome }: AddIncomeFormProps) => {
 			/>
 
 			<LabeledInput
-				value={String(income.amount)}
-				onChange={(amount) => handleChange('amount', amount)}
+				value={String(income.amount ?? '')}
+				onChange={(amount) => handleChange('amount', Number(amount))}
 				label="Amount"
-				placeholder=""
 				type="number"
 			/>
 
 			<LabeledInput
-				value={String(income.transactionDate)}
-				onChange={(transactionDate) => handleChange('date', transactionDate)}
+				value={income.transactionDate ? String(income.transactionDate) : ''}
+				onChange={(transactionDate) => handleChange('transactionDate', Number(transactionDate))}
 				label="Date"
-				placeholder=""
 				type="date"
 			/>
 
-			<div className="flex justify-end mt-6">
+			<div className={styles.addIncomeForm__actions}>
 				<FillButton onClick={() => onAddIncome(income)}>Add Income</FillButton>
 			</div>
 		</div>

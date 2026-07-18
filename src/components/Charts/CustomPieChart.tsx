@@ -1,9 +1,10 @@
 import { Cell, Legend, Pie, PieChart, ResponsiveContainer, Tooltip } from 'recharts';
+import type { Guid } from '../../utils/DataTypes/Guid';
 import CustomLegend from './CustomLegend';
 import CustomTooltip from './CustomTooltip';
 
 interface PieChartDataItem {
-	id: string;
+	id: Guid;
 	name: string;
 	amount: number;
 }

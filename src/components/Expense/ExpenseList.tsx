@@ -6,6 +6,7 @@ import TransactionInfoCard from '../Cards/TransactionInfoCard';
 import CardButton from '../common/CardButton';
 import WrapperCard from '../common/WrapperCard';
 import MainTextTypography from '../MainTextTypography';
+import styles from './styles/_ExpenseList.module.scss';
 
 interface ExpenseListProps {
 	transactions: TransactionDTO[];
@@ -16,18 +17,18 @@ interface ExpenseListProps {
 const ExpenseList = ({ transactions, onDelete, onDownload }: ExpenseListProps) => {
 	return (
 		<WrapperCard>
-			<div className="flex item-center justify-between">
-				<MainTextTypography className="text-lg" variant="h5">
+			<div className={styles.expenseList__header}>
+				<MainTextTypography className={styles.expenseList__title} variant="h5">
 					All Expenses
 				</MainTextTypography>
 
 				<CardButton onClick={onDownload}>
-					<LuDownload className="text-base" />
+					<LuDownload className={styles.expenseList__downloadIcon} />
 				</CardButton>
 			</div>
 
-			<div className="grid grid-cols-1 md:grid-cols-2">
-				{transactions?.map((expense) => (
+			<div className={styles.expenseList__grid}>
+				{transactions.map((expense) => (
 					<TransactionInfoCard
 						key={expense.id}
 						title={expense.category.name}

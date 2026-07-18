@@ -1,5 +1,6 @@
 import FillButton from './common/FillButton';
 import MainTextTypography from './MainTextTypography';
+import styles from './styles/_DeleteAlert.module.scss';
 
 interface DeleteAlertProps {
 	content: string;
@@ -8,12 +9,12 @@ interface DeleteAlertProps {
 
 const DeleteAlert = ({ content, onDelete }: DeleteAlertProps) => {
 	return (
-		<div>
-			<MainTextTypography variant="body" className="text-sm">
+		<div className={styles.deleteAlert}>
+			<MainTextTypography variant="body" className={styles.deleteAlert__content}>
 				{content}
 			</MainTextTypography>
 
-			<div className="flex justify-end mt-6">
+			<div className={styles.deleteAlert__actions}>
 				<FillButton onClick={onDelete}>Delete</FillButton>
 			</div>
 		</div>
