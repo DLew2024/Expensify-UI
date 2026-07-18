@@ -254,7 +254,23 @@ export interface paths {
         patch?: never;
         trace?: never;
     };
-    "/api/Income": {
+    "/api/Income/add": {
+        parameters: {
+            query?: never;
+            header?: never;
+            path?: never;
+            cookie?: never;
+        };
+        get?: never;
+        put?: never;
+        post: operations["AddIncomeSource"];
+        delete?: never;
+        options?: never;
+        head?: never;
+        patch?: never;
+        trace?: never;
+    };
+    "/api/Income/downloadExcel": {
         parameters: {
             query?: never;
             header?: never;
@@ -263,7 +279,23 @@ export interface paths {
         };
         get: operations["DownloadIncomeExcel"];
         put?: never;
-        post: operations["AddIncomeSource"];
+        post?: never;
+        delete?: never;
+        options?: never;
+        head?: never;
+        patch?: never;
+        trace?: never;
+    };
+    "/api/Income/getAll": {
+        parameters: {
+            query?: never;
+            header?: never;
+            path?: never;
+            cookie?: never;
+        };
+        get: operations["GetAllIncomeSource"];
+        put?: never;
+        post?: never;
         delete?: never;
         options?: never;
         head?: never;
@@ -280,26 +312,7 @@ export interface paths {
         get?: never;
         put?: never;
         post?: never;
-        delete: {
-            parameters: {
-                query?: never;
-                header?: never;
-                path: {
-                    id: string;
-                };
-                cookie?: never;
-            };
-            requestBody?: never;
-            responses: {
-                /** @description OK */
-                200: {
-                    headers: {
-                        [name: string]: unknown;
-                    };
-                    content?: never;
-                };
-            };
-        };
+        delete: operations["Delete Income"];
         options?: never;
         head?: never;
         patch?: never;
@@ -309,6 +322,25 @@ export interface paths {
 export type webhooks = Record<string, never>;
 export interface components {
     schemas: {
+        AddIncomeTransactionDTO: {
+            /** Format: uuid */
+            accountId?: Guid;
+            /** Format: uuid */
+            budgetId?: null | string;
+            /** Format: uuid */
+            categoryId?: null | string;
+            /** Format: double */
+            amount?: number | string;
+            /** Format: int64 */
+            transactionDate?: number | string;
+            description: string;
+            merchantName: string;
+            notes?: null | string;
+            isRecurring?: boolean;
+            /** Format: uuid */
+            paymentMethodId?: null | string;
+            tags?: string[];
+        };
         ChangePasswordDTO: {
             currentPassword?: string;
             newPassword?: string;
@@ -330,11 +362,37 @@ export interface components {
             totalBalance?: number | string;
             transactions?: components["schemas"]["TransactionDTO"][];
         };
+        DownloadIncomeExcelDTO: {
+            /** Format: uuid */
+            userID?: Guid;
+        };
         EmailVerificationDTO: {
             token?: string;
         };
         ForgotPasswordDTO: {
             email: string;
+        };
+        GetAllIncomeDTO: {
+            /** Format: uuid */
+            userID?: Guid;
+        };
+        IncomeTransactionResponseDTO: {
+            /** Format: uuid */
+            transactionId?: Guid;
+            /** Format: uuid */
+            accountId?: Guid;
+            /** Format: double */
+            amount?: number | string;
+            /** Format: double */
+            accountBalanceAfterTransaction?: number | string;
+            /** Format: int64 */
+            transactionDate?: number | string;
+            description?: string;
+            merchantName?: string;
+            notes?: null | string;
+            isRecurring?: boolean;
+            status?: components["schemas"]["TransactionPostedStatus"];
+            tags?: string[];
         };
         LoginUserDTO: {
             email: string;
@@ -356,10 +414,10 @@ export interface components {
             refreshToken?: string;
         };
         RegisterUserDTO: {
-            firstName?: string;
-            lastName?: string;
-            email?: string;
-            password?: string;
+            firstName: string;
+            lastName: string;
+            email: string;
+            password: string;
             profileImageURl?: string;
         };
         ResetPasswordDTO: {
@@ -379,7 +437,7 @@ export interface components {
             notes?: string;
             paymentMethod?: components["schemas"]["PaymentMethod"];
             type?: components["schemas"]["TransactionType"];
-            status?: components["schemas"]["TransactionStatus"];
+            status?: components["schemas"]["TransactionPostedStatus"];
             /** Format: uuid */
             categoryId?: Guid;
             categoryName?: string;
@@ -388,7 +446,7 @@ export interface components {
             recurringTransactionId?: Guid;
             tags?: string[];
         };
-        TransactionStatus: number;
+        TransactionPostedStatus: number;
         TransactionType: number;
         UserResponseDTO: {
             /** Format: uuid */
@@ -700,24 +758,6 @@ export interface operations {
             };
         };
     };
-    DownloadIncomeExcel: {
-        parameters: {
-            query?: never;
-            header?: never;
-            path?: never;
-            cookie?: never;
-        };
-        requestBody?: never;
-        responses: {
-            /** @description OK */
-            200: {
-                headers: {
-                    [name: string]: unknown;
-                };
-                content?: never;
-            };
-        };
-    };
     AddIncomeSource: {
         parameters: {
             query?: never;
@@ -725,6 +765,92 @@ export interface operations {
             path?: never;
             cookie?: never;
         };
+        requestBody: {
+            content: {
+                "application/json": components["schemas"]["AddIncomeTransactionDTO"];
+                "text/json": components["schemas"]["AddIncomeTransactionDTO"];
+                "application/*+json": components["schemas"]["AddIncomeTransactionDTO"];
+            };
+        };
+        responses: {
+            /** @description OK */
+            200: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "text/plain": components["schemas"]["IncomeTransactionResponseDTO"];
+                    "application/json": components["schemas"]["IncomeTransactionResponseDTO"];
+                    "text/json": components["schemas"]["IncomeTransactionResponseDTO"];
+                };
+            };
+        };
+    };
+    DownloadIncomeExcel: {
+        parameters: {
+            query?: never;
+            header?: never;
+            path?: never;
+            cookie?: never;
+        };
+        requestBody: {
+            content: {
+                "application/json": components["schemas"]["DownloadIncomeExcelDTO"];
+                "text/json": components["schemas"]["DownloadIncomeExcelDTO"];
+                "application/*+json": components["schemas"]["DownloadIncomeExcelDTO"];
+            };
+        };
+        responses: {
+            /** @description OK */
+            200: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "text/plain": boolean;
+                    "application/json": boolean;
+                    "text/json": boolean;
+                };
+            };
+        };
+    };
+    GetAllIncomeSource: {
+        parameters: {
+            query?: never;
+            header?: never;
+            path?: never;
+            cookie?: never;
+        };
+        requestBody: {
+            content: {
+                "application/json": components["schemas"]["GetAllIncomeDTO"];
+                "text/json": components["schemas"]["GetAllIncomeDTO"];
+                "application/*+json": components["schemas"]["GetAllIncomeDTO"];
+            };
+        };
+        responses: {
+            /** @description OK */
+            200: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "text/plain": boolean;
+                    "application/json": boolean;
+                    "text/json": boolean;
+                };
+            };
+        };
+    };
+    "Delete Income": {
+        parameters: {
+            query?: never;
+            header?: never;
+            path: {
+                id: string;
+            };
+            cookie?: never;
+        };
         requestBody?: never;
         responses: {
             /** @description OK */
@@ -732,7 +858,11 @@ export interface operations {
                 headers: {
                     [name: string]: unknown;
                 };
-                content?: never;
+                content: {
+                    "text/plain": boolean;
+                    "application/json": boolean;
+                    "text/json": boolean;
+                };
             };
         };
     };
