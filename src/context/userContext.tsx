@@ -1,5 +1,5 @@
 import { createContext, type ReactNode, useContext, useState } from 'react';
-import type { UserResponseDTO } from '../api/generated/ApiDTOs';
+import type { UserResponseDTO } from '../api/GeneratedDTOs';
 
 interface UserContextType {
 	user: UserResponseDTO | null;

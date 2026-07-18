@@ -1,18 +1,11 @@
 import moment from 'moment';
+import type { TransactionDTO } from '../../../api/GeneratedDTOs';
+import type {
+	ExpenseBarChartDataItem,
+	ExpenseChartData,
+	IncomeBarChartData,
+} from '../../../components/Dashboard/types/DashboardTypes';
 import { THOUSANDS_SEPARATOR_REGEX } from '../../Regex/RegexUtils';
-
-export interface ExpenseBarChartDataItem {
-	category: string;
-	amount: number;
-}
-
-export interface IncomeTransactionDTO {
-	id: string;
-	source: string;
-	amount: number;
-	date: string;
-	icon?: string;
-}
 
 export interface IncomeBarChartDataItem {
 	month: string;
@@ -41,36 +34,34 @@ export const addThousandsSeparator = (num: number): string => {
 };
 
 export const prepareExpenseBarChartData = (
-	data: ExpenseBarChartDataItem[] = [],
+	data: TransactionDTO[] = [],
 ): ExpenseBarChartDataItem[] => {
 	return data.map((item) => ({
-		category: item.category,
+		categoryName: item.category.name,
 		amount: item.amount,
 	}));
 };
 
-export const prepareIncomeBarChartData = (
-	data: IncomeTransactionDTO[] = [],
-): IncomeBarChartDataItem[] => {
+export const prepareIncomeBarChartData = (data: TransactionDTO[] = []): IncomeBarChartData => {
 	const sortedData = [...data].sort(
-		(a, b) => new Date(a.date).getTime() - new Date(b.date).getTime(),
+		(a, b) => Number(a.transactionDate ?? 0) - Number(b.transactionDate ?? 0),
 	);
 
-	return sortedData.map((item) => ({
-		month: moment(item.date).format('Do MMM'),
-		amount: item.amount,
-		source: item.source,
+	return sortedData.map((transactionDate) => ({
+		date: moment(transactionDate.transactionDate).format('Do MMM'),
+		amount: transactionDate.amount,
+		merchant: transactionDate.merchant,
 	}));
 };
 
-export const prepareExpenseLineChartData = (data: any[] = []) => {
+export const prepareExpenseLineChartData = (data: TransactionDTO[] = []): ExpenseChartData => {
 	const sortedData = [...data].sort(
-		(a, b) => new Date(a.date).getTime() - new Date(b.date).getTime(),
+		(a, b) => Number(a.transactionDate ?? 0) - Number(b.transactionDate ?? 0),
 	);
 
-	return sortedData.map((item) => ({
-		month: moment(item.date).format('Do MMM'),
-		amount: item?.amount,
-		category: item?.category,
+	return sortedData.map((transaction) => ({
+		date: moment(Number(transaction.transactionDate)).format('Do MMM'),
+		amount: Number(transaction.amount ?? 0),
+		categoryId: transaction.category.id,
 	}));
 };

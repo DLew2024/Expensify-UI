@@ -1,19 +1,27 @@
-import { useState } from 'react';
+import { useEffect, useState } from 'react';
 import { LuPlus } from 'react-icons/lu';
+import type { TransactionDTO } from '../../api/GeneratedDTOs';
+import { prepareIncomeBarChartData } from '../../utils/Functions/Conversions/NumberUtils';
 import CustomBarChart from '../Charts/CustomBarChart';
 import AddButton from '../common/AddButton';
 import WrapperCard from '../common/WrapperCard';
+import type { IncomeBarChartData } from '../Dashboard/types/DashboardTypes';
 import MainTextTypography from '../MainTextTypography';
 
-const IncomeOverview = ({ transactions, onAddIncome }) => {
-	const [chartData, setChartData] = useState([]);
+interface IncomeListProps {
+	transactions: TransactionDTO[];
+	onAddIncome: () => void;
+}
 
-	// useEffect(() => {
-	// 	const result = prepareIncomeBarChartData(transactions);
-	// 	setChartData(result);
+const IncomeOverview = ({ transactions, onAddIncome }: IncomeListProps) => {
+	const [chartData, setChartData] = useState<IncomeBarChartData>([]);
 
-	// 	return () => {};
-	// }, [transactions]);
+	useEffect(() => {
+		const result = prepareIncomeBarChartData(transactions);
+		setChartData(result);
+
+		return () => {};
+	}, [transactions]);
 
 	return (
 		<WrapperCard>

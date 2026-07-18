@@ -1,5 +1,6 @@
 import moment from 'moment';
 import { LuArrowRight } from 'react-icons/lu';
+import type { TransactionDTO } from '../../api/GeneratedDTOs';
 import TransactionInfoCard from '../Cards/TransactionInfoCard';
 import CardButton from '../common/CardButton';
 import WrapperCard from '../common/WrapperCard';
@@ -7,7 +8,7 @@ import MainTextTypography from '../MainTextTypography';
 import styles from './styles/_RecentIncome.module.scss';
 
 interface RecentIncomesProps {
-	transactions: any[];
+	transactions: TransactionDTO[];
 	onSeeMore?: () => void;
 }
 
@@ -31,11 +32,11 @@ const RecentIncome = ({ transactions, onSeeMore }: RecentIncomesProps) => {
 				{transactions.slice(0, 5).map((item) => (
 					<TransactionInfoCard
 						key={item.id}
-						title={item.source}
+						title={item.merchant}
 						icon={item.icon}
-						date={moment(item.date).format('Do MMM YYYY')}
+						date={moment(item.transactionDate).format('Do MMM YYYY')}
 						amount={item.amount}
-						type="income"
+						type={item.type}
 						hideDeleteBtn
 					/>
 				))}

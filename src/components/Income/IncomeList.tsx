@@ -1,16 +1,17 @@
 import moment from 'moment';
 import { LuDownload } from 'react-icons/lu';
-import type { IncomeTransactionDTO } from '../../utils/Functions/Conversions/NumberUtils';
+import type { TransactionDTO } from '../../api/GeneratedDTOs';
 import TransactionInfoCard from '../Cards/TransactionInfoCard';
 import CardButton from '../common/CardButton';
 import WrapperCard from '../common/WrapperCard';
 import MainTextTypography from '../MainTextTypography';
 
 interface IncomeListProps {
-	transactions: IncomeTransactionDTO[];
+	transactions: TransactionDTO[];
 	onDelete: (id: string) => void;
 	onDownload: () => void;
 }
+
 const IncomeList = ({ transactions, onDelete, onDownload }: IncomeListProps) => {
 	return (
 		<WrapperCard>
@@ -28,11 +29,11 @@ const IncomeList = ({ transactions, onDelete, onDownload }: IncomeListProps) => 
 				{transactions?.map((income) => (
 					<TransactionInfoCard
 						key={income.id}
-						title={income.source}
+						title={income.category.name}
 						icon={income.icon}
-						date={moment(income.date).format('Do MMM YYYY')}
+						date={moment(income.transactionDate).format('Do MMM YYYY')}
 						amount={income.amount}
-						type="income"
+						type={income.type}
 						onDelete={() => onDelete(income.id)}
 					/>
 				))}

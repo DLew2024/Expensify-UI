@@ -23,11 +23,11 @@ const RecentIncomeWithChart = ({ data, totalIncome }: RecentIncomeWithChartProps
 		setChartData(dataArr);
 	};
 
-	// useEffect(() => {
-	// 	prepareChartData();
+	useEffect(() => {
+		prepareChartData();
 
-	// 	return () => {};
-	// }, [data]);
+		return () => {};
+	}, [data]);
 
 	return (
 		<WrapperCard>

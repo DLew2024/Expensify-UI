@@ -1,10 +1,13 @@
-import { useState } from 'react';
+import { useEffect, useState } from 'react';
 import { toast } from 'react-hot-toast';
+import type { AddExpenseTransactionDTO, TransactionDTO } from '../../api/GeneratedDTOs';
 import DeleteAlert from '../../components/DeleteAlert';
 import AddExpenseForm from '../../components/Expense/AddExpenseForm';
+import ExpenseList from '../../components/Expense/ExpenseList';
 import ExpenseOverview from '../../components/Expense/ExpenseOverview';
 import DashboardLayout from '../../components/layouts/DashboardLayout';
 import Modal from '../../components/Modal';
+import { useUserAuth } from '../../hooks/useUserAuth';
 import {
 	addExpense,
 	deleteExpense,
@@ -13,12 +16,12 @@ import {
 } from '../../store/services/ExpenseService';
 import { dispatch } from '../../store/store';
 import type { Guid } from '../../utils/DataTypes/Guid';
-import ExpenseList from './components/ExpenseList';
+import { handleApiError } from '../../utils/Functions/Utility/ApiFunctions';
 import styles from './styles/_Expense.module.scss';
 
 const Expense = () => {
-	// useUserAuth()
-	const [expenseData, setExpenseData] = useState<string[]>([]);
+	useUserAuth();
+	const [expenseData, setExpenseData] = useState<TransactionDTO[]>([]);
 	const [isLoading, setIsLoading] = useState<boolean>(false);
 	const [openDeleteAlert, setOpenDeleteAlert] = useState<{ show: boolean; data: any }>({
 		show: false,
@@ -44,8 +47,8 @@ const Expense = () => {
 		}
 	};
 
-	const handleAddExpense = async (expense) => {
-		const { category, amount, date, icon } = expense;
+	const handleAddExpense = async (expense: AddExpenseTransactionDTO) => {
+		const { category, amount, date } = expense;
 
 		if (!category.trim()) {
 			toast.error('Category is required.');
@@ -63,13 +66,14 @@ const Expense = () => {
 		}
 
 		try {
-			await dispatch(addExpense({ category, amount, date, icon }));
+			await dispatch(addExpense(expense));
 
 			setOpenAddExpenseModal(false);
 			toast.success('Expense added successfully');
+
 			fetchExpenseDetails();
-		} catch (error) {
-			console.error('Error adding expense:', error.response?.data?.message || error.message);
+		} catch (error: unknown) {
+			handleApiError(error, 'Error adding expense:');
 		}
 	};
 
@@ -80,22 +84,25 @@ const Expense = () => {
 			setOpenDeleteAlert({ show: false, data: null });
 			toast.success('Expense deleted successfully.');
 			fetchExpenseDetails();
-		} catch (error) {
-			console.error('Error deleting expense:', error.response?.data?.message || error.message);
+		} catch (error: unknown) {
+			handleApiError(error, 'Error deleting expense:');
 		}
 	};
 
 	const handleDownloadExpenseDetails = async () => {
 		try {
-			const response = await dispatch(downloadExpense());
+			const blob = await dispatch(downloadExpense()).unwrap();
 
-			const url = window.URL.createObjectURL(new Blob([response.data]));
+			const url = window.URL.createObjectURL(blob);
 			const link = document.createElement('a');
+
 			link.href = url;
 			link.setAttribute('download', 'expense_details.xlsx');
+
 			document.body.appendChild(link);
 			link.click();
-			link.parentNode?.removeChild(link);
+			link.remove();
+
 			window.URL.revokeObjectURL(url);
 		} catch (error) {
 			console.error('Error downloading expense details:', error);
@@ -103,11 +110,12 @@ const Expense = () => {
 		}
 	};
 
-	// useEffect(() => {
-	// 	fetchExpenseDetails();
+	// biome-ignore lint/correctness/useExhaustiveDependencies: <Initial Render Only>
+	useEffect(() => {
+		fetchExpenseDetails();
 
-	// 	return () => {};
-	// }, []);
+		return () => {};
+	}, []);
 
 	return (
 		<DashboardLayout activeMenu="Expense">

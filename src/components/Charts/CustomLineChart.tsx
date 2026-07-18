@@ -4,13 +4,19 @@ import {
 	CartesianGrid,
 	ResponsiveContainer,
 	Tooltip,
+	type TooltipPayload,
 	XAxis,
 	YAxis,
 } from 'recharts';
+import type { ExpenseChartData } from '../Dashboard/types/DashboardTypes';
 import MainTextTypography from '../MainTextTypography';
 
-const CustomLineChart = ({ data }) => {
-	const CustomTooltip = ({ active, payload }) => {
+interface CustomLineChartProps {
+	data: ExpenseChartData;
+}
+
+const CustomLineChart = ({ data }: CustomLineChartProps) => {
+	const CustomTooltip = ({ active, payload }: { active: boolean; payload: TooltipPayload }) => {
 		if (active && payload && payload.length) {
 			return (
 				<div className="bg-white shadow-md rounded-lg p-2 border border-gray-300">
@@ -41,7 +47,7 @@ const CustomLineChart = ({ data }) => {
 					<CartesianGrid stroke="none" />
 					<XAxis dataKey="month" tick={{ fontSize: 12, fill: '#555' }} stroke="none" />
 					<YAxis tick={{ fontSize: 12, fill: '#555' }} stroke="none" />
-					<Tooltip content={<CustomTooltip />} />
+					<Tooltip content={(tooltipProps) => <CustomTooltip {...tooltipProps} />} />
 
 					<Area
 						type="monotone"

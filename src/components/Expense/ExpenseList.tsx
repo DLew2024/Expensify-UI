@@ -1,5 +1,6 @@
 import moment from 'moment';
 import { LuDownload } from 'react-icons/lu';
+import type { TransactionDTO } from '../../api/GeneratedDTOs';
 import type { Guid } from '../../utils/DataTypes/Guid';
 import TransactionInfoCard from '../Cards/TransactionInfoCard';
 import CardButton from '../common/CardButton';
@@ -7,7 +8,7 @@ import WrapperCard from '../common/WrapperCard';
 import MainTextTypography from '../MainTextTypography';
 
 interface ExpenseListProps {
-	transactions: any[];
+	transactions: TransactionDTO[];
 	onDelete: (id: Guid) => void;
 	onDownload: () => void;
 }
@@ -29,11 +30,11 @@ const ExpenseList = ({ transactions, onDelete, onDownload }: ExpenseListProps) =
 				{transactions?.map((expense) => (
 					<TransactionInfoCard
 						key={expense.id}
-						title={expense.source}
+						title={expense.category.name}
 						icon={expense.icon}
-						date={moment(expense.date).format('Do MMM YYYY')}
+						date={moment(expense.transactionDate).format('Do MMM YYYY')}
 						amount={expense.amount}
-						type="expense"
+						type={expense.type}
 						onDelete={() => onDelete(expense.id)}
 					/>
 				))}

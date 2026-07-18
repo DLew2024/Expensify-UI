@@ -1,20 +1,21 @@
 import clsx from 'clsx';
 import { LuTrash2, LuTrendingDown, LuTrendingUp, LuUtensils } from 'react-icons/lu';
+import { TransactionType } from '../Dashboard/types/DashboardTypes';
 import MainTextTypography from '../MainTextTypography';
 import styles from './styles/_TransactionCardInfo.module.scss';
 
 interface TransactionInfoCardProps {
-	title: string;
+	title?: string;
 	icon?: string;
 	date: string;
 	amount: string | number;
-	type: 'income' | 'expense';
+	type: TransactionType;
 	hideDeleteBtn?: boolean;
 	onDelete?: () => void;
 }
 
 const TransactionInfoCard = ({
-	title,
+	title = 'Error',
 	icon,
 	date,
 	amount,
@@ -57,16 +58,16 @@ const TransactionInfoCard = ({
 					<div
 						className={clsx(
 							styles.transactionInfoCard__amount,
-							type === 'income'
+							type === TransactionType.Income
 								? styles['transactionInfoCard__amount--income']
 								: styles['transactionInfoCard__amount--expense'],
 						)}
 					>
 						<MainTextTypography className={styles.transactionInfoCard__amountText} variant="h6">
-							{type === 'income' ? '+' : '-'} ${amount}
+							{type === TransactionType.Income ? '+' : '-'} ${amount}
 						</MainTextTypography>
 
-						{type === 'income' ? <LuTrendingUp /> : <LuTrendingDown />}
+						{type === TransactionType.Income ? <LuTrendingUp /> : <LuTrendingDown />}
 					</div>
 				</div>
 			</div>

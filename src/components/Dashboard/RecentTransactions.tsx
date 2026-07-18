@@ -1,24 +1,14 @@
 import moment from 'moment';
 import { LuArrowRight } from 'react-icons/lu';
+import type { TransactionDTO } from '../../api/GeneratedDTOs';
 import TransactionInfoCard from '../Cards/TransactionInfoCard';
 import CardButton from '../common/CardButton';
 import WrapperCard from '../common/WrapperCard';
 import MainTextTypography from '../MainTextTypography';
 import styles from './styles/_RecentTransactions.module.scss';
 
-interface TransactionResponseDTO {
-	id: string;
-	title?: string;
-	category: string;
-	source: string;
-	icon: string;
-	date: string | number;
-	amount: number;
-	type: 'income' | 'expense';
-}
-
 interface RecentTransactionsProps {
-	transactions?: TransactionResponseDTO[];
+	transactions?: TransactionDTO[];
 	onSeeMore: () => void;
 }
 
@@ -43,9 +33,9 @@ const RecentTransactions = ({ transactions, onSeeMore }: RecentTransactionsProps
 				{transactions?.slice(0, 4).map((item) => (
 					<TransactionInfoCard
 						key={item.id}
-						title={item.type === 'expense' ? item.category : item.source}
+						title={item.type === 0 ? item.category.name : item.merchant}
 						icon={item.icon}
-						date={moment(item.date).format('Do MMM YYYY')}
+						date={moment(item.transactionDate).format('Do MMM YYYY')}
 						amount={item.amount}
 						type={item.type}
 						hideDeleteBtn

@@ -1,18 +1,20 @@
-import React, { useEffect, useState } from 'react';
+import { useEffect, useState } from 'react';
 import { LuPlus } from 'react-icons/lu';
+import type { TransactionDTO } from '../../api/GeneratedDTOs';
 import { prepareExpenseLineChartData } from '../../utils/Functions/Conversions/NumberUtils';
 import CustomLineChart from '../Charts/CustomLineChart';
 import AddButton from '../common/AddButton';
 import WrapperCard from '../common/WrapperCard';
+import type { ExpenseChartData } from '../Dashboard/types/DashboardTypes';
 import MainTextTypography from '../MainTextTypography';
 
 interface ExpenseOverviewProps {
-	transactions: ExpenseTransactionDTO[];
+	transactions: TransactionDTO[];
 	onExpenseIncome: () => void;
 }
 
 const ExpenseOverview = ({ transactions, onExpenseIncome }: ExpenseOverviewProps) => {
-	const [chartData, setChartData] = useState([]);
+	const [chartData, setChartData] = useState<ExpenseChartData>([]);
 
 	useEffect(() => {
 		const result = prepareExpenseLineChartData(transactions);

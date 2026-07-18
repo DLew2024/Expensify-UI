@@ -6,7 +6,7 @@ import styles from './styles/_LabeledInput.module.scss';
 
 type LabeledInputProps = {
 	label: string;
-	value: string;
+	value?: string;
 	placeholder?: string;
 	type?: React.HTMLInputTypeAttribute;
 	onChange: (value: string) => void;

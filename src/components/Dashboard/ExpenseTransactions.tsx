@@ -1,24 +1,15 @@
 import moment from 'moment';
 import { LuArrowRight } from 'react-icons/lu';
+import type { TransactionDTO } from '../../api/GeneratedDTOs';
 import TransactionInfoCard from '../Cards/TransactionInfoCard';
 import CardButton from '../common/CardButton';
 import WrapperCard from '../common/WrapperCard';
 import MainTextTypography from '../MainTextTypography';
 import styles from './styles/_ExpenseTransactions.module.scss';
-
-interface TransactionResponseDTO {
-	id: string;
-	title?: string;
-	category: string;
-	source: string;
-	icon: string;
-	date: string | number;
-	amount: number;
-	type: 'income' | 'expense';
-}
+import { TransactionType } from './types/DashboardTypes';
 
 interface RecentTransactionsProps {
-	transactions?: TransactionResponseDTO[];
+	transactions?: TransactionDTO[];
 	onSeeMore: () => void;
 }
 
@@ -38,11 +29,11 @@ const ExpenseTransactions = ({ transactions, onSeeMore }: RecentTransactionsProp
 				{transactions?.slice(0, 5).map((expense) => (
 					<TransactionInfoCard
 						key={expense.id}
-						title={expense.category}
+						title={expense.category.name}
 						icon={expense.icon}
-						date={moment(expense.date).format('Do MMM YYYY')}
+						date={moment(expense.transactionDate).format('Do MMM YYYY')}
 						amount={expense.amount}
-						type="expense"
+						type={TransactionType.Expense}
 						hideDeleteBtn
 					/>
 				))}

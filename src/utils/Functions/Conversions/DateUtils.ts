@@ -22,7 +22,10 @@ export const dateToEpochSeconds = (date: Date | number): EpochSeconds => {
 	return epochMillisToSeconds(milliseconds);
 };
 
-export const formatEpochSecondsSafe = (epochSeconds?: EpochSeconds, fallback = 'N/A'): string => {
+export const formatEpochSecondsSafe = (
+	epochSeconds?: EpochSeconds | number,
+	fallback = 'N/A',
+): string => {
 	if (typeof epochSeconds !== 'number') return fallback;
 
 	const date = new Date(epochSeconds * 1000);

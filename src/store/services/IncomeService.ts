@@ -1,4 +1,9 @@
 import { createAsyncThunk } from '@reduxjs/toolkit';
+import type {
+	AddIncomeTransactionDTO,
+	IncomeTransactionResponseDTO,
+	TransactionDTO,
+} from '../../api/GeneratedDTOs';
 import {
 	CREATE_INCOME_THUNK_ID,
 	DELETE_INCOME_THUNK_ID,
@@ -9,25 +14,42 @@ import type { Guid } from '../../utils/DataTypes/Guid';
 import { buildAxiosCall } from '../services';
 
 //#region GET
-export const getAllIncome = createAsyncThunk<string[], void>(GET_ALL_INCOME_THUNK_ID, async () => {
-	const { data } = await buildAxiosCall<string[], void>('GET', 'api/income/get');
-	return data;
-});
+export const getAllIncome = createAsyncThunk<TransactionDTO[], void>(
+	GET_ALL_INCOME_THUNK_ID,
+	async () => {
+		const { data } = await buildAxiosCall<TransactionDTO[], void>('GET', 'api/income/get');
+		return data;
+	},
+);
 
-export const downloadIncome = createAsyncThunk<void, void>(
+export const downloadIncome = createAsyncThunk<Blob, void>(
 	GET_DOWNLOADED_INCOME_THUNK_ID,
 	async () => {
-		const { data } = await buildAxiosCall<void, void>('GET', 'api/income/downloadExcel');
-		return data;
+		const response = await buildAxiosCall<Blob, void>(
+			'GET',
+			'api/income/downloadExcel',
+			undefined,
+			{
+				responseType: 'blob',
+			},
+		);
+
+		return response.data;
 	},
 );
 //#endregion GET
 
 //#region POST
-export const addIncome = createAsyncThunk<void, void>(CREATE_INCOME_THUNK_ID, async () => {
-	const { data } = await buildAxiosCall<void, void>('POST', 'api/income/add');
-	return data;
-});
+export const addIncome = createAsyncThunk<AddIncomeTransactionDTO, IncomeTransactionResponseDTO>(
+	CREATE_INCOME_THUNK_ID,
+	async () => {
+		const { data } = await buildAxiosCall<AddIncomeTransactionDTO, IncomeTransactionResponseDTO>(
+			'POST',
+			'api/income/add',
+		);
+		return data;
+	},
+);
 //#endregion POST
 
 //#region PUT

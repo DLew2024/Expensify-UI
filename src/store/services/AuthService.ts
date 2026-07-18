@@ -1,9 +1,5 @@
 import { createAsyncThunk } from '@reduxjs/toolkit';
-import type {
-	LoginUserDTO,
-	RegisterUserDTO,
-	UserTokenResponseDTO,
-} from '../../api/generated/ApiDTOs';
+import type { LoginUserDTO, RegisterUserDTO, UserTokenResponseDTO } from '../../api/GeneratedDTOs';
 import {
 	GET_USER_INFO_THUNK_ID,
 	POST_USER_LOGIN_THUNK_ID,

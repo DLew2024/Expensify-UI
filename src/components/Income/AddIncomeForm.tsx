@@ -1,17 +1,25 @@
 import { useState } from 'react';
+import type { AddIncomeTransactionDTO } from '../../api/GeneratedDTOs';
 import FillButton from '../common/FillButton';
+import type { IncomeProperties } from '../Dashboard/types/DashboardTypes';
 import EmojiPickerPopup from '../EmojiPickerPopup';
 import LabeledInput from '../Inputs/LabeledInput';
 
-const AddIncomeForm = ({ onAddIncome }) => {
-	const [income, setIncome] = useState({
-		source: '',
-		amount: '',
-		date: '',
-		icon: '',
-	});
+interface AddIncomeFormProps {
+	onAddIncome: (expense: AddIncomeTransactionDTO) => void;
+}
 
-	const handleChange = (key, value) => setIncome({ ...income, [key]: value });
+const emptyIncomeTransaction: AddIncomeTransactionDTO = {
+	description: '',
+	source: '',
+};
+
+const AddIncomeForm = ({ onAddIncome }: AddIncomeFormProps) => {
+	const [income, setIncome] = useState<AddIncomeTransactionDTO>(emptyIncomeTransaction);
+
+	const handleChange = <K extends keyof IncomeProperties>(key: K, value: IncomeProperties[K]) => {
+		setIncome({ ...income, [key]: value });
+	};
 
 	return (
 		<div>
@@ -28,7 +36,7 @@ const AddIncomeForm = ({ onAddIncome }) => {
 			/>
 
 			<LabeledInput
-				value={income.amount}
+				value={String(income.amount)}
 				onChange={(amount) => handleChange('amount', amount)}
 				label="Amount"
 				placeholder=""
@@ -36,8 +44,8 @@ const AddIncomeForm = ({ onAddIncome }) => {
 			/>
 
 			<LabeledInput
-				value={income.date}
-				onChange={(date) => handleChange('date', date)}
+				value={String(income.transactionDate)}
+				onChange={(transactionDate) => handleChange('date', transactionDate)}
 				label="Date"
 				placeholder=""
 				type="date"

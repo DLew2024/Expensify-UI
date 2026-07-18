@@ -6,35 +6,30 @@ import {
 	Cell,
 	ResponsiveContainer,
 	Tooltip,
+	type TooltipPayload,
 	XAxis,
 	YAxis,
 } from 'recharts';
 import MainTextTypography from '../MainTextTypography';
 import styles from './styles/_CustomBarChart.module.scss';
 
-export interface BarChartDataItem {
-	category: string;
-	amount: number;
-	month?: string;
-}
 interface CustomBarChartProps {
-	data: BarChartDataItem[];
+	data: any[];
 }
-interface CustomTooltipPayloadItem {
-	value?: number;
-	payload: BarChartDataItem;
-}
-interface CustomTooltipProps {
-	active?: boolean;
-	payload?: CustomTooltipPayloadItem[];
-}
+
 const BAR_COLORS = { primary: '#875cf5', secondary: '#cfbefb' } as const;
 
 const CustomBarChart = ({ data }: CustomBarChartProps) => {
 	const getBarColor = (index: number): string =>
 		index % 2 === 0 ? BAR_COLORS.primary : BAR_COLORS.secondary;
 
-	const CustomTooltip = ({ active, payload }: CustomTooltipProps): ReactElement | null => {
+	const CustomTooltip = ({
+		active,
+		payload,
+	}: {
+		payload: TooltipPayload;
+		active: boolean;
+	}): ReactElement | null => {
 		if (!active || !payload?.length) {
 			return null;
 		}
@@ -62,7 +57,7 @@ const CustomBarChart = ({ data }: CustomBarChartProps) => {
 					<XAxis dataKey={'month'} tick={{ fontSize: 12, fill: '#555' }} stroke="none" />
 					<YAxis tick={{ fontSize: 12, fill: '#555' }} stroke="none" />
 
-					<Tooltip content={<CustomTooltip />} />
+					<Tooltip content={(props) => <CustomTooltip {...props} />} />
 
 					<Bar dataKey="amount" radius={[10, 10, 0, 0]} activeBar={{ fill: BAR_COLORS.primary }}>
 						{data.map((entry, index) => (
