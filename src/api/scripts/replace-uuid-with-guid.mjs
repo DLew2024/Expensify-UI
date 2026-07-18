@@ -1,9 +1,9 @@
 import { readFile, writeFile } from 'node:fs/promises';
 import { resolve } from 'node:path';
 
-const generatedFilePath = resolve(process.cwd(), 'src/api/generated/GeneratedDTOs.ts');
+const generatedFilePath = resolve(process.cwd(), 'src/api/GeneratedDTOs.ts');
 
-const guidImport = "import type { Guid } from '../../utils/DataTypes/Guid';";
+const guidImport = "import type { Guid } from '../utils/DataTypes/Guid';";
 
 try {
 	let generatedContent = await readFile(generatedFilePath, 'utf8');

@@ -4,7 +4,7 @@
 	"version": "0.0.0",
 	"type": "module",
 	"scripts": {
-		"generate:types": "openapi-typescript http://localhost:5073/openapi/v1.json -o src/api/generated/GeneratedDTOs.ts && node src/api/scripts/replace-uuid-with-guid.mjs",
+		"generate:types": "openapi-typescript http://localhost:5073/openapi/v1.json -o src/api/GeneratedOpenApi.ts && node src/api/scripts/generate-dtos.mjs && npx biome format --write src/api/GeneratedDTOs.ts",
 		"predev": "npm i && npm run generate:types",
 		"dev": "vite --port 3000",
 		"format": "biome format .",
