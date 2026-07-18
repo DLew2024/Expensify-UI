@@ -9,12 +9,15 @@ import type { Guid } from '../../utils/DataTypes/Guid';
 import { buildAxiosCall } from '../services';
 
 //#region GET
-export const getAllIncome = createAsyncThunk<void, void>(GET_ALL_EXPENSE_THUNK_ID, async () => {
-	const { data } = await buildAxiosCall<void, void>('GET', 'api/expense/get');
-	return data;
-});
+export const getAllExpense = createAsyncThunk<string[], void>(
+	GET_ALL_EXPENSE_THUNK_ID,
+	async () => {
+		const { data } = await buildAxiosCall<string[], void>('GET', 'api/expense/get');
+		return data;
+	},
+);
 
-export const downloadIncome = createAsyncThunk<void, void>(
+export const downloadExpense = createAsyncThunk<void, void>(
 	GET_DOWNLOADED_EXPENSE_THUNK_ID,
 	async () => {
 		const { data } = await buildAxiosCall<void, void>('GET', 'api/expense/downloadExcel');
@@ -24,7 +27,7 @@ export const downloadIncome = createAsyncThunk<void, void>(
 //#endregion GET
 
 //#region POST
-export const addIncome = createAsyncThunk<void, void>(CREATE_EXPENSE_THUNK_ID, async () => {
+export const addExpense = createAsyncThunk<void, void>(CREATE_EXPENSE_THUNK_ID, async () => {
 	const { data } = await buildAxiosCall<void, void>('POST', 'api/expense/add');
 	return data;
 });
@@ -35,10 +38,10 @@ export const addIncome = createAsyncThunk<void, void>(CREATE_EXPENSE_THUNK_ID, a
 //#endregion PUT
 
 //#region DELETE
-export const deleteIncome = createAsyncThunk<void, Guid>(
+export const deleteExpense = createAsyncThunk<void, Guid>(
 	DELETE_EXPENSE_THUNK_ID,
-	async (incomeId) => {
-		const { data } = await buildAxiosCall<void, Guid>('DELETE', `api/expense/${incomeId}`);
+	async (expenseId) => {
+		const { data } = await buildAxiosCall<void, Guid>('DELETE', `api/expense/${expenseId}`);
 		return data;
 	},
 );

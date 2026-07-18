@@ -9,8 +9,8 @@ import type { Guid } from '../../utils/DataTypes/Guid';
 import { buildAxiosCall } from '../services';
 
 //#region GET
-export const getAllIncome = createAsyncThunk<void, void>(GET_ALL_INCOME_THUNK_ID, async () => {
-	const { data } = await buildAxiosCall<void, void>('GET', 'api/income/get');
+export const getAllIncome = createAsyncThunk<string[], void>(GET_ALL_INCOME_THUNK_ID, async () => {
+	const { data } = await buildAxiosCall<string[], void>('GET', 'api/income/get');
 	return data;
 });
 

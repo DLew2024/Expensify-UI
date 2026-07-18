@@ -1,4 +1,24 @@
+import moment from 'moment';
 import { THOUSANDS_SEPARATOR_REGEX } from '../../Regex/RegexUtils';
+
+export interface ExpenseBarChartDataItem {
+	category: string;
+	amount: number;
+}
+
+export interface IncomeTransactionDTO {
+	id: string;
+	source: string;
+	amount: number;
+	date: string;
+	icon?: string;
+}
+
+export interface IncomeBarChartDataItem {
+	month: string;
+	amount: number;
+	source: string;
+}
 
 export const isNotFiniteNumber = (value: unknown): boolean => {
 	return typeof value !== 'number' || !Number.isFinite(value);
@@ -20,16 +40,37 @@ export const addThousandsSeparator = (num: number): string => {
 	return fractionalPart ? `${formattedInteger}.${fractionalPart}` : formattedInteger;
 };
 
-export interface ExpenseBarChartDataItem {
-	category: string;
-	amount: number;
-}
-
 export const prepareExpenseBarChartData = (
 	data: ExpenseBarChartDataItem[] = [],
 ): ExpenseBarChartDataItem[] => {
 	return data.map((item) => ({
 		category: item.category,
 		amount: item.amount,
+	}));
+};
+
+export const prepareIncomeBarChartData = (
+	data: IncomeTransactionDTO[] = [],
+): IncomeBarChartDataItem[] => {
+	const sortedData = [...data].sort(
+		(a, b) => new Date(a.date).getTime() - new Date(b.date).getTime(),
+	);
+
+	return sortedData.map((item) => ({
+		month: moment(item.date).format('Do MMM'),
+		amount: item.amount,
+		source: item.source,
+	}));
+};
+
+export const prepareExpenseLineChartData = (data: any[] = []) => {
+	const sortedData = [...data].sort(
+		(a, b) => new Date(a.date).getTime() - new Date(b.date).getTime(),
+	);
+
+	return sortedData.map((item) => ({
+		month: moment(item.date).format('Do MMM'),
+		amount: item?.amount,
+		category: item?.category,
 	}));
 };

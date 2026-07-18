@@ -30,13 +30,17 @@ const RecentTransactions = ({ transactions, onSeeMore }: RecentTransactionsProps
 					Recent Transactions
 				</MainTextTypography>
 
-				<CardButton icon={<LuArrowRight className={styles.recentTransactions__seeAllIcon} />}>
+				<CardButton
+					icon={
+						<LuArrowRight className={styles.recentTransactions__seeAllIcon} onClick={onSeeMore} />
+					}
+				>
 					See All
 				</CardButton>
 			</div>
 
 			<div className={styles.recentTransactions__list}>
-				{transactions?.slice(0, 5).map((item) => (
+				{transactions?.slice(0, 4).map((item) => (
 					<TransactionInfoCard
 						key={item.id}
 						title={item.type === 'expense' ? item.category : item.source}

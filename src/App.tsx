@@ -1,4 +1,5 @@
 import { useEffect, useState } from 'react';
+import { Toaster } from 'react-hot-toast';
 import { Navigate, Route, Routes } from 'react-router';
 import UserProvider from './context/userContext';
 import { appRoutes } from './utils/Navigation/AppRoutes';
@@ -15,6 +16,15 @@ function App() {
 					))}
 				</Routes>
 			</div>
+
+			<Toaster
+				toastOptions={{
+					className: '',
+					style: {
+						fontSize: '13px',
+					},
+				}}
+			/>
 		</UserProvider>
 	);
 }

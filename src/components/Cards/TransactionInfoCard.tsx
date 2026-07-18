@@ -10,6 +10,7 @@ interface TransactionInfoCardProps {
 	amount: string | number;
 	type: 'income' | 'expense';
 	hideDeleteBtn?: boolean;
+	onDelete?: () => void;
 }
 
 const TransactionInfoCard = ({
@@ -19,9 +20,8 @@ const TransactionInfoCard = ({
 	amount,
 	type,
 	hideDeleteBtn = false,
+	onDelete,
 }: TransactionInfoCardProps) => {
-	const onDelete = () => {};
-
 	return (
 		<div className={styles.transactionInfoCard}>
 			<div className={styles.transactionInfoCard__iconContainer}>

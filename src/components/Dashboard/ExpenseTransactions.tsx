@@ -1,6 +1,7 @@
 import moment from 'moment';
 import { LuArrowRight } from 'react-icons/lu';
 import TransactionInfoCard from '../Cards/TransactionInfoCard';
+import CardButton from '../common/CardButton';
 import WrapperCard from '../common/WrapperCard';
 import MainTextTypography from '../MainTextTypography';
 import styles from './styles/_ExpenseTransactions.module.scss';
@@ -27,10 +28,10 @@ const ExpenseTransactions = ({ transactions, onSeeMore }: RecentTransactionsProp
 			<div className={styles.expensesCard__header}>
 				<MainTextTypography variant="h5">Expenses</MainTextTypography>
 
-				<button type="button" onClick={onSeeMore} className={styles.expensesCard__button}>
+				<CardButton onClick={onSeeMore}>
 					See All
 					<LuArrowRight className={styles.expensesCard__buttonIcon} />
-				</button>
+				</CardButton>
 			</div>
 
 			<div className={styles.expensesCard__list}>
