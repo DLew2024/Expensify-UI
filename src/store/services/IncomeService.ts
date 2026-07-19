@@ -17,7 +17,7 @@ import { buildAxiosCall } from '../services';
 export const getAllIncome = createAsyncThunk<TransactionDTO[], void>(
 	GET_ALL_INCOME_THUNK_ID,
 	async () => {
-		const { data } = await buildAxiosCall<TransactionDTO[], void>('GET', 'api/income/get');
+		const { data } = await buildAxiosCall<TransactionDTO[], void>('GET', 'api/income/getAll');
 		return data;
 	},
 );
@@ -40,13 +40,15 @@ export const downloadIncome = createAsyncThunk<Blob, void>(
 //#endregion GET
 
 //#region POST
-export const addIncome = createAsyncThunk<AddIncomeTransactionDTO, IncomeTransactionResponseDTO>(
+export const addIncome = createAsyncThunk<IncomeTransactionResponseDTO, AddIncomeTransactionDTO>(
 	CREATE_INCOME_THUNK_ID,
-	async () => {
-		const { data } = await buildAxiosCall<AddIncomeTransactionDTO, IncomeTransactionResponseDTO>(
+	async (income) => {
+		const { data } = await buildAxiosCall<IncomeTransactionResponseDTO, AddIncomeTransactionDTO>(
 			'POST',
 			'api/income/add',
+			income,
 		);
+
 		return data;
 	},
 );

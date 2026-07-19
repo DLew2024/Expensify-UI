@@ -1,6 +1,9 @@
+import moment from 'moment';
 import { useState } from 'react';
+import { v4 } from 'uuid';
 import type { AddIncomeTransactionDTO } from '../../api/GeneratedDTOs';
-import FillButton from '../common/FillButton';
+import type { Guid } from '../../utils/DataTypes/Guid';
+import CardButton from '../common/CardButton';
 import EmojiPickerPopup from '../EmojiPickerPopup';
 import LabeledInput from '../Inputs/LabeledInput';
 import styles from './styles/_AddIncomeForm.module.scss';
@@ -10,11 +13,12 @@ interface AddIncomeFormProps {
 }
 
 const emptyIncomeTransaction: AddIncomeTransactionDTO = {
-	description: '',
 	source: '',
 	amount: 0,
 	transactionDate: 0,
 	icon: '',
+	accountId: v4() as Guid, // must add a account id
+	description: 'TEst',
 };
 
 const AddIncomeForm = ({ onAddIncome }: AddIncomeFormProps) => {
@@ -52,14 +56,18 @@ const AddIncomeForm = ({ onAddIncome }: AddIncomeFormProps) => {
 			/>
 
 			<LabeledInput
-				value={income.transactionDate ? String(income.transactionDate) : ''}
-				onChange={(transactionDate) => handleChange('transactionDate', Number(transactionDate))}
+				value={
+					income.transactionDate ? moment.unix(income.transactionDate).format('YYYY-MM-DD') : ''
+				}
+				onChange={(transactionDate) =>
+					handleChange('transactionDate', moment(transactionDate).unix())
+				}
 				label="Date"
 				type="date"
 			/>
 
 			<div className={styles.addIncomeForm__actions}>
-				<FillButton onClick={() => onAddIncome(income)}>Add Income</FillButton>
+				<CardButton onClick={() => onAddIncome(income)}>Add Income</CardButton>
 			</div>
 		</div>
 	);

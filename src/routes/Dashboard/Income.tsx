@@ -35,24 +35,6 @@ const Income = () => {
 	});
 	const [openAddIncomeModal, setOpenAddIncomeModal] = useState(false);
 
-	const fetchIncomeDetails = async () => {
-		if (isLoading) return;
-
-		setIsLoading(true);
-
-		try {
-			const response = await dispatch(getAllIncome()).unwrap();
-
-			if (response) {
-				setIncomeData(response);
-			}
-		} catch (error: unknown) {
-			handleApiError(error, 'Error fetching income details:');
-		} finally {
-			setIsLoading(false);
-		}
-	};
-
 	const handleAddIncome = async (income: AddIncomeTransactionDTO) => {
 		const { source, amount, transactionDate } = income;
 
@@ -77,7 +59,7 @@ const Income = () => {
 			setOpenAddIncomeModal(false);
 			toast.success('Income added successfully.');
 
-			await fetchIncomeDetails();
+			await refreshIncomeDetails();
 		} catch (error: unknown) {
 			handleApiError(error, 'Error adding income:');
 		}
@@ -94,7 +76,7 @@ const Income = () => {
 
 			toast.success('Income details deleted successfully.');
 
-			await fetchIncomeDetails();
+			await refreshIncomeDetails();
 		} catch (error: unknown) {
 			handleApiError(error, 'Error deleting income:');
 		}
@@ -121,9 +103,31 @@ const Income = () => {
 		}
 	};
 
+	const refreshIncomeDetails = async () => {
+		try {
+			const response = await dispatch(getAllIncome()).unwrap();
+			setIncomeData(response);
+		} catch (error: unknown) {
+			handleApiError(error, 'Error fetching income details:');
+		}
+	};
+
 	// biome-ignore lint/correctness/useExhaustiveDependencies: Initial render only.
 	useEffect(() => {
-		fetchIncomeDetails();
+		const fetchInitialIncome = async () => {
+			setIsLoading(true);
+
+			try {
+				const response = await dispatch(getAllIncome()).unwrap();
+				setIncomeData(response);
+			} catch (error: unknown) {
+				handleApiError(error, 'Error fetching income details:');
+			} finally {
+				setIsLoading(false);
+			}
+		};
+
+		fetchInitialIncome();
 	}, []);
 
 	return (
