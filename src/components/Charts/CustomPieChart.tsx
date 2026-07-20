@@ -25,7 +25,7 @@ const CustomPieChart = ({
 	showAnchorText = false,
 }: CustomPieChartProps) => {
 	return (
-		<ResponsiveContainer>
+		<ResponsiveContainer width={'100%'} height={300}>
 			<PieChart>
 				<Pie
 					data={data}
