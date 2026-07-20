@@ -12,9 +12,10 @@ import {
 } from 'recharts';
 import MainTextTypography from '../MainTextTypography';
 import styles from './styles/_CustomBarChart.module.scss';
+import type { CustomBarChartData } from './utils/CustomComponentTypes';
 
 interface CustomBarChartProps {
-	data: any[];
+	data: CustomBarChartData[];
 }
 
 const BAR_COLORS = { primary: '#875cf5', secondary: '#cfbefb' } as const;
@@ -59,9 +60,9 @@ const CustomBarChart = ({ data }: CustomBarChartProps) => {
 
 					<Tooltip content={(props) => <CustomTooltip {...props} />} />
 
-					<Bar dataKey="amount" radius={[10, 10, 0, 0]} activeBar={{ fill: BAR_COLORS.primary }}>
+					<Bar dataKey={'amount'} radius={[10, 10, 0, 0]} activeBar={{ fill: BAR_COLORS.primary }}>
 						{data.map((entry, index) => (
-							<Cell key={`${entry.category}`} fill={getBarColor(index)} />
+							<Cell key={`${entry.categoryName}`} fill={getBarColor(index)} />
 						))}
 					</Bar>
 				</BarChart>

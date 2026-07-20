@@ -8,12 +8,12 @@ import {
 	XAxis,
 	YAxis,
 } from 'recharts';
-import type { ExpenseChartData } from '../Dashboard/types/DashboardTypes';
 import MainTextTypography from '../MainTextTypography';
 import styles from './styles/_CustomLineChart.module.scss';
+import type { CustomLineChartData } from './utils/CustomComponentTypes';
 
 interface CustomLineChartProps {
-	data: ExpenseChartData;
+	data: CustomLineChartData[];
 }
 
 const CustomLineChart = ({ data }: CustomLineChartProps) => {

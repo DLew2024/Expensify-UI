@@ -28,12 +28,11 @@ const Income = () => {
 	useUserAuth();
 
 	const [incomeData, setIncomeData] = useState<TransactionDTO[]>([]);
-	const [isLoading, setIsLoading] = useState(false);
 	const [openDeleteAlert, setOpenDeleteAlert] = useState<DeleteAlertState>({
 		show: false,
 		data: null,
 	});
-	const [openAddIncomeModal, setOpenAddIncomeModal] = useState(false);
+	const [isAddIncomeModalOpen, setIsOpenAddIncomeModal] = useState<boolean>(false);
 
 	const handleAddIncome = async (income: AddIncomeTransactionDTO) => {
 		const { source, amount, transactionDate } = income;
@@ -56,7 +55,7 @@ const Income = () => {
 		try {
 			await dispatch(addIncome(income)).unwrap();
 
-			setOpenAddIncomeModal(false);
+			setIsOpenAddIncomeModal(false);
 			toast.success('Income added successfully.');
 
 			await refreshIncomeDetails();
@@ -115,15 +114,11 @@ const Income = () => {
 	// biome-ignore lint/correctness/useExhaustiveDependencies: Initial render only.
 	useEffect(() => {
 		const fetchInitialIncome = async () => {
-			setIsLoading(true);
-
 			try {
 				const response = await dispatch(getAllIncome()).unwrap();
 				setIncomeData(response);
 			} catch (error: unknown) {
 				handleApiError(error, 'Error fetching income details:');
-			} finally {
-				setIsLoading(false);
 			}
 		};
 
@@ -136,7 +131,7 @@ const Income = () => {
 				<div className={styles.incomeDashboard__content}>
 					<IncomeOverview
 						transactions={incomeData}
-						onAddIncome={() => setOpenAddIncomeModal(true)}
+						onAddIncome={() => setIsOpenAddIncomeModal(true)}
 					/>
 
 					<IncomeList
@@ -152,8 +147,8 @@ const Income = () => {
 				</div>
 
 				<Modal
-					isOpen={openAddIncomeModal}
-					onClose={() => setOpenAddIncomeModal(false)}
+					isOpen={isAddIncomeModalOpen}
+					onClose={() => setIsOpenAddIncomeModal(false)}
 					title="Add Income"
 				>
 					<AddIncomeForm onAddIncome={handleAddIncome} />

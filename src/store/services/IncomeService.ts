@@ -25,7 +25,7 @@ export const getAllIncome = createAsyncThunk<TransactionDTO[], void>(
 export const downloadIncome = createAsyncThunk<Blob, void>(
 	GET_DOWNLOADED_INCOME_THUNK_ID,
 	async () => {
-		const response = await buildAxiosCall<Blob, void>(
+		const { data } = await buildAxiosCall<Blob, void>(
 			'GET',
 			'api/income/downloadExcel',
 			undefined,
@@ -34,7 +34,7 @@ export const downloadIncome = createAsyncThunk<Blob, void>(
 			},
 		);
 
-		return response.data;
+		return data;
 	},
 );
 //#endregion GET

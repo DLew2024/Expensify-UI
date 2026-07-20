@@ -2,6 +2,8 @@
 
 import type { Guid } from '../utils/DataTypes/Guid';
 
+export type CurrencyCode = number;
+
 export type TransactionPostedStatus = number;
 
 export type LogoutScope = number;
@@ -50,6 +52,49 @@ export type ChangePasswordDTO = {
 	confirmNewPassword?: string;
 };
 
+export type CreateAccountDTO = {
+	name: string;
+	/** Format: uuid */
+	accountTypeId: Guid;
+	institutionName: string;
+	lastFourDigits: string;
+	currencyCode: CurrencyCode;
+	/** Format: double */
+	initialBalance: number;
+	includeInNetWorth?: boolean;
+	/** Format: double */
+	creditLimit?: number;
+	/** Format: double */
+	interestRate?: number;
+	notes?: string;
+};
+
+export type CreateAccountResponseDTO = {
+	/** Format: uuid */
+	accountId?: Guid;
+	name?: string;
+	/** Format: uuid */
+	accountTypeId?: Guid;
+	accountTypeName?: string;
+	institutionName?: null | string;
+	lastFourDigits?: null | string;
+	currencyCode?: CurrencyCode;
+	/** Format: double */
+	currentBalance?: number;
+	/** Format: double */
+	availableBalance?: number;
+	includeInNetWorth?: boolean;
+	isActive?: boolean;
+	isHidden?: boolean;
+	notes?: null | string;
+	/** Format: double */
+	creditLimit?: null | number;
+	/** Format: double */
+	interestRate?: null | number;
+	/** Format: int64 */
+	createDate?: number;
+};
+
 export type DashboardDataResponseDTO = {
 	/** Format: double */
 	totalBalance: number;
@@ -69,11 +114,6 @@ export type DownloadExpenseExcelDTO = {
 	userId?: Guid;
 };
 
-export type DownloadIncomeExcelDTO = {
-	/** Format: uuid */
-	userID?: Guid;
-};
-
 export type EmailVerificationDTO = {
 	token?: string;
 };
@@ -82,11 +122,6 @@ export type ExpenseTransactionResponseDTO = Record<string, never>;
 
 export type ForgotPasswordDTO = {
 	email: string;
-};
-
-export type GetAllIncomeDTO = {
-	/** Format: uuid */
-	userID?: Guid;
 };
 
 export type GetExpenseIncomeDTO = Record<string, never>;
@@ -177,6 +212,8 @@ export type TransactionPeriodSummaryDTO = {
 	totalBalance?: number;
 	transactions?: TransactionDTO[];
 };
+
+export type UpdateAccountDTO = Record<string, never>;
 
 export type UserResponseDTO = {
 	/** Format: uuid */

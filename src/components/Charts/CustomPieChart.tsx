@@ -4,7 +4,7 @@ import CustomLegend from './CustomLegend';
 import CustomTooltip from './CustomTooltip';
 
 interface PieChartDataItem {
-	id: Guid;
+	id: Guid | string;
 	name: string;
 	amount: number;
 }
