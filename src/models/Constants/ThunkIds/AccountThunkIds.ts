@@ -24,4 +24,5 @@ export const GET_USER_ACCOUNTS = `${ThunkOperation.GET}-User Accounts`;
 
 //** DELETE */
 //#region DELETE
+export const DELETE_ACCOUNT_THUNK_ID = `${ThunkOperation.DELETE}-Account`;
 //#endregion DELETE

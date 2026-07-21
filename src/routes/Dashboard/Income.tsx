@@ -6,7 +6,7 @@ import AddIncomeForm from '../../components/Income/AddIncomeForm';
 import IncomeList from '../../components/Income/IncomeList';
 import IncomeOverview from '../../components/Income/IncomeOverview';
 import DashboardLayout from '../../components/layouts/DashboardLayout';
-import Modal from '../../components/Modal';
+import PrimaryModal from '../../components/PrimaryModal';
 import { useUserAuth } from '../../hooks/useUserAuth';
 import {
 	addIncome,
@@ -146,15 +146,15 @@ const Income = () => {
 					/>
 				</div>
 
-				<Modal
+				<PrimaryModal
 					isOpen={isAddIncomeModalOpen}
 					onClose={() => setIsOpenAddIncomeModal(false)}
 					title="Add Income"
 				>
 					<AddIncomeForm onAddIncome={handleAddIncome} />
-				</Modal>
+				</PrimaryModal>
 
-				<Modal
+				<PrimaryModal
 					isOpen={openDeleteAlert.show}
 					onClose={() =>
 						setOpenDeleteAlert({
@@ -172,7 +172,7 @@ const Income = () => {
 							}
 						}}
 					/>
-				</Modal>
+				</PrimaryModal>
 			</div>
 		</DashboardLayout>
 	);

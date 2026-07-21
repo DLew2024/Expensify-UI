@@ -6,7 +6,7 @@ import AddExpenseForm from '../../components/Expense/AddExpenseForm';
 import ExpenseList from '../../components/Expense/ExpenseList';
 import ExpenseOverview from '../../components/Expense/ExpenseOverview';
 import DashboardLayout from '../../components/layouts/DashboardLayout';
-import Modal from '../../components/Modal';
+import PrimaryModal from '../../components/PrimaryModal';
 import { useUserAuth } from '../../hooks/useUserAuth';
 import {
 	addExpense,
@@ -16,13 +16,9 @@ import {
 } from '../../store/services/ExpenseService';
 import { dispatch } from '../../store/store';
 import type { Guid } from '../../utils/DataTypes/Guid';
+import type { DeleteAlertState } from '../../utils/DataTypes/ModalTypes';
 import { handleApiError } from '../../utils/Functions/Utility/ApiFunctions';
 import styles from './styles/_Expense.module.scss';
-
-interface DeleteAlertState {
-	show: boolean;
-	data: Guid | null;
-}
 
 const Expense = () => {
 	useUserAuth();
@@ -33,7 +29,7 @@ const Expense = () => {
 		show: false,
 		data: null,
 	});
-	const [openAddExpenseModal, setOpenAddExpenseModal] = useState(false);
+	const [isAddExpenseModalOpen, setIsAddExpenseModalOpen] = useState<boolean>(false);
 
 	const fetchExpenseDetails = async () => {
 		if (isLoading) return;
@@ -74,7 +70,7 @@ const Expense = () => {
 		try {
 			await dispatch(addExpense(expense)).unwrap();
 
-			setOpenAddExpenseModal(false);
+			setIsAddExpenseModalOpen(false);
 			toast.success('Expense added successfully.');
 
 			await fetchExpenseDetails();
@@ -133,7 +129,7 @@ const Expense = () => {
 					<div className={styles.expenseDashboard__overview}>
 						<ExpenseOverview
 							transactions={expenseData}
-							onExpenseIncome={() => setOpenAddExpenseModal(true)}
+							onExpenseIncome={() => setIsAddExpenseModalOpen(true)}
 						/>
 					</div>
 
@@ -149,15 +145,15 @@ const Expense = () => {
 					/>
 				</div>
 
-				<Modal
-					isOpen={openAddExpenseModal}
-					onClose={() => setOpenAddExpenseModal(false)}
+				<PrimaryModal
+					isOpen={isAddExpenseModalOpen}
+					onClose={() => setIsAddExpenseModalOpen(false)}
 					title="Add Expense"
 				>
 					<AddExpenseForm onAddExpense={handleAddExpense} />
-				</Modal>
+				</PrimaryModal>
 
-				<Modal
+				<PrimaryModal
 					isOpen={openDeleteAlert.show}
 					onClose={() =>
 						setOpenDeleteAlert({
@@ -175,7 +171,7 @@ const Expense = () => {
 							}
 						}}
 					/>
-				</Modal>
+				</PrimaryModal>
 			</div>
 		</DashboardLayout>
 	);

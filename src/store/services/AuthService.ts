@@ -4,16 +4,13 @@ import {
 	GET_USER_INFO_THUNK_ID,
 	POST_USER_LOGIN_THUNK_ID,
 	POST_USER_REGISTER_THUNK_ID,
-} from '../../models/Constants/ThunkIds/User';
+} from '../../models/Constants/ThunkIds/UserThunkIds';
 import { buildAxiosCall } from '../services';
 import { dispatch } from '../store';
 import { uploadImage } from './ImageService';
 
 interface RegisterUserRequest extends Omit<RegisterUserDTO, 'profileImageUrl'> {
 	profileImage?: File;
-}
-export interface UploadImageResponse {
-	imageUrl?: string;
 }
 
 //#region GET

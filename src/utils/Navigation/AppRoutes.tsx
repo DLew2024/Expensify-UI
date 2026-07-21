@@ -1,4 +1,5 @@
 import type { ComponentType } from 'react';
+import Account from '../../routes/Account/Account';
 import LoginPage from '../../routes/Auth/Login/LoginPage';
 import SignUpPage from '../../routes/Auth/SignUp/SignUpPage';
 import Expense from '../../routes/Dashboard/Expense';
@@ -25,6 +26,11 @@ export const appRoutes: AppRoute[] = [
 		Component: SignUpPage,
 	},
 	{
+		path: NavigationRoutePaths.ACCOUNT,
+		caseSensitive: true,
+		Component: Account,
+	},
+	{
 		path: NavigationRoutePaths.DASHBOARD,
 		caseSensitive: true,
 		Component: Home,
@@ -39,28 +45,8 @@ export const appRoutes: AppRoute[] = [
 		caseSensitive: true,
 		Component: Expense,
 	},
-	// {
-	// 	path: NavigationRoutePaths.CREATE_PAGE,
-	// 	caseSensitive: true,
-	// 	Component: AddExpensePage,
-	// },
-	// {
-	// 	path: NavigationRoutePaths.EDIT_PATTERN(),
-	// 	caseSensitive: true,
-	// 	Component: EditExpensePage,
-	// },
-	// {
-	// 	path: NavigationRoutePaths.BUDGET_PAGE,
-	// 	caseSensitive: true,
-	// 	Component: CreateBudgetPage,
-	// },
-	// {
-	// 	path: NavigationRoutePaths.HELP_PAGE,
-	// 	caseSensitive: true,
-	// 	Component: HelpExpensePage,
-	// },
 	{
-		path: NavigationRoutePaths.NOT_FOUND, // Handles invalid routes.. Must always be last
+		path: NavigationRoutePaths.NOT_FOUND,
 		Component: NotFoundPage,
 	},
 ];

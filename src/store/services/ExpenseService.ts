@@ -9,7 +9,7 @@ import {
 	DELETE_EXPENSE_THUNK_ID,
 	GET_ALL_EXPENSE_THUNK_ID,
 	GET_DOWNLOADED_EXPENSE_THUNK_ID,
-} from '../../models/Constants/ThunkIds/Expense';
+} from '../../models/Constants/ThunkIds/ExpenseThunkIds';
 import type { Guid } from '../../utils/DataTypes/Guid';
 import { buildAxiosCall } from '../services';
 

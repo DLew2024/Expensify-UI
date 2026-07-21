@@ -1,8 +1,6 @@
-import moment from 'moment';
 import { LuDownload } from 'react-icons/lu';
 import type { TransactionDTO } from '../../api/GeneratedDTOs';
 import type { Guid } from '../../utils/DataTypes/Guid';
-import { formatEpochSeconds } from '../../utils/Functions/Conversions/NumberUtils';
 import TransactionInfoCard from '../Cards/TransactionInfoCard';
 import CardButton from '../common/CardButton';
 import WrapperCard from '../common/WrapperCard';

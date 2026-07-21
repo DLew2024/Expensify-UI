@@ -9,7 +9,7 @@ import {
 	DELETE_INCOME_THUNK_ID,
 	GET_ALL_INCOME_THUNK_ID,
 	GET_DOWNLOADED_INCOME_THUNK_ID,
-} from '../../models/Constants/ThunkIds/Income';
+} from '../../models/Constants/ThunkIds/IncomeThunkIds';
 import type { Guid } from '../../utils/DataTypes/Guid';
 import { buildAxiosCall } from '../services';
 

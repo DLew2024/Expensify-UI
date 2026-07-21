@@ -1,4 +1,4 @@
-import { type ReactNode } from 'react';
+import type { ReactNode } from 'react';
 import MainTextTypography from './MainTextTypography';
 import styles from './styles/_Modal.module.scss';
 
@@ -9,7 +9,7 @@ interface ModalProps {
 	children: ReactNode;
 }
 
-const Modal = ({ isOpen, onClose, title, children }: ModalProps) => {
+const PrimaryModal = ({ isOpen, onClose, title, children }: ModalProps) => {
 	if (!isOpen) {
 		return null;
 	}
@@ -49,4 +49,4 @@ const Modal = ({ isOpen, onClose, title, children }: ModalProps) => {
 	);
 };
 
-export default Modal;
+export default PrimaryModal;

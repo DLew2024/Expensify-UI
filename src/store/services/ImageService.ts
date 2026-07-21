@@ -2,9 +2,12 @@
 
 import { createAsyncThunk } from '@reduxjs/toolkit';
 import axios from 'axios';
-import { UPLOAD_IMAGE_THUNK_ID } from '../../models/Constants/ThunkIds/Image';
+import { UPLOAD_IMAGE_THUNK_ID } from '../../models/Constants/ThunkIds/ImageThunkIds';
 import { buildAxiosCall } from '../services';
-import type { UploadImageResponse } from './AuthService';
+
+interface UploadImageResponse {
+	imageUrl?: string;
+}
 
 //#endregion GET
 
