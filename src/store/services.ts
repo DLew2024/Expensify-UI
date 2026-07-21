@@ -4,6 +4,7 @@ import axios, {
 	type CancelToken,
 	type InternalAxiosRequestConfig,
 } from 'axios';
+import { shouldBypassAuth } from '../utils/Development/Dev';
 import { withCancelToken } from './utils/withCancel';
 
 interface ErrorResponse {
@@ -83,8 +84,11 @@ axiosInstance.interceptors.response.use(
 		const isAuthRequest = isAuthenticationRequest(requestUrl);
 
 		if (error.response.status === 401 && !isAuthRequest) {
-			localStorage.removeItem('token');
-			window.location.assign('/login');
+			// Remove once in production
+			if (!shouldBypassAuth()) {
+				localStorage.removeItem('token');
+				window.location.assign('/login');
+			}
 		}
 
 		if (error.response.status >= 500) {

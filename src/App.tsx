@@ -2,6 +2,7 @@ import { useEffect, useState } from 'react';
 import { Toaster } from 'react-hot-toast';
 import { Navigate, Route, Routes } from 'react-router';
 import UserProvider from './context/userContext';
+import { shouldBypassAuth } from './utils/Development/Dev';
 import { appRoutes } from './utils/Navigation/AppRoutes';
 import { NavigationRoutePaths } from './utils/Navigation/NavigationRoutePaths';
 
@@ -33,6 +34,12 @@ const Root = () => {
 	const [isAuthenticated, setIsAuthenticated] = useState<boolean | null>(null);
 
 	useEffect(() => {
+		if (shouldBypassAuth()) {
+			localStorage.setItem('token', 'dev-token');
+			setIsAuthenticated(true);
+			return;
+		}
+
 		setIsAuthenticated(Boolean(localStorage.getItem('token')));
 	}, []);
 

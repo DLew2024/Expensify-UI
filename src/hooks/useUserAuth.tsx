@@ -17,7 +17,7 @@ export const useUserAuth = () => {
 
 		const fetchUserInfo = async () => {
 			try {
-				const { user } = await dispatch(getUserInfo()).unwrap();
+				const user = await dispatch(getUserInfo()).unwrap();
 				if (isMounted && user) updateUser(user);
 			} catch (error: unknown) {
 				console.error('Failed to fetch user info:', error);
@@ -33,5 +33,5 @@ export const useUserAuth = () => {
 		return () => {
 			isMounted = false;
 		};
-	}, [user]);
+	}, [navigate, user]);
 };

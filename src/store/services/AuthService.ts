@@ -1,5 +1,10 @@
 import { createAsyncThunk } from '@reduxjs/toolkit';
-import type { LoginUserDTO, RegisterUserDTO, UserTokenResponseDTO } from '../../api/GeneratedDTOs';
+import type {
+	LoginUserDTO,
+	RegisterUserDTO,
+	UserResponseDTO,
+	UserTokenResponseDTO,
+} from '../../api/GeneratedDTOs';
 import {
 	GET_USER_INFO_THUNK_ID,
 	POST_USER_LOGIN_THUNK_ID,
@@ -14,10 +19,10 @@ interface RegisterUserRequest extends Omit<RegisterUserDTO, 'profileImageUrl'> {
 }
 
 //#region GET
-export const getUserInfo = createAsyncThunk<UserTokenResponseDTO, void>(
+export const getUserInfo = createAsyncThunk<UserResponseDTO, void>(
 	GET_USER_INFO_THUNK_ID,
 	async () => {
-		const { data } = await buildAxiosCall<UserTokenResponseDTO, void>('GET', 'api/auth/getUser');
+		const { data } = await buildAxiosCall<UserResponseDTO, void>('GET', 'api/auth/getUser');
 
 		return data;
 	},
