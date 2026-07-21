@@ -1,15 +1,15 @@
 import { createSlice, type PayloadAction } from '@reduxjs/toolkit';
 import type { AccountResponseDTO } from '../../api/GeneratedDTOs';
-import type { Guid } from '../../utils/DataTypes/Guid';
+import { EMPTY_GUID, type Guid } from '../../utils/DataTypes/Guid';
 
 interface AccountsState {
 	accounts: AccountResponseDTO[];
-	selectedAccountId: Guid | null;
+	selectedAccountId: Guid;
 }
 
 const initialState: AccountsState = {
 	accounts: [],
-	selectedAccountId: null,
+	selectedAccountId: EMPTY_GUID,
 };
 
 const accountsSlice = createSlice({
@@ -20,13 +20,13 @@ const accountsSlice = createSlice({
 			state.accounts = action.payload;
 		},
 
-		setSelectedAccountId: (state, action: PayloadAction<Guid | null>) => {
+		setSelectedAccountId: (state, action: PayloadAction<Guid>) => {
 			state.selectedAccountId = action.payload;
 		},
 
 		clearAccounts: (state) => {
 			state.accounts = [];
-			state.selectedAccountId = null;
+			state.selectedAccountId = EMPTY_GUID;
 		},
 	},
 });

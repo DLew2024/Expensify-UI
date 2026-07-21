@@ -22,7 +22,7 @@ const AddIncomeForm = ({ onAddIncome }: AddIncomeFormProps) => {
 		amount: 0,
 		transactionDate: 0,
 		description: '',
-		accountId: $selectedAccountId ?? EMPTY_GUID,
+		accountId: $selectedAccountId,
 	});
 
 	const handleChange = <K extends keyof AddIncomeTransactionDTO>(
