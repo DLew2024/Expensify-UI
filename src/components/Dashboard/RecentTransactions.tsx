@@ -1,7 +1,5 @@
-import moment from 'moment';
 import { LuArrowRight } from 'react-icons/lu';
 import type { TransactionDTO } from '../../api/GeneratedDTOs';
-import { formatEpochSeconds } from '../../utils/Functions/Conversions/NumberUtils';
 import TransactionInfoCard from '../Cards/TransactionInfoCard';
 import CardButton from '../common/CardButton';
 import WrapperCard from '../common/WrapperCard';
@@ -22,9 +20,8 @@ const RecentTransactions = ({ transactions, onSeeMore }: RecentTransactionsProps
 				</MainTextTypography>
 
 				<CardButton
-					icon={
-						<LuArrowRight className={styles.recentTransactions__seeAllIcon} onClick={onSeeMore} />
-					}
+					icon={<LuArrowRight className={styles.recentTransactions__seeAllIcon} />}
+					onClick={onSeeMore}
 				>
 					See All
 				</CardButton>
