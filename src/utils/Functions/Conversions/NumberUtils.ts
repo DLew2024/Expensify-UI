@@ -6,6 +6,10 @@ import type {
 } from '../../../components/Charts/utils/CustomComponentTypes';
 import { THOUSANDS_SEPARATOR_REGEX } from '../../Regex/RegexUtils';
 
+export const formatEpochSeconds = (epochSeconds: number, format: string = 'Do MMM'): string => {
+	return moment.unix(epochSeconds).format(format);
+};
+
 export const addThousandsSeparator = (num: number): string => {
 	if (num == null || Number.isNaN(num)) {
 		return '';
@@ -22,7 +26,7 @@ export const prepareExpenseBarChartData = (data: TransactionDTO[] = []): CustomB
 	return data.map((item) => ({
 		categoryName: item.category.name ?? 'Undefined',
 		amount: item.amount,
-		month: moment(item.transactionDate).format('Do MMM'),
+		month: formatEpochSeconds(Number(item.transactionDate)),
 	}));
 };
 
@@ -31,11 +35,13 @@ export const prepareIncomeBarChartData = (data: TransactionDTO[] = []): CustomBa
 		(a, b) => Number(a.transactionDate ?? 0) - Number(b.transactionDate ?? 0),
 	);
 
-	return sortedData.map((transactionDate) => ({
-		categoryName: transactionDate.merchant ?? 'Undefined',
-		amount: transactionDate.amount,
-		month: moment(transactionDate.transactionDate).format('Do MMM'),
-	}));
+	return sortedData.map((transaction) => {
+		return {
+			categoryName: transaction.merchant ?? 'Undefined',
+			amount: transaction.amount,
+			month: formatEpochSeconds(Number(transaction.transactionDate)),
+		};
+	});
 };
 
 export const prepareExpenseLineChartData = (data: TransactionDTO[] = []): CustomLineChartData[] => {
@@ -46,6 +52,6 @@ export const prepareExpenseLineChartData = (data: TransactionDTO[] = []): Custom
 	return sortedData.map((transaction) => ({
 		categoryId: transaction.category.id,
 		amount: Number(transaction.amount ?? 0),
-		date: moment(Number(transaction.transactionDate)).format('Do MMM'),
+		date: formatEpochSeconds(Number(transaction.transactionDate)),
 	}));
 };

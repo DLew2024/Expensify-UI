@@ -1,6 +1,7 @@
 import moment from 'moment';
 import { LuArrowRight } from 'react-icons/lu';
 import type { TransactionDTO } from '../../api/GeneratedDTOs';
+import { formatEpochSeconds } from '../../utils/Functions/Conversions/NumberUtils';
 import TransactionInfoCard from '../Cards/TransactionInfoCard';
 import CardButton from '../common/CardButton';
 import WrapperCard from '../common/WrapperCard';
@@ -31,7 +32,7 @@ const ExpenseTransactions = ({ transactions, onSeeMore }: RecentTransactionsProp
 						key={expense.id}
 						title={expense.category.name}
 						icon={expense.icon}
-						date={moment(expense.transactionDate).format('Do MMM YYYY')}
+						date={expense.transactionDate}
 						amount={expense.amount}
 						type={TransactionType.Expense}
 						hideDeleteBtn

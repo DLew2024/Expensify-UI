@@ -2,6 +2,7 @@ import moment from 'moment';
 import { LuDownload } from 'react-icons/lu';
 import type { TransactionDTO } from '../../api/GeneratedDTOs';
 import type { Guid } from '../../utils/DataTypes/Guid';
+import { formatEpochSeconds } from '../../utils/Functions/Conversions/NumberUtils';
 import TransactionInfoCard from '../Cards/TransactionInfoCard';
 import CardButton from '../common/CardButton';
 import WrapperCard from '../common/WrapperCard';
@@ -33,7 +34,7 @@ const ExpenseList = ({ transactions, onDelete, onDownload }: ExpenseListProps) =
 						key={expense.id}
 						title={expense.category.name}
 						icon={expense.icon}
-						date={moment(expense.transactionDate).format('Do MMM YYYY')}
+						date={expense.transactionDate}
 						amount={expense.amount}
 						type={expense.type}
 						onDelete={() => onDelete(expense.id)}

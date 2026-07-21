@@ -1,3 +1,4 @@
+import { v4 } from 'uuid';
 import styles from './styles/_CustomLegend.module.scss';
 
 interface CustomLegendProps {
@@ -16,7 +17,7 @@ const CustomLegend = ({ payload }: CustomLegendProps) => {
 	return (
 		<div className={styles.customLegend}>
 			{payload.map((entry) => (
-				<div key={`legend-${entry.id}`} className={styles.customLegend__item}>
+				<div key={`legend-${v4()}`} className={styles.customLegend__item}>
 					<div
 						className={styles.customLegend__indicator}
 						style={{ backgroundColor: entry.color }}

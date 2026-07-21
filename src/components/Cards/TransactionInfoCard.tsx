@@ -1,5 +1,6 @@
 import clsx from 'clsx';
 import { LuTrash2, LuTrendingDown, LuTrendingUp, LuUtensils } from 'react-icons/lu';
+import { formatEpochSeconds } from '../../utils/Functions/Conversions/NumberUtils';
 import { TransactionType } from '../Dashboard/types/DashboardTypes';
 import MainTextTypography from '../MainTextTypography';
 import styles from './styles/_TransactionCardInfo.module.scss';
@@ -7,7 +8,7 @@ import styles from './styles/_TransactionCardInfo.module.scss';
 interface TransactionInfoCardProps {
 	title?: string;
 	icon?: string;
-	date: string;
+	date: number;
 	amount: string | number;
 	type: TransactionType;
 	hideDeleteBtn?: boolean;
@@ -40,7 +41,7 @@ const TransactionInfoCard = ({
 					</MainTextTypography>
 
 					<MainTextTypography className={styles.transactionInfoCard__date} variant="body">
-						{date}
+						{formatEpochSeconds(date, 'Do MMM YYYY')}
 					</MainTextTypography>
 				</div>
 

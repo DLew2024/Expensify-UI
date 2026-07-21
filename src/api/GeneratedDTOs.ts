@@ -217,7 +217,7 @@ export type TransactionDTO = {
 	amount: number;
 	type: TransactionType;
 	/** Format: int64 */
-	transactionDate?: number;
+	transactionDate: number;
 	merchant?: string;
 	description?: string;
 	notes?: string;
