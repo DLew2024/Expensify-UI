@@ -4,12 +4,14 @@ import {
 	type PreloadedStateShapeFromReducersMapObject,
 } from '@reduxjs/toolkit';
 import { thunkMiddleware } from './middleware/thunkMiddleware';
+import accountsReducer from './slices/accountsSlice';
 import expensesReducer from './slices/expensesSlice';
 import filtersReducer from './slices/filtersSlice';
 
 const customMiddleware = [thunkMiddleware];
 
 const rootReducer = combineReducers({
+	accounts: accountsReducer,
 	expenses: expensesReducer,
 	filters: filtersReducer,
 });

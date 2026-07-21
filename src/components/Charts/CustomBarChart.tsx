@@ -10,6 +10,7 @@ import {
 	XAxis,
 	YAxis,
 } from 'recharts';
+import { v4 } from 'uuid';
 import MainTextTypography from '../MainTextTypography';
 import styles from './styles/_CustomBarChart.module.scss';
 import type { CustomBarChartData } from './utils/CustomComponentTypes';
@@ -61,8 +62,8 @@ const CustomBarChart = ({ data }: CustomBarChartProps) => {
 					<Tooltip content={(props) => <CustomTooltip {...props} />} />
 
 					<Bar dataKey={'amount'} radius={[10, 10, 0, 0]} activeBar={{ fill: BAR_COLORS.primary }}>
-						{data.map((entry, index) => (
-							<Cell key={`${entry.categoryName}`} fill={getBarColor(index)} />
+						{data.map((_, index) => (
+							<Cell key={`${v4()}`} fill={getBarColor(index)} />
 						))}
 					</Bar>
 				</BarChart>

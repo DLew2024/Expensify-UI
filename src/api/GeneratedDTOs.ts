@@ -10,6 +10,30 @@ export type LogoutScope = number;
 
 export type TransactionType = number;
 
+export type AccountResponseDTO = {
+	/** Format: uuid */
+	id: Guid;
+	name: string;
+	institutionName?: string;
+	lastFourDigits?: string;
+	/** Format: uuid */
+	accountTypeId?: Guid;
+	accountTypeName?: string;
+	currencyCode?: CurrencyCode;
+	/** Format: double */
+	currentBalance?: number;
+	/** Format: double */
+	availableBalance?: number;
+	includeInNetWorth?: boolean;
+	isActive?: boolean;
+	isHidden?: boolean;
+	/** Format: double */
+	creditLimit?: null | number;
+	/** Format: double */
+	interestRate?: null | number;
+	notes?: string;
+};
+
 export type AddExpenseTransactionDTO = {
 	icon: string;
 	category: string;
@@ -21,15 +45,15 @@ export type AddExpenseTransactionDTO = {
 
 export type AddIncomeTransactionDTO = {
 	/** Format: uuid */
-	accountId?: Guid;
+	accountId: Guid;
 	/** Format: uuid */
 	budgetId?: null | Guid;
 	/** Format: uuid */
 	categoryId?: null | Guid;
 	/** Format: double */
-	amount?: number;
+	amount: number;
 	/** Format: int64 */
-	transactionDate?: number;
+	transactionDate: number;
 	description: string;
 	source: string;
 	notes?: null | string;

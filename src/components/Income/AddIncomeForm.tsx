@@ -1,8 +1,9 @@
 import moment from 'moment';
 import { useState } from 'react';
-import { v4 } from 'uuid';
+import { useSelector } from 'react-redux';
 import type { AddIncomeTransactionDTO } from '../../api/GeneratedDTOs';
-import type { Guid } from '../../utils/DataTypes/Guid';
+import type { AppState } from '../../store/store';
+import { EMPTY_GUID } from '../../utils/DataTypes/Guid';
 import CardButton from '../common/CardButton';
 import EmojiPickerPopup from '../EmojiPickerPopup';
 import LabeledInput from '../Inputs/LabeledInput';
@@ -12,17 +13,17 @@ interface AddIncomeFormProps {
 	onAddIncome: (income: AddIncomeTransactionDTO) => void;
 }
 
-const emptyIncomeTransaction: AddIncomeTransactionDTO = {
-	source: '',
-	amount: 0,
-	transactionDate: 0,
-	icon: '',
-	accountId: v4() as Guid, // must add a account id
-	description: 'TEst',
-};
-
 const AddIncomeForm = ({ onAddIncome }: AddIncomeFormProps) => {
-	const [income, setIncome] = useState<AddIncomeTransactionDTO>(emptyIncomeTransaction);
+	const $selectedAccountId = useSelector((state: AppState) => state.accounts.selectedAccountId);
+
+	const [income, setIncome] = useState<AddIncomeTransactionDTO>({
+		icon: '',
+		source: '',
+		amount: 0,
+		transactionDate: 0,
+		description: '',
+		accountId: $selectedAccountId ?? EMPTY_GUID,
+	});
 
 	const handleChange = <K extends keyof AddIncomeTransactionDTO>(
 		key: K,
@@ -32,6 +33,17 @@ const AddIncomeForm = ({ onAddIncome }: AddIncomeFormProps) => {
 			...prevIncome,
 			[key]: value,
 		}));
+	};
+
+	const handleAddIncome = () => {
+		if (!$selectedAccountId) {
+			return;
+		}
+
+		onAddIncome({
+			...income,
+			accountId: $selectedAccountId,
+		});
 	};
 
 	return (
@@ -66,8 +78,15 @@ const AddIncomeForm = ({ onAddIncome }: AddIncomeFormProps) => {
 				type="date"
 			/>
 
+			<LabeledInput
+				value={String(income.description ?? '')}
+				onChange={(description) => handleChange('description', description)}
+				label="Description"
+				type="text"
+			/>
+
 			<div className={styles.addIncomeForm__actions}>
-				<CardButton onClick={() => onAddIncome(income)}>Add Income</CardButton>
+				<CardButton onClick={handleAddIncome}>Add Income</CardButton>
 			</div>
 		</div>
 	);
