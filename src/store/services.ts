@@ -144,7 +144,6 @@ async function buildAxiosCallBase<R, T>(
 
 	switch (method) {
 		case 'GET':
-		default:
 			return axiosInstance.get<R>(endpoint, config);
 		case 'POST':
 			return axiosInstance.post<R, AxiosResponse<R>, T>(endpoint, data, config);
@@ -155,9 +154,10 @@ async function buildAxiosCallBase<R, T>(
 				...config,
 				data,
 			});
-
 		case 'PATCH':
 			return axiosInstance.patch<R, AxiosResponse<R>, T>(endpoint, data, config);
+		default:
+			return axiosInstance.get<R>(endpoint, config);
 	}
 }
 

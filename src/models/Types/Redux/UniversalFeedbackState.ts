@@ -15,6 +15,7 @@ export interface QueuedFeedback extends UniversalFeedbackComponentInput {
 
 interface FeedbackButton {
 	label: string;
+	// biome-ignore lint/suspicious/noExplicitAny: <Buttons can have any reducers>
 	reducer: AsyncThunk<any, undefined, any> | ActionCreatorWithoutPayload | undefined;
 	action: VoidFunction | undefined;
 }

@@ -117,7 +117,7 @@ const Expense = () => {
 		}
 	};
 
-	// biome-ignore lint/correctness/useExhaustiveDependencies: Initial render only.
+	// biome-ignore lint/correctness/useExhaustiveDependencies: <Initial render only.>
 	useEffect(() => {
 		fetchExpenseDetails();
 	}, []);

@@ -7,7 +7,6 @@ export const NavigationRoutePaths = {
 	ACCOUNT: '/account',
 	INCOME: '/income',
 	EXPENSE: '/expense',
-	CREATE_PAGE: '/create',
 	BUDGET_PAGE: '/budget',
 	HELP_PAGE: '/help',
 	NOT_FOUND: '*',

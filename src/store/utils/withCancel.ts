@@ -14,7 +14,7 @@ export function withCancelToken<R, T>(
 		method: 'GET' | 'POST' | 'PUT' | 'DELETE' | 'PATCH',
 		endpoint: string,
 		data?: T,
-		// eslint-disable-next-line @typescript-eslint/no-explicit-any
+		// biome-ignore lint/suspicious/noExplicitAny: <Params can be any>
 		params?: any,
 		signal?: AbortSignal,
 		configs?: AxiosRequestConfig,
@@ -25,7 +25,7 @@ export function withCancelToken<R, T>(
 		method: 'GET' | 'POST' | 'PUT' | 'DELETE' | 'PATCH',
 		endpoint: string,
 		data?: T,
-		// eslint-disable-next-line @typescript-eslint/no-explicit-any
+		// biome-ignore lint/suspicious/noExplicitAny: <Params can be any>
 		params?: any,
 		signal?: AbortSignal,
 		configs?: AxiosRequestConfig,

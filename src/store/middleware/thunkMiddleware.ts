@@ -10,6 +10,7 @@ import { removeCancelToken } from '../cancelToken/cancelTokenSlice';
 import { RevokedCallError } from '../utils/RevokedCallError';
 
 export type AsyncThunkLifecycleStatus = ReturnType<
+	// biome-ignore lint/suspicious/noExplicitAny: <Thunks can have any>
 	AsyncThunk<unknown, unknown, any>['pending' | 'fulfilled' | 'rejected']
 >['meta']['requestStatus'];
 

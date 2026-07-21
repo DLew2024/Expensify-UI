@@ -111,7 +111,6 @@ const Income = () => {
 		}
 	};
 
-	// biome-ignore lint/correctness/useExhaustiveDependencies: Initial render only.
 	useEffect(() => {
 		const fetchInitialIncome = async () => {
 			try {

@@ -57,7 +57,7 @@ const Home = () => {
 		}
 	};
 
-	// biome-ignore lint/correctness/useExhaustiveDependencies: initial page load
+	// biome-ignore lint/correctness/useExhaustiveDependencies: <Initial page load only>
 	useEffect(() => {
 		fetchDashboardData();
 	}, []);
