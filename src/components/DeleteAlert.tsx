@@ -1,4 +1,4 @@
-import FillButton from './common/FillButton';
+import CardButton from './common/CardButton';
 import MainTextTypography from './MainTextTypography';
 import styles from './styles/_DeleteAlert.module.scss';
 
@@ -15,7 +15,7 @@ const DeleteAlert = ({ content, onDelete }: DeleteAlertProps) => {
 			</MainTextTypography>
 
 			<div className={styles.deleteAlert__actions}>
-				<FillButton onClick={onDelete}>Delete</FillButton>
+				<CardButton onClick={onDelete}>Delete</CardButton>
 			</div>
 		</div>
 	);
