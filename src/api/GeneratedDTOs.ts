@@ -91,6 +91,7 @@ export type CreateAccountDTO = {
 	/** Format: double */
 	interestRate?: number;
 	notes?: string;
+	icon?: string;
 };
 
 export type CreateAccountResponseDTO = {

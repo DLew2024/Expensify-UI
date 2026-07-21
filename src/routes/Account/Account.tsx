@@ -1,11 +1,18 @@
 import { useState } from 'react';
 import toast from 'react-hot-toast';
-import type { AccountResponseDTO } from '../../api/GeneratedDTOs';
+import type { AccountResponseDTO, CreateAccountDTO } from '../../api/GeneratedDTOs';
+import { AccountList } from '../../components/Account/AccountList';
+import { AccountOverview } from '../../components/Account/AccountOverview';
+import { AddAccountForm } from '../../components/Account/AddAccountForm';
 import DeleteAlert from '../../components/DeleteAlert';
 import DashboardLayout from '../../components/layouts/DashboardLayout';
 import PrimaryModal from '../../components/PrimaryModal';
 import { useUserAuth } from '../../hooks/useUserAuth';
-import { deleteAccount, getUserAccounts } from '../../store/services/AccountService';
+import {
+	addUserAccount,
+	deleteAccount,
+	getUserAccounts,
+} from '../../store/services/AccountService';
 import { dispatch } from '../../store/store';
 import type { Guid } from '../../utils/DataTypes/Guid';
 import type { DeleteAlertState } from '../../utils/DataTypes/ModalTypes';
@@ -21,9 +28,36 @@ const Account = () => {
 		data: null,
 	});
 
-	const handleDeleteIncome = async (incomeId: Guid) => {
+	const handleAddAccount = async (account: CreateAccountDTO) => {
+		// const { name, accountTypeId, institutionName, lastFourDigits, currencyCode, includeInNetWorth, initialBalance } = account;
+
+		// if (!name.trim()) {
+		// 	toast.error('Account name is required.');
+		// 	return;
+		// }
+
+		// if (!initialBalance || Number.isNaN(initialBalance) || initialBalance <= 0) {
+		// 	toast.error('Amount should be a valid number greater than 0.');
+		// 	return;
+		// }
+
+		// Handle errors
+
 		try {
-			await dispatch(deleteAccount(incomeId)).unwrap();
+			await dispatch(addUserAccount(account)).unwrap();
+
+			setIsAddAccountModalOpen(false);
+			toast.success('Account added successfully.');
+
+			await refreshAccountDetails();
+		} catch (error: unknown) {
+			handleApiError(error, 'Error adding Account:');
+		}
+	};
+
+	const handleDeleteAccount = async (accountId: Guid) => {
+		try {
+			await dispatch(deleteAccount(accountId)).unwrap();
 
 			setOpenDeleteAlert({
 				show: false,
@@ -34,7 +68,7 @@ const Account = () => {
 
 			await refreshAccountDetails();
 		} catch (error: unknown) {
-			handleApiError(error, 'Error deleting income:');
+			handleApiError(error, 'Error deleting account:');
 		}
 	};
 
@@ -43,21 +77,33 @@ const Account = () => {
 			const response = await dispatch(getUserAccounts()).unwrap();
 			setAccounts(response);
 		} catch (error: unknown) {
-			handleApiError(error, 'Error fetching income details:');
+			handleApiError(error, 'Error fetching account details:');
 		}
 	};
 
 	return (
 		<DashboardLayout activeMenu="Accounts">
 			<div>
-				<div></div>
+				<div>
+					<AccountOverview onAddAccount={() => setIsAddAccountModalOpen(true)} />
+
+					<AccountList
+						accounts={accounts}
+						onDelete={(id) =>
+							setOpenDeleteAlert({
+								show: true,
+								data: id,
+							})
+						}
+					/>
+				</div>
 
 				<PrimaryModal
 					isOpen={isAddAccountModalOpen}
 					onClose={() => setIsAddAccountModalOpen(false)}
 					title="Add Account"
 				>
-					<AccountOverview accounts={accounts} />
+					<AddAccountForm onAddAccount={handleAddAccount} />
 				</PrimaryModal>
 
 				<PrimaryModal
@@ -71,33 +117,16 @@ const Account = () => {
 					title="Delete Account"
 				>
 					<DeleteAlert
-						content="Are you sure you want to delete this account? All income and expenses associated to this account will be lost."
+						content="Are you sure you want to delete this account? All account information associated to this account will be lost."
 						onDelete={() => {
 							if (openDeleteAlert.data) {
-								handleDeleteIncome(openDeleteAlert.data);
+								handleDeleteAccount(openDeleteAlert.data);
 							}
 						}}
 					/>
 				</PrimaryModal>
 			</div>
 		</DashboardLayout>
-	);
-};
-
-interface AccountOverviewProps {
-	accounts: AccountResponseDTO[];
-}
-
-const AccountOverview = ({ accounts }: AccountOverviewProps) => {
-	return (
-		<div>
-			Account
-			<div>
-				{accounts.map((account) => (
-					<div key={account.id}>Test</div>
-				))}
-			</div>
-		</div>
 	);
 };
 

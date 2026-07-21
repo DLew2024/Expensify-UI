@@ -1,6 +1,7 @@
 import { createAsyncThunk } from '@reduxjs/toolkit';
-import type { AccountResponseDTO } from '../../api/GeneratedDTOs';
+import type { AccountResponseDTO, CreateAccountDTO } from '../../api/GeneratedDTOs';
 import {
+	CREATE_USER_ACCOUNTS,
 	DELETE_ACCOUNT_THUNK_ID,
 	GET_USER_ACCOUNTS,
 } from '../../models/Constants/ThunkIds/AccountThunkIds';
@@ -18,7 +19,13 @@ export const getUserAccounts = createAsyncThunk<AccountResponseDTO[], void>(
 //#endregion GET
 
 //#region POST
-
+export const addUserAccount = createAsyncThunk<void, CreateAccountDTO>(
+	CREATE_USER_ACCOUNTS,
+	async (account) => {
+		const { data } = await buildAxiosCall<void, CreateAccountDTO>('POST', `api/accounts`, account);
+		return data;
+	},
+);
 //#endregion POST
 
 //#region PUT

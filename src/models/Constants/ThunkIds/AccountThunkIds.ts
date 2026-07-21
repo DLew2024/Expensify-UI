@@ -7,6 +7,7 @@ export const GET_USER_ACCOUNTS = `${ThunkOperation.GET}-User Accounts`;
 
 //** CREATE */
 //#region CREATE
+export const CREATE_USER_ACCOUNTS = `${ThunkOperation.CREATE}-User Accounts`;
 //#endregion CREATE
 
 //** UPDATE */
