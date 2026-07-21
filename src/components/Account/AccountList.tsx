@@ -3,12 +3,14 @@ import type { Guid } from '../../utils/DataTypes/Guid';
 import { AccountInfoCard } from '../Cards/AccountInfoCard';
 import WrapperCard from '../common/WrapperCard';
 import MainTextTypography from '../MainTextTypography';
+// import styles from './styles/_AccountList.module.scss';
 
-interface AccountLists {
+interface AccountListProps {
 	accounts: AccountResponseDTO[];
 	onDelete: (id: Guid) => void;
 }
-export const AccountList = ({ accounts, onDelete }: AccountLists) => {
+
+export const AccountList = ({ accounts, onDelete }: AccountListProps) => {
 	return (
 		<WrapperCard>
 			<div>
