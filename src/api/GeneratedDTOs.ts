@@ -32,6 +32,7 @@ export type AccountResponseDTO = {
 	/** Format: double */
 	interestRate?: null | number;
 	notes?: string;
+	icon?: string;
 };
 
 export type AddExpenseTransactionDTO = {

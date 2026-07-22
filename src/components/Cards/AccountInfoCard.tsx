@@ -6,17 +6,19 @@ import styles from './styles/_AccountInfoCard.module.scss';
 interface TransactionInfoCardProps {
 	name?: string;
 	institutionName?: string;
-	type?: string;
+	type?: string; // Using type to change color
+	icon?: string;
 	availableBalance?: number;
 	lastFourDigits?: string;
 	hideDeleteBtn?: boolean;
 	onDelete?: () => void;
 }
 
-export const AccountInfoCard = ({
+const AccountInfoCard = ({
 	name = 'Error',
 	institutionName,
 	type,
+	icon,
 	availableBalance,
 	lastFourDigits,
 	hideDeleteBtn = false,
@@ -24,19 +26,33 @@ export const AccountInfoCard = ({
 }: TransactionInfoCardProps) => {
 	return (
 		<div className={styles.accountInfoCard}>
-			<div className={styles.accountInfoCard__icon}>
-				<RiAccountBoxLine />
+			<div className={styles.accountInfoCard__iconContainer}>
+				{icon ? (
+					<img src={icon} alt={name} className={styles.accountInfoCard__icon} />
+				) : (
+					<RiAccountBoxLine className={styles.accountInfoCard__fallbackIcon} />
+				)}
 			</div>
 
 			<div className={styles.accountInfoCard__content}>
 				<div className={styles.accountInfoCard__details}>
-					<MainTextTypography variant="body" className={styles.accountInfoCard__name}>
-						{name}
+					<MainTextTypography className={styles.accountInfoCard__name}>
+						{institutionName}: {name} Account
 					</MainTextTypography>
 
-					<MainTextTypography variant="body" className={styles.accountInfoCard__type}>
-						{type}
+					<MainTextTypography className={styles.accountInfoCard__balanceLabel}>
+						Available Balance
 					</MainTextTypography>
+
+					<div className={styles.accountInfoCard__balanceDetails}>
+						<MainTextTypography className={styles.accountInfoCard__balance}>
+							${availableBalance}
+						</MainTextTypography>
+
+						<MainTextTypography className={styles.accountInfoCard__lastFourDigits}>
+							{lastFourDigits}
+						</MainTextTypography>
+					</div>
 				</div>
 
 				<div className={styles.accountInfoCard__actions}>
@@ -54,3 +70,5 @@ export const AccountInfoCard = ({
 		</div>
 	);
 };
+
+export default AccountInfoCard;

@@ -1,6 +1,6 @@
 import type { AccountResponseDTO } from '../../api/GeneratedDTOs';
 import type { Guid } from '../../utils/DataTypes/Guid';
-import { AccountInfoCard } from '../Cards/AccountInfoCard';
+import AccountInfoCard from '../Cards/AccountInfoCard';
 import WrapperCard from '../common/WrapperCard';
 import MainTextTypography from '../MainTextTypography';
 import styles from './styles/_AccountList.module.scss';
@@ -24,7 +24,11 @@ const AccountList = ({ accounts, onDelete }: AccountListProps) => {
 					<AccountInfoCard
 						key={account.id}
 						name={account.name}
+						institutionName={account.institutionName}
 						type={account.accountTypeName}
+						availableBalance={account.availableBalance}
+						icon={account.icon}
+						lastFourDigits={account.lastFourDigits}
 						onDelete={() => {
 							if (account.id) {
 								onDelete(account.id);

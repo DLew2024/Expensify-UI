@@ -1,4 +1,4 @@
-import { useState } from 'react';
+import { useEffect, useState } from 'react';
 import toast from 'react-hot-toast';
 import type { AccountResponseDTO, CreateAccountDTO } from '../../api/GeneratedDTOs';
 import AccountList from '../../components/Account/AccountList';
@@ -106,6 +106,11 @@ const Account = () => {
 			handleApiError(error, 'Error fetching account details:');
 		}
 	};
+
+	// biome-ignore lint/correctness/useExhaustiveDependencies: <Initial Only>
+	useEffect(() => {
+		refreshAccountDetails();
+	}, []);
 
 	return (
 		<DashboardLayout activeMenu="Accounts">
