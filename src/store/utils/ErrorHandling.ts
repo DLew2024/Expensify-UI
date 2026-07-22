@@ -28,5 +28,7 @@ export const isValidationErrorResponse = (value: unknown): value is ValidationEr
 };
 
 export const getValidationErrorMessage = (errors: Record<string, string[]>): string => {
-	return Object.values(errors).flat().join('\n');
+	const messages = Object.values(errors).flat();
+
+	return ['Please correct the following:', ...messages.map((message) => `• ${message}`)].join('\n');
 };
