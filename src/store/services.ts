@@ -7,11 +7,12 @@ import axios, {
 } from 'axios';
 import toast from 'react-hot-toast';
 import { shouldBypassAuth } from '../utils/Development/Dev';
+import {
+	getValidationErrorMessage,
+	isErrorResponse,
+	isValidationErrorResponse,
+} from './utils/ErrorHandling';
 import { withCancelToken } from './utils/withCancel';
-
-interface ErrorResponse {
-	message: string;
-}
 
 interface BuildAxiosCallOptions {
 	params?: AxiosRequestConfig['params'];
@@ -90,9 +91,11 @@ axiosInstance.interceptors.response.use(
 		const errorMessage =
 			typeof responseData === 'string'
 				? responseData
-				: isErrorResponse(responseData)
-					? responseData.message
-					: 'Something went wrong. Please try again later.';
+				: isValidationErrorResponse(responseData)
+					? getValidationErrorMessage(responseData.errors)
+					: isErrorResponse(responseData)
+						? responseData.message
+						: 'Something went wrong. Please try again later.';
 
 		return Promise.reject(new Error(errorMessage));
 	},
@@ -192,43 +195,6 @@ async function buildAxiosCallBase<R, T>(
 }
 
 /**
- * Extracts the display name from a thunk ID.
- *
- * Example:
- * CREATE-User Login -> User Login
- */
-const getThunkDisplayName = (thunkId?: string): string => {
-	if (!thunkId) return 'Operation';
-
-	const separatorIndex = thunkId.indexOf('-');
-
-	if (separatorIndex === -1) return thunkId.trim();
-
-	return thunkId.slice(separatorIndex + 1).trim();
-};
-
-const isErrorResponse = (value: unknown): value is ErrorResponse => {
-	return (
-		typeof value === 'object' &&
-		value !== null &&
-		'message' in value &&
-		typeof value.message === 'string'
-	);
-};
-
-const isAuthenticationRequest = (requestUrl: string): boolean => {
-	const authenticationEndpoints = ['/login', '/register', '/refresh-token'];
-	return authenticationEndpoints.some((endpoint) => requestUrl.includes(endpoint));
-};
-
-/**
- * Returns the current JWT access token.
- */
-export async function getAuthenticationToken(): Promise<string> {
-	return localStorage.getItem('token') ?? '';
-}
-
-/**
  * Builds an Axios GET, POST, or PUT of the specified type T and return type R
  * @param method GET, POST, or PUT
  * @param endpoint Api endpoint to call
@@ -252,3 +218,31 @@ export const createMutationThunk = <Returned, ThunkArg>(
 	createAsyncThunk<Returned, ThunkArg>(thunkId, async (arg) => {
 		return payloadCreator(arg, { thunkId });
 	});
+
+/**
+ * Returns the current JWT access token.
+ */
+async function getAuthenticationToken(): Promise<string> {
+	return localStorage.getItem('token') ?? '';
+}
+
+/**
+ * Extracts the display name from a thunk ID.
+ *
+ * Example:
+ * CREATE-User Login -> User Login
+ */
+const getThunkDisplayName = (thunkId?: string): string => {
+	if (!thunkId) return 'Operation';
+
+	const separatorIndex = thunkId.indexOf('-');
+
+	if (separatorIndex === -1) return thunkId.trim();
+
+	return thunkId.slice(separatorIndex + 1).trim();
+};
+
+const isAuthenticationRequest = (requestUrl: string): boolean => {
+	const authenticationEndpoints = ['/login', '/register', '/refresh-token'];
+	return authenticationEndpoints.some((endpoint) => requestUrl.includes(endpoint));
+};
