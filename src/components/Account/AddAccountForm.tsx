@@ -1,5 +1,5 @@
 import { useState } from 'react';
-import type { AccountResponseDTO, CreateAccountDTO, CurrencyCode } from '../../api/GeneratedDTOs';
+import type { CreateAccountDTO } from '../../api/GeneratedDTOs';
 import type { Guid } from '../../utils/DataTypes/Guid';
 import { EMPTY_ACCOUNT } from '../../utils/EmptyObjects/EMPTY_ACCOUNT';
 import { AppliedCheckbox } from '../common/AppliedCheckbox';

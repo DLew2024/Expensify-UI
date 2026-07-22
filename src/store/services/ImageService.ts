@@ -3,7 +3,7 @@
 import { createAsyncThunk } from '@reduxjs/toolkit';
 import axios from 'axios';
 import { UPLOAD_IMAGE_THUNK_ID } from '../../models/Constants/ThunkIds/ImageThunkIds';
-import { buildAxiosCall } from '../services';
+import { buildAxiosCall, createMutationThunk } from '../services';
 
 interface UploadImageResponse {
 	imageUrl?: string;
@@ -12,29 +12,22 @@ interface UploadImageResponse {
 //#endregion GET
 
 //#region POST
-export const uploadImage = createAsyncThunk<UploadImageResponse, File>(
+export const uploadImage = createMutationThunk<UploadImageResponse, File>(
 	UPLOAD_IMAGE_THUNK_ID,
-	async (imageFile) => {
+	async (imageFile, { thunkId }) => {
 		const formData = new FormData();
 		formData.append('image', imageFile);
 
-		try {
-			const { data } = await buildAxiosCall<UploadImageResponse, FormData>(
-				'POST',
-				'api/image/upload-image',
-				formData,
-			);
+		const { data } = await buildAxiosCall<UploadImageResponse, FormData>(
+			'POST',
+			'api/image/upload-image',
+			formData,
+			{
+				thunkId,
+			},
+		);
 
-			return data;
-		} catch (error: unknown) {
-			if (axios.isAxiosError(error)) {
-				console.error('Error uploading image:', error.response?.data);
-			} else {
-				console.error('Unexpected error:', error);
-			}
-
-			throw error;
-		}
+		return data;
 	},
 );
 //#endregion POST

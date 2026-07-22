@@ -6,7 +6,7 @@ import {
 	GET_USER_ACCOUNTS,
 } from '../../models/Constants/ThunkIds/AccountThunkIds';
 import type { Guid } from '../../utils/DataTypes/Guid';
-import { buildAxiosCall } from '../services';
+import { buildAxiosCall, createMutationThunk } from '../services';
 
 //#region GET
 export const getUserAccounts = createAsyncThunk<AccountResponseDTO[], void>(
@@ -19,10 +19,13 @@ export const getUserAccounts = createAsyncThunk<AccountResponseDTO[], void>(
 //#endregion GET
 
 //#region POST
-export const addUserAccount = createAsyncThunk<void, CreateAccountDTO>(
+export const addUserAccount = createMutationThunk<void, CreateAccountDTO>(
 	CREATE_USER_ACCOUNTS,
-	async (account) => {
-		const { data } = await buildAxiosCall<void, CreateAccountDTO>('POST', `api/accounts`, account);
+	async (account, { thunkId }) => {
+		const { data } = await buildAxiosCall<void, CreateAccountDTO>('POST', 'api/accounts', account, {
+			thunkId,
+		});
+
 		return data;
 	},
 );
@@ -33,10 +36,16 @@ export const addUserAccount = createAsyncThunk<void, CreateAccountDTO>(
 //#endregion PUT
 
 //#region DELETE
-export const deleteAccount = createAsyncThunk<void, Guid>(
+export const deleteAccount = createMutationThunk<void, Guid>(
 	DELETE_ACCOUNT_THUNK_ID,
-	async (accountId) => {
-		const { data } = await buildAxiosCall<void, Guid>('DELETE', `api/account/${accountId}`);
+	async (accountId, { thunkId }) => {
+		const { data } = await buildAxiosCall<void, Guid>(
+			'DELETE',
+			`api/account/${accountId}`,
+			undefined,
+			{ thunkId },
+		);
+
 		return data;
 	},
 );

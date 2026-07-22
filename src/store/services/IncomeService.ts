@@ -11,7 +11,7 @@ import {
 	GET_DOWNLOADED_INCOME_THUNK_ID,
 } from '../../models/Constants/ThunkIds/IncomeThunkIds';
 import type { Guid } from '../../utils/DataTypes/Guid';
-import { buildAxiosCall } from '../services';
+import { buildAxiosCall, createMutationThunk } from '../services';
 
 //#region GET
 export const getAllIncome = createAsyncThunk<TransactionDTO[], void>(
@@ -40,13 +40,14 @@ export const downloadIncome = createAsyncThunk<Blob, void>(
 //#endregion GET
 
 //#region POST
-export const addIncome = createAsyncThunk<IncomeTransactionResponseDTO, AddIncomeTransactionDTO>(
+export const addIncome = createMutationThunk<IncomeTransactionResponseDTO, AddIncomeTransactionDTO>(
 	CREATE_INCOME_THUNK_ID,
-	async (income) => {
+	async (income, { thunkId }) => {
 		const { data } = await buildAxiosCall<IncomeTransactionResponseDTO, AddIncomeTransactionDTO>(
 			'POST',
 			'api/income/add',
 			income,
+			{ thunkId },
 		);
 
 		return data;
@@ -59,10 +60,16 @@ export const addIncome = createAsyncThunk<IncomeTransactionResponseDTO, AddIncom
 //#endregion PUT
 
 //#region DELETE
-export const deleteIncome = createAsyncThunk<void, Guid>(
+export const deleteIncome = createMutationThunk<void, Guid>(
 	DELETE_INCOME_THUNK_ID,
-	async (incomeId) => {
-		const { data } = await buildAxiosCall<void, Guid>('DELETE', `api/income/${incomeId}`);
+	async (incomeId, { thunkId }) => {
+		const { data } = await buildAxiosCall<void, Guid>(
+			'DELETE',
+			`api/income/${incomeId}`,
+			undefined,
+			{ thunkId },
+		);
+
 		return data;
 	},
 );

@@ -1,14 +1,26 @@
+import { createAsyncThunk } from '@reduxjs/toolkit';
 import axios, {
 	type AxiosRequestConfig,
 	type AxiosResponse,
 	type CancelToken,
 	type InternalAxiosRequestConfig,
 } from 'axios';
+import toast from 'react-hot-toast';
 import { shouldBypassAuth } from '../utils/Development/Dev';
 import { withCancelToken } from './utils/withCancel';
 
 interface ErrorResponse {
 	message: string;
+}
+
+interface BuildAxiosCallOptions {
+	params?: AxiosRequestConfig['params'];
+	signal?: AbortSignal;
+	configs?: AxiosRequestConfig;
+	cancelToken?: CancelToken;
+	thunkId?: string;
+	showSuccessToast?: boolean;
+	showErrorToast?: boolean;
 }
 
 const baseUrl = import.meta.env.MODE === 'production' ? '' : 'http://localhost:5073';
@@ -21,28 +33,6 @@ const axiosInstance = axios.create({
 		'Content-Type': 'application/json',
 	},
 });
-
-/**
- * Returns the current JWT access token.
- */
-export async function getAuthenticationToken(): Promise<string> {
-	return localStorage.getItem('token') ?? '';
-}
-
-const isErrorResponse = (value: unknown): value is ErrorResponse => {
-	return (
-		typeof value === 'object' &&
-		value !== null &&
-		'message' in value &&
-		typeof value.message === 'string'
-	);
-};
-
-const isAuthenticationRequest = (requestUrl: string): boolean => {
-	const authenticationEndpoints = ['/login', '/register', '/refresh-token'];
-
-	return authenticationEndpoints.some((endpoint) => requestUrl.includes(endpoint));
-};
 
 /**
  * Adds the current JWT token to every outgoing request.
@@ -139,30 +129,103 @@ async function buildAxiosCallBase<R, T>(
 	method: 'GET' | 'POST' | 'PUT' | 'DELETE' | 'PATCH',
 	endpoint: string,
 	data?: T,
-	params?: AxiosRequestConfig['params'],
-	signal?: AbortSignal,
-	configs?: AxiosRequestConfig,
-	cancelToken?: CancelToken,
+	options: BuildAxiosCallOptions = {},
 ): Promise<AxiosResponse<R>> {
-	const config = buildAxiosConfig(signal, params, configs, cancelToken);
+	const {
+		params,
+		signal,
+		configs,
+		cancelToken,
+		thunkId,
+		showSuccessToast = true,
+		showErrorToast = true,
+	} = options;
 
-	switch (method) {
-		case 'GET':
-			return axiosInstance.get<R>(endpoint, config);
-		case 'POST':
-			return axiosInstance.post<R, AxiosResponse<R>, T>(endpoint, data, config);
-		case 'PUT':
-			return axiosInstance.put<R, AxiosResponse<R>, T>(endpoint, data, config);
-		case 'DELETE':
-			return axiosInstance.delete<R>(endpoint, {
-				...config,
-				data,
-			});
-		case 'PATCH':
-			return axiosInstance.patch<R, AxiosResponse<R>, T>(endpoint, data, config);
-		default:
-			return axiosInstance.get<R>(endpoint, config);
+	const config = buildAxiosConfig(signal, params, configs, cancelToken);
+	const thunkDisplayName = getThunkDisplayName(thunkId);
+
+	try {
+		let response: AxiosResponse<R>;
+
+		switch (method) {
+			case 'GET':
+				response = await axiosInstance.get<R>(endpoint, config);
+				break;
+
+			case 'POST':
+				response = await axiosInstance.post<R, AxiosResponse<R>, T>(endpoint, data, config);
+				break;
+
+			case 'PUT':
+				response = await axiosInstance.put<R, AxiosResponse<R>, T>(endpoint, data, config);
+				break;
+
+			case 'DELETE':
+				response = await axiosInstance.delete<R>(endpoint, {
+					...config,
+					data,
+				});
+				break;
+
+			case 'PATCH':
+				response = await axiosInstance.patch<R, AxiosResponse<R>, T>(endpoint, data, config);
+				break;
+
+			default:
+				throw new Error(`Unsupported HTTP method: ${method}`);
+		}
+
+		if (showSuccessToast) {
+			toast.success(`${thunkDisplayName} successful`);
+		}
+
+		return response;
+	} catch (error: unknown) {
+		if (showErrorToast) {
+			const errorMessage = error instanceof Error ? error.message : `Failed ${thunkDisplayName}`;
+
+			toast.error(errorMessage);
+		}
+
+		throw error;
 	}
+}
+
+/**
+ * Extracts the display name from a thunk ID.
+ *
+ * Example:
+ * CREATE-User Login -> User Login
+ */
+const getThunkDisplayName = (thunkId?: string): string => {
+	if (!thunkId) return 'Operation';
+
+	const separatorIndex = thunkId.indexOf('-');
+
+	if (separatorIndex === -1) return thunkId.trim();
+
+	return thunkId.slice(separatorIndex + 1).trim();
+};
+
+const isErrorResponse = (value: unknown): value is ErrorResponse => {
+	return (
+		typeof value === 'object' &&
+		value !== null &&
+		'message' in value &&
+		typeof value.message === 'string'
+	);
+};
+
+const isAuthenticationRequest = (requestUrl: string): boolean => {
+	const authenticationEndpoints = ['/login', '/register', '/refresh-token'];
+	return authenticationEndpoints.some((endpoint) => requestUrl.includes(endpoint));
+};
+
+/**
+ * Returns the current JWT access token.
+ */
+export async function getAuthenticationToken(): Promise<string> {
+	return localStorage.getItem('token') ?? '';
 }
 
 /**
@@ -173,3 +236,19 @@ async function buildAxiosCallBase<R, T>(
  * @param data Data to pass to endpoint for POST or PUT calls
  */
 export const buildAxiosCall = withCancelToken(buildAxiosCallBase);
+
+/**
+ * Use when you want POST PUT PATCH or DELETE to return a toast
+ */
+export const createMutationThunk = <Returned, ThunkArg>(
+	thunkId: string,
+	payloadCreator: (
+		arg: ThunkArg,
+		context: {
+			thunkId: string;
+		},
+	) => Promise<Returned>,
+) =>
+	createAsyncThunk<Returned, ThunkArg>(thunkId, async (arg) => {
+		return payloadCreator(arg, { thunkId });
+	});

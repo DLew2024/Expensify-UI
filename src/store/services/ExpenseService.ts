@@ -11,7 +11,7 @@ import {
 	GET_DOWNLOADED_EXPENSE_THUNK_ID,
 } from '../../models/Constants/ThunkIds/ExpenseThunkIds';
 import type { Guid } from '../../utils/DataTypes/Guid';
-import { buildAxiosCall } from '../services';
+import { buildAxiosCall, createMutationThunk } from '../services';
 
 //#region GET
 export const getAllExpense = createAsyncThunk<TransactionDTO[], void>(
@@ -40,16 +40,19 @@ export const downloadExpense = createAsyncThunk<Blob, void>(
 //#endregion GET
 
 //#region POST
-export const addExpense = createAsyncThunk<ExpenseTransactionResponseDTO, AddExpenseTransactionDTO>(
-	CREATE_EXPENSE_THUNK_ID,
-	async () => {
-		const { data } = await buildAxiosCall<ExpenseTransactionResponseDTO, AddExpenseTransactionDTO>(
-			'POST',
-			'api/expense/add',
-		);
-		return data;
-	},
-);
+export const addExpense = createMutationThunk<
+	ExpenseTransactionResponseDTO,
+	AddExpenseTransactionDTO
+>(CREATE_EXPENSE_THUNK_ID, async (expense, { thunkId }) => {
+	const { data } = await buildAxiosCall<ExpenseTransactionResponseDTO, AddExpenseTransactionDTO>(
+		'POST',
+		'api/expense/add',
+		expense,
+		{ thunkId },
+	);
+
+	return data;
+});
 //#endregion POST
 
 //#region PUT
@@ -57,10 +60,16 @@ export const addExpense = createAsyncThunk<ExpenseTransactionResponseDTO, AddExp
 //#endregion PUT
 
 //#region DELETE
-export const deleteExpense = createAsyncThunk<void, Guid>(
+export const deleteExpense = createMutationThunk<void, Guid>(
 	DELETE_EXPENSE_THUNK_ID,
-	async (expenseId) => {
-		const { data } = await buildAxiosCall<void, Guid>('DELETE', `api/expense/${expenseId}`);
+	async (expenseId, { thunkId }) => {
+		const { data } = await buildAxiosCall<void, Guid>(
+			'DELETE',
+			`api/expense/${expenseId}`,
+			undefined,
+			{ thunkId },
+		);
+
 		return data;
 	},
 );

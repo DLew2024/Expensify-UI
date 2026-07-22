@@ -10,7 +10,7 @@ import {
 	POST_USER_LOGIN_THUNK_ID,
 	POST_USER_REGISTER_THUNK_ID,
 } from '../../models/Constants/ThunkIds/UserThunkIds';
-import { buildAxiosCall } from '../services';
+import { buildAxiosCall, createMutationThunk } from '../services';
 import { dispatch } from '../store';
 import { uploadImage } from './ImageService';
 
@@ -30,22 +30,25 @@ export const getUserInfo = createAsyncThunk<UserResponseDTO, void>(
 //#endregion GET
 
 //#region POST
-export const loginUser = createAsyncThunk<UserTokenResponseDTO, LoginUserDTO>(
+export const loginUser = createMutationThunk<UserTokenResponseDTO, LoginUserDTO>(
 	POST_USER_LOGIN_THUNK_ID,
-	async (userLoginCredentials) => {
+	async (userLoginCredentials, { thunkId }) => {
 		const { data } = await buildAxiosCall<UserTokenResponseDTO, LoginUserDTO>(
 			'POST',
 			'api/auth/login',
 			userLoginCredentials,
+			{
+				thunkId,
+			},
 		);
 
 		return data;
 	},
 );
 
-export const registerUser = createAsyncThunk<UserTokenResponseDTO, RegisterUserRequest>(
+export const registerUser = createMutationThunk<UserTokenResponseDTO, RegisterUserRequest>(
 	POST_USER_REGISTER_THUNK_ID,
-	async ({ firstName, lastName, email, password, profileImage }) => {
+	async ({ firstName, lastName, email, password, profileImage }, { thunkId }) => {
 		let profileImageUrl = '';
 
 		if (profileImage) {
@@ -60,10 +63,12 @@ export const registerUser = createAsyncThunk<UserTokenResponseDTO, RegisterUserR
 			password,
 			profileImageURl: profileImageUrl,
 		};
+
 		const { data } = await buildAxiosCall<UserTokenResponseDTO, RegisterUserDTO>(
 			'POST',
 			'api/auth/register',
 			request,
+			{ thunkId },
 		);
 
 		return data;
