@@ -1,4 +1,5 @@
 import axios from 'axios';
+import toast from 'react-hot-toast';
 
 const axiosInstance = axios.create({
 	baseURL: import.meta.env.VITE_API_DEVELOPMENT_URL,
@@ -28,34 +29,35 @@ axiosInstance.interceptors.response.use(
 	(response) => response,
 	(error: unknown) => {
 		if (!axios.isAxiosError(error)) {
-			return Promise.reject(new Error('Something went wrong. Please try again later.'));
+			const message = 'Something went wrong. Please try again later.';
+
+			toast.error(message);
+
+			return Promise.reject(new Error(message));
 		}
 
 		if (error.code === 'ECONNABORTED') {
-			return Promise.reject(new Error('Request timed out. Please try again.'));
+			const message = 'Request timed out. Please try again.';
+
+			toast.error(message);
+
+			return Promise.reject(new Error(message));
 		}
 
 		if (!error.response) {
-			return Promise.reject(
-				new Error('Unable to connect to the server. Please check your internet connection.'),
-			);
+			const message = 'Unable to connect to the server. Please check your internet connection.';
+
+			toast.error(message);
+
+			return Promise.reject(new Error(message));
 		}
 
 		const requestUrl = error.config?.url ?? '';
+
 		const isAuthRequest =
 			requestUrl.includes('/login') ||
 			requestUrl.includes('/register') ||
 			requestUrl.includes('/refresh-token');
-
-		if (error.response.status === 401 && !isAuthRequest) {
-			localStorage.removeItem('token');
-
-			window.location.assign('/login');
-		}
-
-		if (error.response.status === 500) {
-			console.error('Server error. Please try again later.');
-		}
 
 		const responseData: unknown = error.response.data;
 
@@ -64,7 +66,15 @@ axiosInstance.interceptors.response.use(
 				? responseData
 				: isErrorResponse(responseData)
 					? responseData.message
-					: 'Something went wrong. Please try again later.';
+					: getDefaultErrorMessage(error.response.status);
+
+		toast.error(errorMessage);
+
+		if (error.response.status === 401 && !isAuthRequest) {
+			localStorage.removeItem('token');
+
+			window.location.assign('/login');
+		}
 
 		return Promise.reject(new Error(errorMessage));
 	},
@@ -81,6 +91,25 @@ const isErrorResponse = (value: unknown): value is ErrorResponse => {
 		'message' in value &&
 		typeof value.message === 'string'
 	);
+};
+
+const getDefaultErrorMessage = (status: number): string => {
+	switch (status) {
+		case 400:
+			return 'The request was invalid. Please check your information.';
+		case 401:
+			return 'Your session has expired. Please log in again.';
+		case 403:
+			return 'You do not have permission to perform this action.';
+		case 404:
+			return 'The requested resource could not be found.';
+		case 409:
+			return 'A conflict occurred while processing your request.';
+		case 500:
+			return 'A server error occurred. Please try again later.';
+		default:
+			return 'Something went wrong. Please try again later.';
+	}
 };
 
 export default axiosInstance;
