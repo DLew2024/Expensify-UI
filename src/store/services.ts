@@ -86,16 +86,19 @@ axiosInstance.interceptors.response.use(
 			console.error('Server error:', error.response.data);
 		}
 
-		const responseData: unknown = error.response.data;
+		const status = error.response?.status;
+		const responseData: unknown = error.response?.data;
 
 		const errorMessage =
-			typeof responseData === 'string'
+			typeof responseData === 'string' && responseData.trim()
 				? responseData
 				: isValidationErrorResponse(responseData)
 					? getValidationErrorMessage(responseData.errors)
 					: isErrorResponse(responseData)
 						? responseData.message
-						: 'Something went wrong. Please try again later.';
+						: status === 404
+							? 'The requested resource or endpoint was not found.'
+							: 'Something went wrong. Please try again later.';
 
 		return Promise.reject(new Error(errorMessage));
 	},

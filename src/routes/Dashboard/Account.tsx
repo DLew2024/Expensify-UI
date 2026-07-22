@@ -17,6 +17,7 @@ import { dispatch } from '../../store/store';
 import type { Guid } from '../../utils/DataTypes/Guid';
 import type { DeleteAlertState } from '../../utils/DataTypes/ModalTypes';
 import { handleApiError } from '../../utils/Functions/Utility/ApiFunctions';
+import { LAST_FOUR_DIGITS_REGEX } from '../../utils/Regex/RegexUtils';
 import styles from './styles/_Account.module.scss';
 
 const Account = () => {
@@ -30,19 +31,12 @@ const Account = () => {
 	});
 
 	const handleAddAccount = async (account: CreateAccountDTO) => {
-		// const { name, accountTypeId, institutionName, lastFourDigits, currencyCode, includeInNetWorth, initialBalance } = account;
+		const validationError = validateAccount(account);
 
-		// if (!name.trim()) {
-		// 	toast.error('Account name is required.');
-		// 	return;
-		// }
-
-		// if (!initialBalance || Number.isNaN(initialBalance) || initialBalance <= 0) {
-		// 	toast.error('Amount should be a valid number greater than 0.');
-		// 	return;
-		// }
-
-		// Handle errors
+		if (validationError) {
+			toast.error(validationError);
+			return;
+		}
 
 		try {
 			await dispatch(addUserAccount(account)).unwrap();
@@ -54,6 +48,37 @@ const Account = () => {
 		} catch (error: unknown) {
 			handleApiError(error, 'Error adding Account:');
 		}
+	};
+
+	const validateAccount = (account: CreateAccountDTO): string | null => {
+		const { name, institutionName, lastFourDigits, initialBalance } = account;
+
+		if (!name.trim()) {
+			return 'Account name is required.';
+		}
+
+		if (!institutionName?.trim()) {
+			return 'Institution name is required.';
+		}
+
+		if (!lastFourDigits?.trim()) {
+			return 'Last four digits are required.';
+		}
+
+		if (!LAST_FOUR_DIGITS_REGEX.test(lastFourDigits.trim())) {
+			return 'Last four digits must contain exactly 4 numbers.';
+		}
+
+		if (
+			initialBalance === null ||
+			initialBalance === undefined ||
+			Number.isNaN(initialBalance) ||
+			initialBalance < 0
+		) {
+			return 'Initial balance must be a valid number.';
+		}
+
+		return null;
 	};
 
 	const handleDeleteAccount = async (accountId: Guid) => {

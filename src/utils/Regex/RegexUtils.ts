@@ -4,3 +4,4 @@ export const GUID_REGEX =
 export const STRICT_EMAIL_VALIDATION_REGEX = /^[a-zA-Z0-9._%+-]+@[a-zA-Z0-9.-]+\.[A-Za-z]{2,}$/;
 export const WHITE_SPACE_REGEX = /\s+/;
 export const THOUSANDS_SEPARATOR_REGEX = /\B(?=(\d{3})+(?!\d))/g;
+export const LAST_FOUR_DIGITS_REGEX = /^\d{4}$/;
