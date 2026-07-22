@@ -16,7 +16,7 @@ import DashboardLayout from '../../components/layouts/DashboardLayout';
 import { useUserAuth } from '../../hooks/useUserAuth';
 import { getUserAccounts } from '../../store/services/AccountService';
 import { getUserDashboardData } from '../../store/services/DashboardService';
-import { setAccounts, setSelectedAccountId } from '../../store/slices/accountsSlice';
+import { setSelectedAccountId } from '../../store/slices/accountsSlice';
 import { type AppState, dispatch } from '../../store/store';
 import { addThousandsSeparator } from '../../utils/Functions/Conversions/NumberUtils';
 import { handleApiError } from '../../utils/Functions/Utility/ApiFunctions';
@@ -46,11 +46,7 @@ const Home = () => {
 				setDashboardData(dashboardData);
 			}
 
-			const accounts = await dispatch(getUserAccounts()).unwrap();
-
-			if (accounts) {
-				dispatch(setAccounts(accounts));
-			}
+			await dispatch(getUserAccounts()).unwrap();
 		} catch (error: unknown) {
 			handleApiError(error, 'Error logging in account:');
 		} finally {

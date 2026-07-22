@@ -17,7 +17,7 @@ interface TransactionInfoCardProps {
 const AccountInfoCard = ({
 	name = 'Error',
 	institutionName,
-	type,
+	// type,
 	icon,
 	availableBalance,
 	lastFourDigits,

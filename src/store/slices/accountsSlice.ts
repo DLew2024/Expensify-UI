@@ -1,6 +1,7 @@
 import { createSlice, type PayloadAction } from '@reduxjs/toolkit';
 import type { AccountResponseDTO } from '../../api/GeneratedDTOs';
 import { EMPTY_GUID, type Guid } from '../../utils/DataTypes/Guid';
+import { getUserAccounts } from '../services/AccountService';
 
 interface AccountsState {
 	userAccounts: AccountResponseDTO[];
@@ -28,6 +29,11 @@ const accountsSlice = createSlice({
 			state.userAccounts = [];
 			state.selectedAccountId = EMPTY_GUID;
 		},
+	},
+	extraReducers: (builder) => {
+		builder.addCase(getUserAccounts.fulfilled, (state, action) => {
+			state.userAccounts = action.payload;
+		});
 	},
 });
 

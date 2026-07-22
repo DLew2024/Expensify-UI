@@ -1,7 +1,3 @@
-//#region GET
-
-import { createAsyncThunk } from '@reduxjs/toolkit';
-import axios from 'axios';
 import { UPLOAD_IMAGE_THUNK_ID } from '../../models/Constants/ThunkIds/ImageThunkIds';
 import { buildAxiosCall, createMutationThunk } from '../services';
 
@@ -9,6 +5,7 @@ interface UploadImageResponse {
 	imageUrl?: string;
 }
 
+//#region GET
 //#endregion GET
 
 //#region POST
