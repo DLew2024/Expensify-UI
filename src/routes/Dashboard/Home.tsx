@@ -5,6 +5,7 @@ import { useSelector } from 'react-redux';
 import { useNavigate } from 'react-router';
 import type { DashboardDataResponseDTO } from '../../api/GeneratedDTOs';
 import InfoCard from '../../components/Cards/InfoCard';
+import Selector from '../../components/common/Selector';
 import ExpenseTransactions from '../../components/Dashboard/ExpenseTransactions';
 import FinanceOverview from '../../components/Dashboard/FinanceOverview';
 import Last30DaysExpenses from '../../components/Dashboard/Last30DaysExpenses';
@@ -18,7 +19,6 @@ import { getUserDashboardData } from '../../store/services/DashboardService';
 import { setAccounts, setSelectedAccountId } from '../../store/slices/accountsSlice';
 import { type AppState, dispatch } from '../../store/store';
 import { addThousandsSeparator } from '../../utils/Functions/Conversions/NumberUtils';
-import AccountSelector from './AccountsSelector';
 import styles from './styles/_Home.module.scss';
 
 const Home = () => {
@@ -65,11 +65,12 @@ const Home = () => {
 	return (
 		<DashboardLayout activeMenu="Dashboard">
 			<div className={styles.dashboard}>
-				<AccountSelector
+				<Selector
 					accounts={$userAccounts}
 					selectedAccountId={$selectedAccountId}
 					onChange={(account) => {
-						dispatch(setSelectedAccountId(account?.id ?? null));
+						if (!account) return;
+						dispatch(setSelectedAccountId(account.id));
 					}}
 				/>
 

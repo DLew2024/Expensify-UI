@@ -1,9 +1,9 @@
 import { useState } from 'react';
 import toast from 'react-hot-toast';
 import type { AccountResponseDTO, CreateAccountDTO } from '../../api/GeneratedDTOs';
-import { AccountList } from '../../components/Account/AccountList';
+import AccountList from '../../components/Account/AccountList';
 import { AccountOverview } from '../../components/Account/AccountOverview';
-import { AddAccountForm } from '../../components/Account/AddAccountForm';
+import AddAccountForm from '../../components/Account/AddAccountForm';
 import DeleteAlert from '../../components/DeleteAlert';
 import DashboardLayout from '../../components/layouts/DashboardLayout';
 import PrimaryModal from '../../components/PrimaryModal';
@@ -17,6 +17,7 @@ import { dispatch } from '../../store/store';
 import type { Guid } from '../../utils/DataTypes/Guid';
 import type { DeleteAlertState } from '../../utils/DataTypes/ModalTypes';
 import { handleApiError } from '../../utils/Functions/Utility/ApiFunctions';
+import styles from './styles/_Account.module.scss';
 
 const Account = () => {
 	useUserAuth();
@@ -83,13 +84,13 @@ const Account = () => {
 
 	return (
 		<DashboardLayout activeMenu="Accounts">
-			<div>
-				<div>
+			<div className={styles.accountPage}>
+				<div className={styles.accountPage__content}>
 					<AccountOverview onAddAccount={() => setIsAddAccountModalOpen(true)} />
 
 					<AccountList
 						accounts={accounts}
-						onDelete={(id) =>
+						onDelete={(id: Guid) =>
 							setOpenDeleteAlert({
 								show: true,
 								data: id,

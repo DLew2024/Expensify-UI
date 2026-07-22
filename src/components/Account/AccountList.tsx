@@ -3,21 +3,23 @@ import type { Guid } from '../../utils/DataTypes/Guid';
 import { AccountInfoCard } from '../Cards/AccountInfoCard';
 import WrapperCard from '../common/WrapperCard';
 import MainTextTypography from '../MainTextTypography';
-// import styles from './styles/_AccountList.module.scss';
+import styles from './styles/_AccountList.module.scss';
 
 interface AccountListProps {
 	accounts: AccountResponseDTO[];
 	onDelete: (id: Guid) => void;
 }
 
-export const AccountList = ({ accounts, onDelete }: AccountListProps) => {
+const AccountList = ({ accounts, onDelete }: AccountListProps) => {
 	return (
 		<WrapperCard>
-			<div>
-				<MainTextTypography variant="h5">Accounts</MainTextTypography>
+			<div className={styles.accountList__header}>
+				<MainTextTypography variant="h5" className={styles.accountList__title}>
+					Accounts
+				</MainTextTypography>
 			</div>
 
-			<div>
+			<div className={styles.accountList__grid}>
 				{accounts.map((account) => (
 					<AccountInfoCard
 						key={account.id}
@@ -34,3 +36,5 @@ export const AccountList = ({ accounts, onDelete }: AccountListProps) => {
 		</WrapperCard>
 	);
 };
+
+export default AccountList;

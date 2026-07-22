@@ -2,8 +2,7 @@ import { LuPlus } from 'react-icons/lu';
 import AddButton from '../common/AddButton';
 import WrapperCard from '../common/WrapperCard';
 import MainTextTypography from '../MainTextTypography';
-
-// import styles from './styles/_AccountOverview.module.scss';
+import styles from './styles/_AccountOverview.module.scss';
 
 interface AccountOverviewProps {
 	onAddAccount: () => void;
@@ -11,16 +10,21 @@ interface AccountOverviewProps {
 export const AccountOverview = ({ onAddAccount }: AccountOverviewProps) => {
 	return (
 		<WrapperCard>
-			<div>
-				<MainTextTypography variant="h5">Account Overview</MainTextTypography>
-				<MainTextTypography variant="body">
-					Create accounts to add financial data too.
-				</MainTextTypography>
-			</div>
+			<div className={styles.accountOverview__header}>
+				<div>
+					<MainTextTypography variant="h5" className={styles.accountOverview__title}>
+						Account Overview
+					</MainTextTypography>
 
-			<AddButton icon={<LuPlus />} onClick={onAddAccount}>
-				Add Account
-			</AddButton>
+					<MainTextTypography variant="body" className={styles.accountOverview__description}>
+						Create accounts to add financial data to.
+					</MainTextTypography>
+				</div>
+
+				<AddButton icon={<LuPlus />} onClick={onAddAccount}>
+					Add Account
+				</AddButton>
+			</div>
 		</WrapperCard>
 	);
 };

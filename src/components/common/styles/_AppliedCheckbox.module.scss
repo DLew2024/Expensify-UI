@@ -1,0 +1,64 @@
+$checkboxWidth: 1rem;
+$checkboxHeight: 1rem;
+$checkboxBaseWidth: 1.25rem;
+$checkboxBaseHeight: 1.25rem;
+
+$checkboxGap: 0.25rem;
+
+$checkboxFontSize: 0.8rem;
+
+.appliedCheckbox {
+    position: relative;
+
+    display: flex;
+    align-items: center;
+
+    width: 100%;
+
+    gap: $checkboxGap;
+
+    &.disabled {
+        opacity: 0.26;
+    }
+
+    // @include themify("color", "MainText");
+
+    .checkboxButton {
+        padding: 0;
+        margin: 0;
+        border: none;
+        background-color: transparent;
+
+        display: flex;
+        align-items: center;
+        justify-content: center;
+
+        width: $checkboxWidth;
+        height: $checkboxHeight;
+
+        cursor: pointer;
+
+        &:disabled {
+            cursor: default;
+        }
+
+        .checkboxBase {
+            width: $checkboxBaseWidth;
+            height: $checkboxBaseHeight;
+        }
+    }
+
+    .checkboxLabel {
+        cursor: pointer;
+        -webkit-user-select: none;
+        user-select: none;
+
+        &:hover {
+            // @include themify("color", "SubtextOrSmallElements");
+        }
+    }
+
+    .disabledCheckboxLabel {
+        cursor: default;
+    }
+}

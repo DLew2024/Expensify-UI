@@ -1,1 +1,19 @@
 @use "/src/styles/index" as *;
+
+.accountOverview {
+    &__header {
+        display: flex;
+        align-items: center;
+        justify-content: space-between;
+    }
+
+    &__title {
+        font-size: 1.125rem;
+    }
+
+    &__description {
+        margin-top: 0.125rem;
+        color: #9ca3af;
+        font-size: 0.75rem;
+    }
+}

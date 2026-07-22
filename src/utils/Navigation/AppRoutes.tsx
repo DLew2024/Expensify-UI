@@ -1,7 +1,7 @@
 import type { ComponentType } from 'react';
-import Account from '../../routes/Account/Account';
 import LoginPage from '../../routes/Auth/Login/LoginPage';
 import SignUpPage from '../../routes/Auth/SignUp/SignUpPage';
+import Account from '../../routes/Dashboard/Account';
 import Expense from '../../routes/Dashboard/Expense';
 import Home from '../../routes/Dashboard/Home';
 import Income from '../../routes/Dashboard/Income';

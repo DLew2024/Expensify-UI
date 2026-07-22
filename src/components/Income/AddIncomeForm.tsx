@@ -3,6 +3,7 @@ import { useState } from 'react';
 import { useSelector } from 'react-redux';
 import type { AddIncomeTransactionDTO } from '../../api/GeneratedDTOs';
 import type { AppState } from '../../store/store';
+import { EMPTY_INCOME } from '../../utils/EmptyObjects/EMPTY_INCOME';
 import CardButton from '../common/CardButton';
 import EmojiPickerPopup from '../EmojiPickerPopup';
 import LabeledInput from '../Inputs/LabeledInput';
@@ -15,14 +16,7 @@ interface AddIncomeFormProps {
 const AddIncomeForm = ({ onAddIncome }: AddIncomeFormProps) => {
 	const $selectedAccountId = useSelector((state: AppState) => state.accounts.selectedAccountId);
 
-	const [income, setIncome] = useState<AddIncomeTransactionDTO>({
-		icon: '',
-		source: '',
-		amount: 0,
-		transactionDate: 0,
-		description: '',
-		accountId: $selectedAccountId,
-	});
+	const [income, setIncome] = useState<AddIncomeTransactionDTO>(EMPTY_INCOME);
 
 	const handleChange = <K extends keyof AddIncomeTransactionDTO>(
 		key: K,

@@ -15,29 +15,36 @@ interface TransactionInfoCardProps {
 
 export const AccountInfoCard = ({
 	name = 'Error',
+	institutionName,
 	type,
+	availableBalance,
+	lastFourDigits,
 	hideDeleteBtn = false,
 	onDelete,
 }: TransactionInfoCardProps) => {
 	return (
 		<div className={styles.accountInfoCard}>
-			<div>
+			<div className={styles.accountInfoCard__icon}>
 				<RiAccountBoxLine />
 			</div>
 
-			<div>
-				<div>
-					<MainTextTypography variant="body">{name}</MainTextTypography>
+			<div className={styles.accountInfoCard__content}>
+				<div className={styles.accountInfoCard__details}>
+					<MainTextTypography variant="body" className={styles.accountInfoCard__name}>
+						{name}
+					</MainTextTypography>
 
-					<MainTextTypography variant="body">{type}</MainTextTypography>
+					<MainTextTypography variant="body" className={styles.accountInfoCard__type}>
+						{type}
+					</MainTextTypography>
 				</div>
 
-				<div>
+				<div className={styles.accountInfoCard__actions}>
 					{!hideDeleteBtn && (
 						<button
 							type="button"
 							onClick={onDelete}
-							className={styles.transactionInfoCard__deleteButton}
+							className={styles.accountInfoCard__deleteButton}
 						>
 							<LuTrash2 size={18} />
 						</button>
