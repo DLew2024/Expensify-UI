@@ -1,8 +1,19 @@
-import axios from 'axios';
-import toast from 'react-hot-toast';
+import axios, { type InternalAxiosRequestConfig } from 'axios';
+import {
+	getAuthenticationToken,
+	isAuthenticationRequest,
+} from '../store/utils/AuthenticationUtils';
+import { getValidationErrorMessage, isValidationErrorResponse } from '../store/utils/ErrorHandling';
+import { shouldBypassAuth } from './Development/Dev';
+
+interface ErrorResponse {
+	message: string;
+}
+
+const baseUrl = import.meta.env.MODE === 'production' ? '' : 'http://localhost:5073';
 
 const axiosInstance = axios.create({
-	baseURL: import.meta.env.VITE_API_DEVELOPMENT_URL,
+	baseURL: baseUrl,
 	timeout: 10000,
 	headers: {
 		'Content-Type': 'application/json',
@@ -10,13 +21,15 @@ const axiosInstance = axios.create({
 	},
 });
 
-// Request interceptor
+/**
+ * Adds the current JWT token to every outgoing request.
+ */
 axiosInstance.interceptors.request.use(
-	(config) => {
-		const accessToken = localStorage.getItem('token');
+	async (config: InternalAxiosRequestConfig) => {
+		const jwtToken = await getAuthenticationToken();
 
-		if (accessToken) {
-			config.headers.Authorization = `Bearer ${accessToken}`;
+		if (jwtToken) {
+			config.headers.Authorization = `Bearer ${jwtToken}`;
 		}
 
 		return config;
@@ -24,65 +37,53 @@ axiosInstance.interceptors.request.use(
 	(error: unknown) => Promise.reject(error),
 );
 
-// Response interceptor
+/**
+ * Converts Axios failures into consistent Error objects.
+ */
 axiosInstance.interceptors.response.use(
 	(response) => response,
 	(error: unknown) => {
 		if (!axios.isAxiosError(error)) {
-			const message = 'Something went wrong. Please try again later.';
-
-			toast.error(message);
-
-			return Promise.reject(new Error(message));
+			return Promise.reject(
+				new Error(
+					'An unexpected application error occurred while processing your request. Please try again.',
+				),
+			);
 		}
 
 		if (error.code === 'ECONNABORTED') {
-			const message = 'Request timed out. Please try again.';
-
-			toast.error(message);
-
-			return Promise.reject(new Error(message));
+			return Promise.reject(new Error('Request timed out. Please try again.'));
 		}
 
 		if (!error.response) {
-			const message = 'Unable to connect to the server. Please check your internet connection.';
-
-			toast.error(message);
-
-			return Promise.reject(new Error(message));
+			return Promise.reject(
+				new Error('Unable to connect to the server. Please check your internet connection.'),
+			);
 		}
 
 		const requestUrl = error.config?.url ?? '';
-
-		const isAuthRequest =
-			requestUrl.includes('/login') ||
-			requestUrl.includes('/register') ||
-			requestUrl.includes('/refresh-token');
-
+		const isAuthRequest = isAuthenticationRequest(requestUrl);
+		const status = error.response.status;
 		const responseData: unknown = error.response.data;
 
-		const errorMessage =
-			typeof responseData === 'string'
-				? responseData
-				: isErrorResponse(responseData)
-					? responseData.message
-					: getDefaultErrorMessage(error.response.status);
-
-		toast.error(errorMessage);
-
-		if (error.response.status === 401 && !isAuthRequest) {
+		if (status === 401 && !isAuthRequest && !shouldBypassAuth()) {
+			// Remove once in production
 			localStorage.removeItem('token');
-
 			window.location.assign('/login');
 		}
+
+		const errorMessage =
+			typeof responseData === 'string' && responseData.trim()
+				? responseData
+				: isValidationErrorResponse(responseData)
+					? getValidationErrorMessage(responseData.errors)
+					: isErrorResponse(responseData)
+						? responseData.message
+						: getDefaultErrorMessage(status);
 
 		return Promise.reject(new Error(errorMessage));
 	},
 );
-
-interface ErrorResponse {
-	message: string;
-}
 
 const isErrorResponse = (value: unknown): value is ErrorResponse => {
 	return (

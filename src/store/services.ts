@@ -1,17 +1,7 @@
 import { createAsyncThunk } from '@reduxjs/toolkit';
-import axios, {
-	type AxiosRequestConfig,
-	type AxiosResponse,
-	type CancelToken,
-	type InternalAxiosRequestConfig,
-} from 'axios';
+import type { AxiosRequestConfig, AxiosResponse, CancelToken } from 'axios';
 import toast from 'react-hot-toast';
-import { shouldBypassAuth } from '../utils/Development/Dev';
-import {
-	getValidationErrorMessage,
-	isErrorResponse,
-	isValidationErrorResponse,
-} from './utils/ErrorHandling';
+import axiosInstance from '../utils/axiosInstance';
 import { withCancelToken } from './utils/withCancel';
 
 interface BuildAxiosCallOptions {
@@ -22,106 +12,6 @@ interface BuildAxiosCallOptions {
 	thunkId?: string;
 	showSuccessToast?: boolean;
 	showErrorToast?: boolean;
-}
-
-const baseUrl = import.meta.env.MODE === 'production' ? '' : 'http://localhost:5073';
-
-const axiosInstance = axios.create({
-	baseURL: baseUrl,
-	timeout: 10000,
-	headers: {
-		Accept: 'application/json',
-		'Content-Type': 'application/json',
-	},
-});
-
-/**
- * Adds the current JWT token to every outgoing request.
- */
-axiosInstance.interceptors.request.use(
-	async (config: InternalAxiosRequestConfig) => {
-		const jwtToken = await getAuthenticationToken();
-
-		if (jwtToken) {
-			config.headers.Authorization = `Bearer ${jwtToken}`;
-		}
-
-		return config;
-	},
-	(error: unknown) => Promise.reject(error),
-);
-
-/**
- * Converts Axios failures into consistent Error objects.
- */
-axiosInstance.interceptors.response.use(
-	(response) => response,
-	(error: unknown) => {
-		if (!axios.isAxiosError(error)) {
-			return Promise.reject(new Error('Something went wrong. Please try again later.'));
-		}
-
-		if (error.code === 'ECONNABORTED') {
-			return Promise.reject(new Error('Request timed out. Please try again.'));
-		}
-
-		if (!error.response) {
-			return Promise.reject(
-				new Error('Unable to connect to the server. Please check your internet connection.'),
-			);
-		}
-
-		const requestUrl = error.config?.url ?? '';
-		const isAuthRequest = isAuthenticationRequest(requestUrl);
-
-		if (error.response.status === 401 && !isAuthRequest) {
-			// Remove once in production
-			if (!shouldBypassAuth()) {
-				localStorage.removeItem('token');
-				window.location.assign('/login');
-			}
-		}
-
-		if (error.response.status >= 500) {
-			console.error('Server error:', error.response.data);
-		}
-
-		const status = error.response?.status;
-		const responseData: unknown = error.response?.data;
-
-		const errorMessage =
-			typeof responseData === 'string' && responseData.trim()
-				? responseData
-				: isValidationErrorResponse(responseData)
-					? getValidationErrorMessage(responseData.errors)
-					: isErrorResponse(responseData)
-						? responseData.message
-						: status === 404
-							? 'The requested resource or endpoint was not found.'
-							: 'Something went wrong. Please try again later.';
-
-		return Promise.reject(new Error(errorMessage));
-	},
-);
-
-/**
- * Builds the Axios request configuration.
- */
-function buildAxiosConfig(
-	signal?: AbortSignal,
-	params?: AxiosRequestConfig['params'],
-	configs?: AxiosRequestConfig,
-	cancelToken?: CancelToken,
-): AxiosRequestConfig {
-	return {
-		...configs,
-		params: params ?? configs?.params,
-		signal: signal ?? configs?.signal,
-		cancelToken: cancelToken ?? configs?.cancelToken,
-		headers: {
-			...configs?.headers,
-		},
-	};
 }
 
 /**
@@ -148,7 +38,6 @@ async function buildAxiosCallBase<R, T>(
 	} = options;
 
 	const config = buildAxiosConfig(signal, params, configs, cancelToken);
-	const thunkDisplayName = getThunkDisplayName(thunkId);
 
 	try {
 		let response: AxiosResponse<R>;
@@ -181,14 +70,19 @@ async function buildAxiosCallBase<R, T>(
 				throw new Error(`Unsupported HTTP method: ${method}`);
 		}
 
-		if (showSuccessToast) {
-			toast.success(`${thunkDisplayName} successful`);
+		if (showSuccessToast && thunkId) {
+			toast.success(`${getThunkDisplayName(thunkId)} successful`);
 		}
 
 		return response;
 	} catch (error: unknown) {
 		if (showErrorToast) {
-			const errorMessage = error instanceof Error ? error.message : `Failed ${thunkDisplayName}`;
+			const errorMessage =
+				error instanceof Error
+					? error.message
+					: thunkId
+						? `Failed ${getThunkDisplayName(thunkId)}`
+						: 'Something went wrong. Please try again later.';
 
 			toast.error(errorMessage);
 		}
@@ -223,10 +117,23 @@ export const createMutationThunk = <Returned, ThunkArg>(
 	});
 
 /**
- * Returns the current JWT access token.
+ * Builds the Axios request configuration.
  */
-async function getAuthenticationToken(): Promise<string> {
-	return localStorage.getItem('token') ?? '';
+function buildAxiosConfig(
+	signal?: AbortSignal,
+	params?: AxiosRequestConfig['params'],
+	configs?: AxiosRequestConfig,
+	cancelToken?: CancelToken,
+): AxiosRequestConfig {
+	return {
+		...configs,
+		params: params ?? configs?.params,
+		signal: signal ?? configs?.signal,
+		cancelToken: cancelToken ?? configs?.cancelToken,
+		headers: {
+			...configs?.headers,
+		},
+	};
 }
 
 /**
@@ -235,17 +142,10 @@ async function getAuthenticationToken(): Promise<string> {
  * Example:
  * CREATE-User Login -> User Login
  */
-const getThunkDisplayName = (thunkId?: string): string => {
-	if (!thunkId) return 'Operation';
-
+const getThunkDisplayName = (thunkId: string): string => {
 	const separatorIndex = thunkId.indexOf('-');
 
 	if (separatorIndex === -1) return thunkId.trim();
 
 	return thunkId.slice(separatorIndex + 1).trim();
-};
-
-const isAuthenticationRequest = (requestUrl: string): boolean => {
-	const authenticationEndpoints = ['/login', '/register', '/refresh-token'];
-	return authenticationEndpoints.some((endpoint) => requestUrl.includes(endpoint));
 };
