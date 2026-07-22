@@ -3,12 +3,12 @@ import type { AccountResponseDTO } from '../../api/GeneratedDTOs';
 import { EMPTY_GUID, type Guid } from '../../utils/DataTypes/Guid';
 
 interface AccountsState {
-	accounts: AccountResponseDTO[];
+	userAccounts: AccountResponseDTO[];
 	selectedAccountId: Guid;
 }
 
 const initialState: AccountsState = {
-	accounts: [],
+	userAccounts: [],
 	selectedAccountId: EMPTY_GUID,
 };
 
@@ -17,7 +17,7 @@ const accountsSlice = createSlice({
 	initialState,
 	reducers: {
 		setAccounts: (state, action: PayloadAction<AccountResponseDTO[]>) => {
-			state.accounts = action.payload;
+			state.userAccounts = action.payload;
 		},
 
 		setSelectedAccountId: (state, action: PayloadAction<Guid>) => {
@@ -25,7 +25,7 @@ const accountsSlice = createSlice({
 		},
 
 		clearAccounts: (state) => {
-			state.accounts = [];
+			state.userAccounts = [];
 			state.selectedAccountId = EMPTY_GUID;
 		},
 	},

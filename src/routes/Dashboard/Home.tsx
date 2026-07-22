@@ -3,7 +3,7 @@ import { IoMdCard } from 'react-icons/io';
 import { LuHandCoins, LuWalletMinimal } from 'react-icons/lu';
 import { useSelector } from 'react-redux';
 import { useNavigate } from 'react-router';
-import type { DashboardDataResponseDTO } from '../../api/GeneratedDTOs';
+import type { AccountResponseDTO, DashboardDataResponseDTO } from '../../api/GeneratedDTOs';
 import InfoCard from '../../components/Cards/InfoCard';
 import Selector from '../../components/common/Selector';
 import ExpenseTransactions from '../../components/Dashboard/ExpenseTransactions';
@@ -19,13 +19,14 @@ import { getUserDashboardData } from '../../store/services/DashboardService';
 import { setAccounts, setSelectedAccountId } from '../../store/slices/accountsSlice';
 import { type AppState, dispatch } from '../../store/store';
 import { addThousandsSeparator } from '../../utils/Functions/Conversions/NumberUtils';
+import { handleApiError } from '../../utils/Functions/Utility/ApiFunctions';
 import styles from './styles/_Home.module.scss';
 
 const Home = () => {
 	useUserAuth();
 
 	const navigate = useNavigate();
-	const $userAccounts = useSelector((state: AppState) => state.accounts.accounts);
+	const $userAccounts = useSelector((state: AppState) => state.accounts.userAccounts);
 	const $selectedAccountId = useSelector((state: AppState) => state.accounts.selectedAccountId);
 	const $selectedAccount =
 		$userAccounts.find((account) => account.id === $selectedAccountId) ?? null;
@@ -50,8 +51,8 @@ const Home = () => {
 			if (accounts) {
 				dispatch(setAccounts(accounts));
 			}
-		} catch (error) {
-			console.log('Something went wrong. Please try again.', error);
+		} catch (error: unknown) {
+			handleApiError(error, 'Error logging in account:');
 		} finally {
 			setIsLoading(false);
 		}
@@ -65,9 +66,13 @@ const Home = () => {
 	return (
 		<DashboardLayout activeMenu="Dashboard">
 			<div className={styles.dashboard}>
-				<Selector
-					accounts={$userAccounts}
-					selectedAccountId={$selectedAccountId}
+				<Selector<AccountResponseDTO>
+					items={$userAccounts}
+					selectedValue={$selectedAccountId}
+					label="User Account"
+					placeholder="Select Account"
+					getValue={(account) => account.id}
+					getLabel={(account) => account.name || 'Unnamed Account'}
 					onChange={(account) => {
 						if (!account) return;
 						dispatch(setSelectedAccountId(account.id));

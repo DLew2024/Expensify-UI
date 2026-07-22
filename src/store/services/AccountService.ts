@@ -39,9 +39,9 @@ export const addUserAccount = createMutationThunk<void, CreateAccountDTO>(
 export const deleteAccount = createMutationThunk<void, Guid>(
 	DELETE_ACCOUNT_THUNK_ID,
 	async (accountId, { thunkId }) => {
-		const { data } = await buildAxiosCall<void, Guid>(
+		const { data } = await buildAxiosCall<void, void>(
 			'DELETE',
-			`api/account/${accountId}`,
+			`api/accounts/${accountId}`,
 			undefined,
 			{ thunkId },
 		);

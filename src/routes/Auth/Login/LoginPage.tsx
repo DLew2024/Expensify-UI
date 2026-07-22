@@ -7,6 +7,7 @@ import { PrimaryButton } from '../../../components/UI Components/buttons/Primary
 import { useUserContext } from '../../../context/userContext';
 import { loginUser } from '../../../store/services/AuthService';
 import { dispatch } from '../../../store/store';
+import { handleApiError } from '../../../utils/Functions/Utility/ApiFunctions';
 import { validateEmail } from '../../../utils/Functions/Utility/ValidationFunctions';
 import { NavigationRoutePaths } from '../../../utils/Navigation/NavigationRoutePaths';
 import styles from './styles/_LoginPage.module.scss';
@@ -41,10 +42,8 @@ const LoginPage = () => {
 			localStorage.setItem('token', token);
 			updateUser(user);
 			navigate(NavigationRoutePaths.DASHBOARD);
-		} catch (error) {
-			setError(
-				error instanceof Error ? error.message : 'Something went wrong. Please try again later.',
-			);
+		} catch (error: unknown) {
+			handleApiError(error, 'Error logging in account:');
 		}
 	};
 
