@@ -5,8 +5,8 @@ import {
 	addLoadingMessage,
 	pushUniversalFeedbackNotification,
 	removeLoadingMessage,
-} from '../Common/commonSlice';
-import { removeCancelToken } from '../cancelToken/cancelTokenSlice';
+} from '../slices/commonSlice';
+import { removeCancelToken } from '../slices/cancelTokenSlice';
 import { RevokedCallError } from '../utils/RevokedCallError';
 
 export type AsyncThunkLifecycleStatus = ReturnType<

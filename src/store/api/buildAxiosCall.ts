@@ -1,8 +1,7 @@
-import { createAsyncThunk } from '@reduxjs/toolkit';
 import type { AxiosRequestConfig, AxiosResponse, CancelToken } from 'axios';
 import toast from 'react-hot-toast';
-import axiosInstance from '../utils/axiosInstance';
-import { withCancelToken } from './utils/withCancel';
+import { withCancelToken } from '../utils/withCancel';
+import axiosInstance from './axiosInstance';
 
 interface BuildAxiosCallOptions {
 	params?: AxiosRequestConfig['params'];
@@ -99,22 +98,6 @@ async function buildAxiosCallBase<R, T>(
  * @param data Data to pass to endpoint for POST or PUT calls
  */
 export const buildAxiosCall = withCancelToken(buildAxiosCallBase);
-
-/**
- * Use when you want POST PUT PATCH or DELETE to return a toast
- */
-export const createMutationThunk = <Returned, ThunkArg>(
-	thunkId: string,
-	payloadCreator: (
-		arg: ThunkArg,
-		context: {
-			thunkId: string;
-		},
-	) => Promise<Returned>,
-) =>
-	createAsyncThunk<Returned, ThunkArg>(thunkId, async (arg) => {
-		return payloadCreator(arg, { thunkId });
-	});
 
 /**
  * Builds the Axios request configuration.

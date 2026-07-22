@@ -6,7 +6,8 @@ import {
 	GET_USER_ACCOUNTS,
 } from '../../models/Constants/ThunkIds/AccountThunkIds';
 import type { Guid } from '../../utils/DataTypes/Guid';
-import { buildAxiosCall, createMutationThunk } from '../services';
+import { buildAxiosCall } from '../api/buildAxiosCall';
+import { createMutationThunk } from '../api/createMutationThunk';
 
 //#region GET
 export const getUserAccounts = createAsyncThunk<AccountResponseDTO[], void>(

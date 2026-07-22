@@ -1,7 +1,7 @@
 import axios, { type AxiosRequestConfig, type AxiosResponse, type CancelToken } from 'axios';
 import { v4 } from 'uuid';
 import { extractPathFromEndpoint } from '../../utils/Functions/Conversions/StringUtils';
-import { addCancelToken, removeCancelToken } from '../cancelToken/cancelTokenSlice';
+import { addCancelToken, removeCancelToken } from '../slices/cancelTokenSlice';
 import { dispatch } from '../store';
 
 /**

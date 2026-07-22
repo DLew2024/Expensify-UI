@@ -3,7 +3,7 @@ import { useState } from 'react';
 import { useSelector } from 'react-redux';
 import type { AddIncomeTransactionDTO } from '../../api/GeneratedDTOs';
 import type { AppState } from '../../store/store';
-import { EMPTY_INCOME } from '../../utils/EmptyObjects/EMPTY_INCOME';
+import { EMPTY_INCOME } from '../../utils/DataTypes/EmptyObjects/EMPTY_INCOME';
 import CardButton from '../common/CardButton';
 import EmojiPickerPopup from '../EmojiPickerPopup';
 import LabeledInput from '../Inputs/LabeledInput';

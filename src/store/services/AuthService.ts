@@ -10,7 +10,8 @@ import {
 	POST_USER_LOGIN_THUNK_ID,
 	POST_USER_REGISTER_THUNK_ID,
 } from '../../models/Constants/ThunkIds/UserThunkIds';
-import { buildAxiosCall, createMutationThunk } from '../services';
+import { buildAxiosCall } from '../api/buildAxiosCall';
+import { createMutationThunk } from '../api/createMutationThunk';
 import { dispatch } from '../store';
 import { uploadImage } from './ImageService';
 

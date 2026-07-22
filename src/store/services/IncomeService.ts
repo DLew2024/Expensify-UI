@@ -11,7 +11,8 @@ import {
 	GET_DOWNLOADED_INCOME_THUNK_ID,
 } from '../../models/Constants/ThunkIds/IncomeThunkIds';
 import type { Guid } from '../../utils/DataTypes/Guid';
-import { buildAxiosCall, createMutationThunk } from '../services';
+import { buildAxiosCall } from '../api/buildAxiosCall';
+import { createMutationThunk } from '../api/createMutationThunk';
 
 //#region GET
 export const getAllIncome = createAsyncThunk<TransactionDTO[], void>(

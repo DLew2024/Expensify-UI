@@ -1,10 +1,7 @@
 import axios, { type InternalAxiosRequestConfig } from 'axios';
-import {
-	getAuthenticationToken,
-	isAuthenticationRequest,
-} from '../store/utils/AuthenticationUtils';
-import { getValidationErrorMessage, isValidationErrorResponse } from '../store/utils/ErrorHandling';
-import { shouldBypassAuth } from './Development/Dev';
+import { shouldBypassAuth } from '../../utils/Development/Dev';
+import { getAuthenticationToken, isAuthenticationRequest } from '../utils/AuthenticationUtils';
+import { getValidationErrorMessage, isValidationErrorResponse } from '../utils/ErrorHandling';
 
 interface ErrorResponse {
 	message: string;

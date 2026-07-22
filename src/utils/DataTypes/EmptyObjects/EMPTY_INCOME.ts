@@ -1,5 +1,5 @@
-import type { AddIncomeTransactionDTO } from '../../api/GeneratedDTOs';
-import { EMPTY_GUID } from '../DataTypes/Guid';
+import type { AddIncomeTransactionDTO } from '../../../api/GeneratedDTOs';
+import { EMPTY_GUID } from '../Guid';
 
 export const EMPTY_INCOME: AddIncomeTransactionDTO = {
 	icon: '',

@@ -1,5 +1,5 @@
-import type { CreateAccountDTO } from '../../api/GeneratedDTOs';
-import { EMPTY_GUID } from '../DataTypes/Guid';
+import type { CreateAccountDTO } from '../../../api/GeneratedDTOs';
+import { EMPTY_GUID } from '../Guid';
 
 export const EMPTY_ACCOUNT: CreateAccountDTO = {
 	name: '',

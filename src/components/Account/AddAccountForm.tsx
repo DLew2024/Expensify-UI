@@ -1,7 +1,7 @@
 import { useState } from 'react';
 import type { CreateAccountDTO } from '../../api/GeneratedDTOs';
+import { EMPTY_ACCOUNT } from '../../utils/DataTypes/EmptyObjects/EMPTY_ACCOUNT';
 import type { Guid } from '../../utils/DataTypes/Guid';
-import { EMPTY_ACCOUNT } from '../../utils/EmptyObjects/EMPTY_ACCOUNT';
 import { AppliedCheckbox } from '../common/AppliedCheckbox';
 import CardButton from '../common/CardButton';
 import Selector from '../common/Selector';
