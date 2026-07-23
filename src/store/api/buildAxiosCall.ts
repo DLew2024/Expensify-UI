@@ -1,5 +1,6 @@
 import type { AxiosRequestConfig, AxiosResponse, CancelToken } from 'axios';
 import toast from 'react-hot-toast';
+import { ThunkOperation } from '../../models/Constants/Redux/ThunkOperations';
 import { withCancelToken } from '../utils/withCancel';
 import axiosInstance from './axiosInstance';
 
@@ -69,8 +70,10 @@ async function buildAxiosCallBase<R, T>(
 				throw new Error(`Unsupported HTTP method: ${method}`);
 		}
 
-		if (showSuccessToast && thunkId) {
-			toast.success(`${getThunkDisplayName(thunkId)} successful`);
+		const successMessage = getThunkSuccessMessage(thunkId);
+
+		if (showSuccessToast && successMessage) {
+			toast.success(successMessage);
 		}
 
 		return response;
@@ -79,9 +82,7 @@ async function buildAxiosCallBase<R, T>(
 			const errorMessage =
 				error instanceof Error
 					? error.message
-					: thunkId
-						? `Failed ${getThunkDisplayName(thunkId)}`
-						: 'Something went wrong. Please try again later.';
+					: (getThunkErrorMessage(thunkId) ?? 'Something went wrong. Please try again later.');
 
 			toast.error(errorMessage);
 		}
@@ -119,16 +120,60 @@ function buildAxiosConfig(
 	};
 }
 
-/**
- * Extracts the display name from a thunk ID.
- *
- * Example:
- * CREATE-User Login -> User Login
- */
-const getThunkDisplayName = (thunkId: string): string => {
+const getThunkSuccessMessage = (thunkId?: string): string | null => {
+	if (!thunkId) return null;
+
 	const separatorIndex = thunkId.indexOf('-');
 
-	if (separatorIndex === -1) return thunkId.trim();
+	if (separatorIndex === -1) return null;
 
-	return thunkId.slice(separatorIndex + 1).trim();
+	const operation = thunkId.slice(0, separatorIndex) as ThunkOperation;
+	const displayName = thunkId.slice(separatorIndex + 1).trim();
+
+	switch (operation) {
+		case ThunkOperation.CREATE:
+			return `${displayName} created successfully.`;
+
+		case ThunkOperation.DELETE:
+			return `${displayName} deleted successfully.`;
+
+		case ThunkOperation.UPDATE:
+		case ThunkOperation.PUT:
+		case ThunkOperation.PATCH:
+		case ThunkOperation.UPSERT:
+			return `${displayName} updated successfully.`;
+
+		case ThunkOperation.GET:
+		default:
+			return null;
+	}
+};
+
+const getThunkErrorMessage = (thunkId?: string): string | null => {
+	if (!thunkId) return null;
+
+	const separatorIndex = thunkId.indexOf('-');
+
+	if (separatorIndex === -1) return null;
+
+	const operation = thunkId.slice(0, separatorIndex) as ThunkOperation;
+	const displayName = thunkId.slice(separatorIndex + 1).trim();
+
+	switch (operation) {
+		case ThunkOperation.CREATE:
+			return `Failed to create ${displayName.toLowerCase()}.`;
+
+		case ThunkOperation.DELETE:
+			return `Failed to delete ${displayName.toLowerCase()}.`;
+
+		case ThunkOperation.UPDATE:
+		case ThunkOperation.PUT:
+		case ThunkOperation.PATCH:
+		case ThunkOperation.UPSERT:
+			return `Failed to update ${displayName.toLowerCase()}.`;
+
+		case ThunkOperation.GET:
+		default:
+			return null;
+	}
 };
