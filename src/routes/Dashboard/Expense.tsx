@@ -1,6 +1,7 @@
 import { useEffect, useState } from 'react';
 import { toast } from 'react-hot-toast';
 import type { AddExpenseTransactionDTO, TransactionDTO } from '../../api/GeneratedDTOs';
+import AccountSelector from '../../components/Account/AccountSelector';
 import DeleteAlert from '../../components/DeleteAlert';
 import AddExpenseForm from '../../components/Expense/AddExpenseForm';
 import ExpenseList from '../../components/Expense/ExpenseList';
@@ -43,7 +44,6 @@ const Expense = () => {
 			await dispatch(addExpense(expense)).unwrap();
 
 			setIsAddExpenseModalOpen(false);
-			toast.success('Expense added successfully.');
 
 			await refreshExpenseDetails();
 		} catch (error: unknown) {
@@ -59,8 +59,6 @@ const Expense = () => {
 				show: false,
 				data: null,
 			});
-
-			toast.success('Expense deleted successfully.');
 
 			await refreshExpenseDetails();
 		} catch (error: unknown) {
@@ -114,6 +112,8 @@ const Expense = () => {
 	return (
 		<DashboardLayout activeMenu="Expense">
 			<div className={styles.expenseDashboard}>
+				<AccountSelector />
+
 				<div className={styles.expenseDashboard__content}>
 					<div className={styles.expenseDashboard__overview}>
 						<ExpenseOverview

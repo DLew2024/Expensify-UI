@@ -3,9 +3,9 @@ import { IoMdCard } from 'react-icons/io';
 import { LuHandCoins, LuWalletMinimal } from 'react-icons/lu';
 import { useSelector } from 'react-redux';
 import { useNavigate } from 'react-router';
-import type { AccountResponseDTO, DashboardDataResponseDTO } from '../../api/GeneratedDTOs';
+import type { DashboardDataResponseDTO } from '../../api/GeneratedDTOs';
+import AccountSelector from '../../components/Account/AccountSelector';
 import InfoCard from '../../components/Cards/InfoCard';
-import Selector from '../../components/common/Selector';
 import ExpenseTransactions from '../../components/Dashboard/ExpenseTransactions';
 import FinanceOverview from '../../components/Dashboard/FinanceOverview';
 import Last30DaysExpenses from '../../components/Dashboard/Last30DaysExpenses';
@@ -16,7 +16,6 @@ import DashboardLayout from '../../components/layouts/DashboardLayout';
 import { useUserAuth } from '../../hooks/useUserAuth';
 import { getUserAccounts } from '../../store/services/AccountService';
 import { getUserDashboardData } from '../../store/services/DashboardService';
-import { setSelectedAccountId } from '../../store/slices/accountsSlice';
 import { type AppState, dispatch } from '../../store/store';
 import { addThousandsSeparator } from '../../utils/Functions/Conversions/NumberUtils';
 import { handleApiError } from '../../utils/Functions/Utility/ApiFunctions';
@@ -26,15 +25,17 @@ const Home = () => {
 	useUserAuth();
 
 	const navigate = useNavigate();
-	const $userAccounts = useSelector((state: AppState) => state.accounts.userAccounts);
 	const $selectedAccountId = useSelector((state: AppState) => state.accounts.selectedAccountId);
 	const $selectedAccount = useSelector((state: AppState) => state.accounts.selectedAccount);
+	const $accountsStatus = useSelector((state: AppState) => state.accounts.status);
 
 	const [dashboardData, setDashboardData] = useState<DashboardDataResponseDTO | null>(null);
 
 	useEffect(() => {
-		dispatch(getUserAccounts());
-	}, []);
+		if ($accountsStatus === 'idle') {
+			dispatch(getUserAccounts());
+		}
+	}, [$accountsStatus]);
 
 	useEffect(() => {
 		if (!$selectedAccountId) return;
@@ -55,18 +56,7 @@ const Home = () => {
 	return (
 		<DashboardLayout activeMenu="Dashboard">
 			<div className={styles.dashboard}>
-				<Selector<AccountResponseDTO>
-					items={$userAccounts}
-					selectedValue={$selectedAccountId}
-					label="User Account"
-					placeholder="Select Account"
-					getValue={(account) => account.id}
-					getLabel={(account) => account.name || 'Unnamed Account'}
-					onChange={(account) => {
-						if (!account) return;
-						dispatch(setSelectedAccountId(account.id));
-					}}
-				/>
+				<AccountSelector />
 
 				<div className={styles.dashboard__cards}>
 					<InfoCard

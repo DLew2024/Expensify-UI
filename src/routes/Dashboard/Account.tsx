@@ -42,7 +42,6 @@ const Account = () => {
 			await dispatch(addUserAccount(account)).unwrap();
 
 			setIsAddAccountModalOpen(false);
-			toast.success('Account added successfully.');
 
 			await refreshAccountDetails();
 		} catch (error: unknown) {

@@ -20,12 +20,17 @@ export const getUserAccounts = createAsyncThunk<AccountResponseDTO[], void>(
 //#endregion GET
 
 //#region POST
-export const addUserAccount = createMutationThunk<void, CreateAccountDTO>(
+export const addUserAccount = createMutationThunk<AccountResponseDTO, CreateAccountDTO>(
 	CREATE_USER_ACCOUNTS,
 	async (account, { thunkId }) => {
-		const { data } = await buildAxiosCall<void, CreateAccountDTO>('POST', 'api/accounts', account, {
-			thunkId,
-		});
+		const { data } = await buildAxiosCall<AccountResponseDTO, CreateAccountDTO>(
+			'POST',
+			'api/accounts',
+			account,
+			{
+				thunkId,
+			},
+		);
 
 		return data;
 	},
