@@ -33,6 +33,15 @@ export type AccountResponseDTO = {
 	interestRate?: null | number;
 	notes?: string;
 	icon?: string;
+	isDefault: boolean;
+};
+
+export type AccountSummaryDTO = {
+	/** Format: uuid */
+	id?: Guid;
+	name?: string;
+	/** Format: double */
+	currentBalance?: number;
 };
 
 export type AddExpenseTransactionDTO = {
@@ -93,6 +102,7 @@ export type CreateAccountDTO = {
 	interestRate?: number;
 	notes?: string;
 	icon?: string;
+	isDefault: boolean;
 };
 
 export type CreateAccountResponseDTO = {
@@ -128,6 +138,7 @@ export type DashboardDataResponseDTO = {
 	totalIncome: number;
 	/** Format: double */
 	totalExpenses: number;
+	account?: null | AccountSummaryDTO;
 	last30DaysOfExpenses?: null | TransactionPeriodSummaryDTO;
 	last60DaysOfExpenses?: null | TransactionPeriodSummaryDTO;
 	last30DaysOfIncome?: null | TransactionPeriodSummaryDTO;

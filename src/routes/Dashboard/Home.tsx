@@ -28,36 +28,29 @@ const Home = () => {
 	const navigate = useNavigate();
 	const $userAccounts = useSelector((state: AppState) => state.accounts.userAccounts);
 	const $selectedAccountId = useSelector((state: AppState) => state.accounts.selectedAccountId);
-	const $selectedAccount =
-		$userAccounts.find((account) => account.id === $selectedAccountId) ?? null;
+	const $selectedAccount = useSelector((state: AppState) => state.accounts.selectedAccount);
 
 	const [dashboardData, setDashboardData] = useState<DashboardDataResponseDTO | null>(null);
-	const [isLoading, setIsLoading] = useState<boolean>(false);
 
-	const fetchDashboardData = async () => {
-		if (isLoading) return;
-
-		setIsLoading(true);
-
-		try {
-			const dashboardData = await dispatch(getUserDashboardData()).unwrap();
-
-			if (dashboardData) {
-				setDashboardData(dashboardData);
-			}
-
-			await dispatch(getUserAccounts()).unwrap();
-		} catch (error: unknown) {
-			handleApiError(error, 'Error logging in account:');
-		} finally {
-			setIsLoading(false);
-		}
-	};
-
-	// biome-ignore lint/correctness/useExhaustiveDependencies: <Initial page load only>
 	useEffect(() => {
-		fetchDashboardData();
+		dispatch(getUserAccounts());
 	}, []);
+
+	useEffect(() => {
+		if (!$selectedAccountId) return;
+
+		const fetchDashboardData = async () => {
+			try {
+				const dashboardData = await dispatch(getUserDashboardData($selectedAccountId)).unwrap();
+
+				setDashboardData(dashboardData);
+			} catch (error: unknown) {
+				handleApiError(error, 'Error loading dashboard data:');
+			}
+		};
+
+		fetchDashboardData();
+	}, [$selectedAccountId]);
 
 	return (
 		<DashboardLayout activeMenu="Dashboard">
