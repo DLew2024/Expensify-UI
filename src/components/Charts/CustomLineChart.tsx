@@ -4,7 +4,6 @@ import {
 	CartesianGrid,
 	ResponsiveContainer,
 	Tooltip,
-	type TooltipPayload,
 	XAxis,
 	YAxis,
 } from 'recharts';
@@ -16,24 +15,25 @@ interface CustomLineChartProps {
 	data: CustomLineChartData[];
 }
 
+interface CustomTooltipProps {
+	active?: boolean;
+	payload?: Array<{
+		payload: CustomLineChartData;
+	}>;
+}
+
 const CustomLineChart = ({ data }: CustomLineChartProps) => {
-	const CustomTooltip = ({ active, payload }: { active: boolean; payload: TooltipPayload }) => {
+	const CustomTooltip = ({ active, payload }: CustomTooltipProps) => {
 		if (!active || !payload?.length) {
 			return null;
 		}
 
+		const item = payload[0].payload;
+
 		return (
 			<div className={styles.customLineChart__tooltip}>
-				<MainTextTypography variant="body" className={styles.customLineChart__tooltipCategory}>
-					{payload[0].payload.category}
-				</MainTextTypography>
-
-				<MainTextTypography variant="body" className={styles.customLineChart__tooltipAmount}>
-					Amount:{' '}
-					<span className={styles.customLineChart__tooltipAmountValue}>
-						{payload[0].payload.amount}
-					</span>
-				</MainTextTypography>
+				<MainTextTypography variant="body">Amount: ${item.amount}</MainTextTypography>
+				<MainTextTypography variant="body">{item.date}</MainTextTypography>
 			</div>
 		);
 	};
@@ -45,18 +45,17 @@ const CustomLineChart = ({ data }: CustomLineChartProps) => {
 					<defs>
 						<linearGradient id="incomeGradient" x1="0" y1="0" x2="0" y2="1">
 							<stop offset="5%" stopColor="#875cf5" stopOpacity={0.4} />
-
 							<stop offset="95%" stopColor="#875cf5" stopOpacity={0} />
 						</linearGradient>
 					</defs>
 
 					<CartesianGrid stroke="none" />
 
-					<XAxis dataKey="month" tick={{ fontSize: 12, fill: '#555' }} stroke="none" />
+					<XAxis dataKey="date" tick={{ fontSize: 12, fill: '#555' }} stroke="none" />
 
 					<YAxis tick={{ fontSize: 12, fill: '#555' }} stroke="none" />
 
-					<Tooltip content={(tooltipProps) => <CustomTooltip {...tooltipProps} />} />
+					<Tooltip content={<CustomTooltip />} />
 
 					<Area
 						type="monotone"

@@ -90,8 +90,6 @@ const Account = () => {
 				data: null,
 			});
 
-			toast.success('Account deleted successfully.');
-
 			await refreshAccountDetails();
 		} catch (error: unknown) {
 			handleApiError(error, 'Error deleting account:');
@@ -107,9 +105,17 @@ const Account = () => {
 		}
 	};
 
-	// biome-ignore lint/correctness/useExhaustiveDependencies: <Initial Only>
 	useEffect(() => {
-		refreshAccountDetails();
+		const fetchAccountDetails = async () => {
+			try {
+				const response = await dispatch(getUserAccounts()).unwrap();
+				setAccounts(response);
+			} catch (error: unknown) {
+				handleApiError(error, 'Error fetching account details:');
+			}
+		};
+
+		fetchAccountDetails();
 	}, []);
 
 	return (

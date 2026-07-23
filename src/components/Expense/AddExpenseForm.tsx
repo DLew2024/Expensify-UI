@@ -1,23 +1,30 @@
 import { useState } from 'react';
+import toast from 'react-hot-toast';
+import { useSelector } from 'react-redux';
 import type { AddExpenseTransactionDTO } from '../../api/GeneratedDTOs';
-import FillButton from '../common/FillButton';
+import type { AppState } from '../../store/store';
+import { EMPTY_EXPENSE_TRANSACTION } from '../../utils/DataTypes/EmptyObjects/EMPTY_TRANSACTIONS';
+import {
+	convertStringToEpochSeconds,
+	formatEpochSeconds,
+} from '../../utils/Functions/Conversions/DateUtils';
+import CardButton from '../common/CardButton';
 import EmojiPickerPopup from '../EmojiPickerPopup';
 import LabeledInput from '../Inputs/LabeledInput';
 import styles from './styles/_AddExpenseForm.module.scss';
+
+enum CurrencyCode {
+	USD = 0,
+}
 
 interface AddExpenseFormProps {
 	onAddExpense: (expense: AddExpenseTransactionDTO) => void;
 }
 
-const emptyExpenseTransaction: AddExpenseTransactionDTO = {
-	icon: '',
-	category: '',
-	amount: 0,
-	date: 0,
-};
-
 const AddExpenseForm = ({ onAddExpense }: AddExpenseFormProps) => {
-	const [expense, setExpense] = useState<AddExpenseTransactionDTO>(emptyExpenseTransaction);
+	const $selectedAccountId = useSelector((state: AppState) => state.accounts.selectedAccountId);
+
+	const [expense, setExpense] = useState<AddExpenseTransactionDTO>(EMPTY_EXPENSE_TRANSACTION);
 
 	const handleChange = <K extends keyof AddExpenseTransactionDTO>(
 		key: K,
@@ -29,6 +36,18 @@ const AddExpenseForm = ({ onAddExpense }: AddExpenseFormProps) => {
 		}));
 	};
 
+	const handleAddExpense = () => {
+		if (!$selectedAccountId) {
+			toast.error('Please select an account');
+			return;
+		}
+
+		onAddExpense({
+			...expense,
+			accountId: $selectedAccountId,
+		});
+	};
+
 	return (
 		<div className={styles.addExpenseForm}>
 			<EmojiPickerPopup
@@ -37,9 +56,9 @@ const AddExpenseForm = ({ onAddExpense }: AddExpenseFormProps) => {
 			/>
 
 			<LabeledInput
-				value={expense.category}
-				onChange={(category) => handleChange('category', category)}
-				label="Category"
+				value={expense.source}
+				onChange={(source) => handleChange('source', source)}
+				label="Source"
 				placeholder="Rent, Groceries, etc"
 			/>
 
@@ -48,17 +67,29 @@ const AddExpenseForm = ({ onAddExpense }: AddExpenseFormProps) => {
 				onChange={(amount) => handleChange('amount', Number(amount))}
 				label="Amount"
 				type="number"
+				formatAsCurrency
 			/>
 
 			<LabeledInput
-				value={String(expense.date ?? '')}
-				onChange={(date) => handleChange('date', Number(date))}
+				value={
+					expense.transactionDate ? formatEpochSeconds(expense.transactionDate, 'YYYY-MM-DD') : ''
+				}
+				onChange={(transactionDate) =>
+					handleChange('transactionDate', convertStringToEpochSeconds(transactionDate))
+				}
 				label="Date"
 				type="date"
 			/>
 
+			<LabeledInput
+				value={String(expense.description ?? '')}
+				onChange={(description) => handleChange('description', description)}
+				label="Description"
+				type="text"
+			/>
+
 			<div className={styles.addExpenseForm__actions}>
-				<FillButton onClick={() => onAddExpense(expense)}>Add Expense</FillButton>
+				<CardButton onClick={handleAddExpense}>Add Expense</CardButton>
 			</div>
 		</div>
 	);
