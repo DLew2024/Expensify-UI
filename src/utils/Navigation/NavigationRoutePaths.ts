@@ -12,4 +12,3 @@ export const NavigationRoutePaths = {
 	NOT_FOUND: '*',
 } as const;
 
-export const buildEditPath = (id: string | number) => `/edit/${id}`;

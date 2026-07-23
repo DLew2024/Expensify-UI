@@ -11,6 +11,8 @@ import { NavigationRoutePaths } from './NavigationRoutePaths';
 interface AppRoute {
 	path: string;
 	caseSensitive?: boolean;
+	isHidden?: boolean;
+	requiresAccount?: boolean;
 	Component: ComponentType;
 }
 
@@ -38,11 +40,13 @@ export const appRoutes: AppRoute[] = [
 	{
 		path: NavigationRoutePaths.INCOME,
 		caseSensitive: true,
+		requiresAccount: true,
 		Component: Income,
 	},
 	{
 		path: NavigationRoutePaths.EXPENSE,
 		caseSensitive: true,
+		requiresAccount: true,
 		Component: Expense,
 	},
 	{

@@ -1,16 +1,18 @@
 import { createSlice, type PayloadAction } from '@reduxjs/toolkit';
 import type { AccountResponseDTO } from '../../api/GeneratedDTOs';
-import { EMPTY_GUID, type Guid } from '../../utils/DataTypes/Guid';
+import type { Guid } from '../../utils/DataTypes/Guid';
 import { getUserAccounts } from '../services/AccountService';
 
 interface AccountsState {
 	userAccounts: AccountResponseDTO[];
-	selectedAccountId: Guid;
+	selectedAccountId: Guid | null;
+	selectedAccount: AccountResponseDTO | null;
 }
 
 const initialState: AccountsState = {
 	userAccounts: [],
-	selectedAccountId: EMPTY_GUID,
+	selectedAccountId: null,
+	selectedAccount: null,
 };
 
 const accountsSlice = createSlice({
@@ -23,16 +25,25 @@ const accountsSlice = createSlice({
 
 		setSelectedAccountId: (state, action: PayloadAction<Guid>) => {
 			state.selectedAccountId = action.payload;
+
+			state.selectedAccount =
+				state.userAccounts.find((account) => account.id === action.payload) ?? null;
 		},
 
 		clearAccounts: (state) => {
 			state.userAccounts = [];
-			state.selectedAccountId = EMPTY_GUID;
+			state.selectedAccountId = null;
+			state.selectedAccount = null;
 		},
 	},
 	extraReducers: (builder) => {
 		builder.addCase(getUserAccounts.fulfilled, (state, action) => {
 			state.userAccounts = action.payload;
+
+			const defaultAccount = action.payload.find((account) => account.isDefault) ?? null;
+
+			state.selectedAccount = defaultAccount;
+			state.selectedAccountId = defaultAccount?.id ?? null;
 		});
 	},
 });

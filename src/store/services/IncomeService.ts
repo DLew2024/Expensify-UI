@@ -15,10 +15,15 @@ import { buildAxiosCall } from '../api/buildAxiosCall';
 import { createMutationThunk } from '../api/createMutationThunk';
 
 //#region GET
-export const getAllIncome = createAsyncThunk<TransactionDTO[], void>(
+export const getAllIncome = createAsyncThunk<TransactionDTO[], Guid | null>(
 	GET_ALL_INCOME_THUNK_ID,
-	async () => {
-		const { data } = await buildAxiosCall<TransactionDTO[], void>('GET', 'api/income/getAll');
+	async (currentlySelectedAccountId) => {
+		const url = currentlySelectedAccountId
+			? `api/income/getAll?accountId=${currentlySelectedAccountId}`
+			: 'api/income/getAll';
+
+		const { data } = await buildAxiosCall<TransactionDTO[], void>('GET', url);
+
 		return data;
 	},
 );
