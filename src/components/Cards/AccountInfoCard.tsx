@@ -3,7 +3,7 @@ import { RiAccountBoxLine } from 'react-icons/ri';
 import MainTextTypography from '../MainTextTypography';
 import styles from './styles/_AccountInfoCard.module.scss';
 
-interface TransactionInfoCardProps {
+interface AccountInfoCardProps {
 	name?: string;
 	institutionName?: string;
 	type?: string; // Using type to change color
@@ -23,7 +23,7 @@ const AccountInfoCard = ({
 	lastFourDigits,
 	hideDeleteBtn = false,
 	onDelete,
-}: TransactionInfoCardProps) => {
+}: AccountInfoCardProps) => {
 	return (
 		<div className={styles.accountInfoCard}>
 			<div className={styles.accountInfoCard__iconContainer}>

@@ -1,6 +1,15 @@
 import type { Dayjs } from 'dayjs';
 import dayjs from 'dayjs';
+import moment from 'moment';
 import type { EpochMillis, EpochSeconds } from '../../DataTypes/DateTypes';
+
+export const formatEpochSeconds = (epochSeconds: number, format: string = 'Do MMM'): string => {
+	return moment.unix(epochSeconds).format(format);
+};
+
+export const convertStringToEpochSeconds = (epochSeconds: string): number => {
+	return moment(epochSeconds).unix();
+};
 
 export const formatDateTimeSafe = (dateString?: string, fallback = 'N/A'): string => {
 	if (!dateString) return fallback;

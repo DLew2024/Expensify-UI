@@ -18,7 +18,7 @@ import { createMutationThunk } from '../api/createMutationThunk';
 export const getAllExpense = createAsyncThunk<TransactionDTO[], void>(
 	GET_ALL_EXPENSE_THUNK_ID,
 	async () => {
-		const { data } = await buildAxiosCall<TransactionDTO[], void>('GET', 'api/expense/get');
+		const { data } = await buildAxiosCall<TransactionDTO[], void>('GET', 'api/expense/getAll');
 		return data;
 	},
 );

@@ -1,13 +1,14 @@
 import type { Guid } from '../../../utils/DataTypes/Guid';
 
 export interface CustomBarChartData {
-	categoryName: string;
+	id?: Guid;
+	sourceName: string;
+	date: string;
 	amount: number;
-	month: string;
 }
 
 export type CustomLineChartData = {
-	categoryId?: Guid;
+	id?: Guid;
 	date: string;
 	amount: number;
 };

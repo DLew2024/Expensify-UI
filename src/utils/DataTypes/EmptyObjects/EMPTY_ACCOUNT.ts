@@ -9,6 +9,7 @@ export const EMPTY_ACCOUNT: CreateAccountDTO = {
 	currencyCode: 0,
 	initialBalance: 0,
 	includeInNetWorth: true,
+	isDefault: false,
 	notes: '',
 	icon: '',
 };

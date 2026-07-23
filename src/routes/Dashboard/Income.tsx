@@ -23,6 +23,7 @@ import {
 import { setSelectedAccountId } from '../../store/slices/accountsSlice';
 import { type AppState, dispatch } from '../../store/store';
 import type { Guid } from '../../utils/DataTypes/Guid';
+import { validateIncome } from '../../utils/Functions/Transaction/TransactionValidation';
 import { handleApiError } from '../../utils/Functions/Utility/ApiFunctions';
 import styles from './styles/_Income.module.scss';
 
@@ -36,30 +37,19 @@ const Income = () => {
 
 	const $userAccounts = useSelector((state: AppState) => state.accounts.userAccounts);
 	const $selectedAccountId = useSelector((state: AppState) => state.accounts.selectedAccountId);
-	const $selectedAccount = useSelector((state: AppState) => state.accounts.selectedAccount);
 
 	const [incomeData, setIncomeData] = useState<TransactionDTO[]>([]);
+	const [isAddIncomeModalOpen, setIsOpenAddIncomeModal] = useState<boolean>(false);
 	const [openDeleteAlert, setOpenDeleteAlert] = useState<DeleteAlertState>({
 		show: false,
 		data: null,
 	});
-	const [isAddIncomeModalOpen, setIsOpenAddIncomeModal] = useState<boolean>(false);
 
 	const handleAddIncome = async (income: AddIncomeTransactionDTO) => {
-		const { source, amount, transactionDate } = income;
+		const validationError = validateIncome(income);
 
-		if (!source.trim()) {
-			toast.error('Source is required.');
-			return;
-		}
-
-		if (!amount || Number.isNaN(amount) || amount <= 0) {
-			toast.error('Amount should be a valid number greater than 0.');
-			return;
-		}
-
-		if (!transactionDate) {
-			toast.error('Date is required.');
+		if (validationError) {
+			toast.error(validationError);
 			return;
 		}
 
@@ -67,7 +57,6 @@ const Income = () => {
 			await dispatch(addIncome(income)).unwrap();
 
 			setIsOpenAddIncomeModal(false);
-			toast.success('Income added successfully.');
 
 			await refreshIncomeDetails();
 		} catch (error: unknown) {

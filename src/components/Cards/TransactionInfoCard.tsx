@@ -1,6 +1,6 @@
 import clsx from 'clsx';
 import { LuTrash2, LuTrendingDown, LuTrendingUp, LuUtensils } from 'react-icons/lu';
-import { formatEpochSeconds } from '../../utils/Functions/Conversions/NumberUtils';
+import { formatEpochSeconds } from '../../utils/Functions/Conversions/DateUtils';
 import { TransactionType } from '../Dashboard/types/DashboardTypes';
 import MainTextTypography from '../MainTextTypography';
 import styles from './styles/_TransactionCardInfo.module.scss';

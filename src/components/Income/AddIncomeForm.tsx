@@ -1,9 +1,13 @@
-import moment from 'moment';
 import { useState } from 'react';
+import toast from 'react-hot-toast';
 import { useSelector } from 'react-redux';
 import type { AddIncomeTransactionDTO } from '../../api/GeneratedDTOs';
 import type { AppState } from '../../store/store';
-import { EMPTY_INCOME } from '../../utils/DataTypes/EmptyObjects/EMPTY_INCOME';
+import { EMPTY_INCOME_TRANSACTION } from '../../utils/DataTypes/EmptyObjects/EMPTY_TRANSACTIONS';
+import {
+	convertStringToEpochSeconds,
+	formatEpochSeconds,
+} from '../../utils/Functions/Conversions/DateUtils';
 import CardButton from '../common/CardButton';
 import EmojiPickerPopup from '../EmojiPickerPopup';
 import LabeledInput from '../Inputs/LabeledInput';
@@ -16,7 +20,7 @@ interface AddIncomeFormProps {
 const AddIncomeForm = ({ onAddIncome }: AddIncomeFormProps) => {
 	const $selectedAccountId = useSelector((state: AppState) => state.accounts.selectedAccountId);
 
-	const [income, setIncome] = useState<AddIncomeTransactionDTO>(EMPTY_INCOME);
+	const [income, setIncome] = useState<AddIncomeTransactionDTO>(EMPTY_INCOME_TRANSACTION);
 
 	const handleChange = <K extends keyof AddIncomeTransactionDTO>(
 		key: K,
@@ -30,6 +34,7 @@ const AddIncomeForm = ({ onAddIncome }: AddIncomeFormProps) => {
 
 	const handleAddIncome = () => {
 		if (!$selectedAccountId) {
+			toast.error('Please select an account');
 			return;
 		}
 
@@ -58,14 +63,15 @@ const AddIncomeForm = ({ onAddIncome }: AddIncomeFormProps) => {
 				onChange={(amount) => handleChange('amount', Number(amount))}
 				label="Amount"
 				type="number"
+				formatAsCurrency
 			/>
 
 			<LabeledInput
 				value={
-					income.transactionDate ? moment.unix(income.transactionDate).format('YYYY-MM-DD') : ''
+					income.transactionDate ? formatEpochSeconds(income.transactionDate, 'YYYY-MM-DD') : ''
 				}
 				onChange={(transactionDate) =>
-					handleChange('transactionDate', moment(transactionDate).unix())
+					handleChange('transactionDate', convertStringToEpochSeconds(transactionDate))
 				}
 				label="Date"
 				type="date"

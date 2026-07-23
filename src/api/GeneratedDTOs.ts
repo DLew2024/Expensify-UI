@@ -45,21 +45,8 @@ export type AccountSummaryDTO = {
 };
 
 export type AddExpenseTransactionDTO = {
-	icon: string;
-	category: string;
-	/** Format: int32 */
-	amount: number;
-	/** Format: int64 */
-	date: number;
-};
-
-export type AddIncomeTransactionDTO = {
 	/** Format: uuid */
 	accountId: Guid;
-	/** Format: uuid */
-	budgetId?: null | Guid;
-	/** Format: uuid */
-	categoryId?: null | Guid;
 	/** Format: double */
 	amount: number;
 	/** Format: int64 */
@@ -72,6 +59,31 @@ export type AddIncomeTransactionDTO = {
 	paymentMethodId?: null | Guid;
 	tags?: string[];
 	icon?: string;
+	/** Format: uuid */
+	budgetId?: null | Guid;
+	/** Format: uuid */
+	categoryId?: null | Guid;
+};
+
+export type AddIncomeTransactionDTO = {
+	/** Format: uuid */
+	accountId: Guid;
+	/** Format: double */
+	amount: number;
+	/** Format: int64 */
+	transactionDate: number;
+	description: string;
+	source: string;
+	notes?: null | string;
+	isRecurring?: boolean;
+	/** Format: uuid */
+	paymentMethodId?: null | Guid;
+	tags?: string[];
+	icon?: string;
+	/** Format: uuid */
+	budgetId?: null | Guid;
+	/** Format: uuid */
+	categoryId?: null | Guid;
 };
 
 export type CategoryDTO = {
@@ -146,22 +158,32 @@ export type DashboardDataResponseDTO = {
 	recentTransactions?: TransactionDTO[];
 };
 
-export type DownloadExpenseExcelDTO = {
-	/** Format: uuid */
-	userId?: Guid;
-};
-
 export type EmailVerificationDTO = {
 	token?: string;
 };
 
-export type ExpenseTransactionResponseDTO = Record<string, never>;
+export type ExpenseTransactionResponseDTO = {
+	/** Format: uuid */
+	transactionId?: Guid;
+	/** Format: uuid */
+	accountId?: Guid;
+	/** Format: double */
+	amount?: number;
+	/** Format: double */
+	accountBalanceAfterTransaction?: number;
+	/** Format: int64 */
+	transactionDate?: number;
+	description?: string;
+	merchantName?: string;
+	notes?: null | string;
+	isRecurring?: boolean;
+	status?: TransactionPostedStatus;
+	tags?: string[];
+};
 
 export type ForgotPasswordDTO = {
 	email: string;
 };
-
-export type GetExpenseIncomeDTO = Record<string, never>;
 
 export type IncomeTransactionResponseDTO = {
 	/** Format: uuid */

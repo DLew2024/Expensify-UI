@@ -17,6 +17,7 @@ import {
 import { dispatch } from '../../store/store';
 import type { Guid } from '../../utils/DataTypes/Guid';
 import type { DeleteAlertState } from '../../utils/DataTypes/ModalTypes';
+import { validateExpense } from '../../utils/Functions/Transaction/TransactionValidation';
 import { handleApiError } from '../../utils/Functions/Utility/ApiFunctions';
 import styles from './styles/_Expense.module.scss';
 
@@ -24,46 +25,17 @@ const Expense = () => {
 	useUserAuth();
 
 	const [expenseData, setExpenseData] = useState<TransactionDTO[]>([]);
-	const [isLoading, setIsLoading] = useState(false);
+	const [isAddExpenseModalOpen, setIsAddExpenseModalOpen] = useState<boolean>(false);
 	const [openDeleteAlert, setOpenDeleteAlert] = useState<DeleteAlertState>({
 		show: false,
 		data: null,
 	});
-	const [isAddExpenseModalOpen, setIsAddExpenseModalOpen] = useState<boolean>(false);
-
-	const fetchExpenseDetails = async () => {
-		if (isLoading) return;
-
-		setIsLoading(true);
-
-		try {
-			const response = await dispatch(getAllExpense()).unwrap();
-
-			if (response) {
-				setExpenseData(response);
-			}
-		} catch (error: unknown) {
-			handleApiError(error, 'Error fetching expense details:');
-		} finally {
-			setIsLoading(false);
-		}
-	};
 
 	const handleAddExpense = async (expense: AddExpenseTransactionDTO) => {
-		const { category, amount, date } = expense;
+		const validationError = validateExpense(expense);
 
-		if (!category.trim()) {
-			toast.error('Category is required.');
-			return;
-		}
-
-		if (!amount || Number.isNaN(amount) || amount <= 0) {
-			toast.error('Amount should be a valid number greater than 0.');
-			return;
-		}
-
-		if (!date) {
-			toast.error('Date is required.');
+		if (validationError) {
+			toast.error(validationError);
 			return;
 		}
 
@@ -73,7 +45,7 @@ const Expense = () => {
 			setIsAddExpenseModalOpen(false);
 			toast.success('Expense added successfully.');
 
-			await fetchExpenseDetails();
+			await refreshExpenseDetails();
 		} catch (error: unknown) {
 			handleApiError(error, 'Error adding expense:');
 		}
@@ -90,7 +62,7 @@ const Expense = () => {
 
 			toast.success('Expense deleted successfully.');
 
-			await fetchExpenseDetails();
+			await refreshExpenseDetails();
 		} catch (error: unknown) {
 			handleApiError(error, 'Error deleting expense:');
 		}
@@ -117,9 +89,26 @@ const Expense = () => {
 		}
 	};
 
-	// biome-ignore lint/correctness/useExhaustiveDependencies: <Initial render only.>
+	const refreshExpenseDetails = async () => {
+		try {
+			const response = await dispatch(getAllExpense()).unwrap();
+			setExpenseData(response);
+		} catch (error: unknown) {
+			handleApiError(error, 'Error fetching income details:');
+		}
+	};
+
 	useEffect(() => {
-		fetchExpenseDetails();
+		const fetchInitialExpenses = async () => {
+			try {
+				const response = await dispatch(getAllExpense()).unwrap();
+				setExpenseData(response);
+			} catch (error: unknown) {
+				handleApiError(error, 'Error fetching income details:');
+			}
+		};
+
+		fetchInitialExpenses();
 	}, []);
 
 	return (
