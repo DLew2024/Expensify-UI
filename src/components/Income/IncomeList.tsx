@@ -30,7 +30,7 @@ const IncomeList = ({ transactions, onDelete, onDownload }: IncomeListProps) => 
 				{transactions.map((income) => (
 					<TransactionInfoCard
 						key={income.id}
-						title={income.category.name ?? ''}
+						title={income.merchant}
 						icon={income.icon}
 						date={income.transactionDate}
 						amount={income.amount}

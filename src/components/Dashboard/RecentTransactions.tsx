@@ -28,10 +28,10 @@ const RecentTransactions = ({ transactions, onSeeMore }: RecentTransactionsProps
 			</div>
 
 			<div className={styles.recentTransactions__list}>
-				{transactions?.slice(0, 4).map((item) => (
+				{transactions?.slice(0, 5).map((item) => (
 					<TransactionInfoCard
 						key={item.id}
-						title={item.type === 0 ? item.category.name : item.merchant}
+						title={item.merchant}
 						icon={item.icon}
 						date={item.transactionDate}
 						amount={item.amount}
