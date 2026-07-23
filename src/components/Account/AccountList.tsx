@@ -29,6 +29,7 @@ const AccountList = ({ accounts, onDelete }: AccountListProps) => {
 						availableBalance={account.availableBalance}
 						icon={account.icon}
 						lastFourDigits={account.lastFourDigits}
+						hideDeleteBtn={accounts.length === 1}
 						onDelete={() => {
 							if (account.id) {
 								onDelete(account.id);

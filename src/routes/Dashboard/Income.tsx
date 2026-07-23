@@ -1,11 +1,7 @@
 import { useEffect, useState } from 'react';
 import { toast } from 'react-hot-toast';
-import type {
-	AccountResponseDTO,
-	AddIncomeTransactionDTO,
-	TransactionDTO,
-} from '../../api/GeneratedDTOs';
-import Selector from '../../components/common/Selector';
+import type { AddIncomeTransactionDTO, TransactionDTO } from '../../api/GeneratedDTOs';
+import AccountSelector from '../../components/Account/AccountSelector';
 import DeleteAlert from '../../components/DeleteAlert';
 import AddIncomeForm from '../../components/Income/AddIncomeForm';
 import IncomeList from '../../components/Income/IncomeList';
@@ -20,7 +16,6 @@ import {
 	downloadIncome,
 	getAllIncome,
 } from '../../store/services/IncomeService';
-import { setSelectedAccountId } from '../../store/slices/accountsSlice';
 import { type AppState, dispatch } from '../../store/store';
 import type { Guid } from '../../utils/DataTypes/Guid';
 import { validateIncome } from '../../utils/Functions/Transaction/TransactionValidation';
@@ -35,7 +30,6 @@ interface DeleteAlertState {
 const Income = () => {
 	useUserAuth();
 
-	const $userAccounts = useSelector((state: AppState) => state.accounts.userAccounts);
 	const $selectedAccountId = useSelector((state: AppState) => state.accounts.selectedAccountId);
 
 	const [incomeData, setIncomeData] = useState<TransactionDTO[]>([]);
@@ -127,18 +121,8 @@ const Income = () => {
 	return (
 		<DashboardLayout activeMenu="Income">
 			<div className={styles.incomeDashboard}>
-				<Selector<AccountResponseDTO>
-					items={$userAccounts}
-					selectedValue={$selectedAccountId}
-					label="User Account"
-					placeholder="Select Account"
-					getValue={(account) => account.id}
-					getLabel={(account) => account.name || 'Unnamed Account'}
-					onChange={(account) => {
-						if (!account) return;
-						dispatch(setSelectedAccountId(account.id));
-					}}
-				/>
+				<AccountSelector />
+
 				<div className={styles.incomeDashboard__content}>
 					<IncomeOverview
 						transactions={incomeData}
