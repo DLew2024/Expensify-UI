@@ -1,6 +1,6 @@
 import type { AsyncThunk, Middleware } from '@reduxjs/toolkit';
-import { BypassFeedbackThunkSubjects } from '../../models/Constants/ThunkIds/BypassedThunks';
 import { ThunkOperation } from '../constants/Redux/ThunkOperations';
+import { BypassFeedbackThunkSubjects } from '../constants/ThunkIds/BypassedThunks';
 import { removeCancelToken } from '../slices/cancelTokenSlice';
 import {
 	addLoadingMessage,
