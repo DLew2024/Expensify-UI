@@ -1,12 +1,12 @@
 import type { AsyncThunk, Middleware } from '@reduxjs/toolkit';
-import { ThunkOperation } from '../../models/Constants/Redux/ThunkOperations';
 import { BypassFeedbackThunkSubjects } from '../../models/Constants/ThunkIds/BypassedThunks';
+import { ThunkOperation } from '../constants/Redux/ThunkOperations';
+import { removeCancelToken } from '../slices/cancelTokenSlice';
 import {
 	addLoadingMessage,
 	pushUniversalFeedbackNotification,
 	removeLoadingMessage,
 } from '../slices/commonSlice';
-import { removeCancelToken } from '../slices/cancelTokenSlice';
 import { RevokedCallError } from '../utils/RevokedCallError';
 
 export type AsyncThunkLifecycleStatus = ReturnType<

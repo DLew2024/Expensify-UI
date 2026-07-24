@@ -4,15 +4,15 @@ import type {
 	IncomeTransactionResponseDTO,
 	TransactionDTO,
 } from '../../api/GeneratedDTOs';
+import type { Guid } from '../../utils/DataTypes/Guid';
+import { buildAxiosCall } from '../api/buildAxiosCall';
+import { createMutationThunk } from '../api/createMutationThunk';
 import {
 	CREATE_INCOME_THUNK_ID,
 	DELETE_INCOME_THUNK_ID,
 	GET_ALL_INCOME_THUNK_ID,
 	GET_DOWNLOADED_INCOME_THUNK_ID,
-} from '../../models/Constants/ThunkIds/IncomeThunkIds';
-import type { Guid } from '../../utils/DataTypes/Guid';
-import { buildAxiosCall } from '../api/buildAxiosCall';
-import { createMutationThunk } from '../api/createMutationThunk';
+} from '../constants/ThunkIds/IncomeThunkIds';
 
 //#region GET
 export const getAllIncome = createAsyncThunk<TransactionDTO[], Guid | null>(

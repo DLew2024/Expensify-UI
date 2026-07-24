@@ -5,13 +5,13 @@ import type {
 	UserResponseDTO,
 	UserTokenResponseDTO,
 } from '../../api/GeneratedDTOs';
+import { buildAxiosCall } from '../api/buildAxiosCall';
+import { createMutationThunk } from '../api/createMutationThunk';
 import {
 	GET_USER_INFO_THUNK_ID,
 	POST_USER_LOGIN_THUNK_ID,
 	POST_USER_REGISTER_THUNK_ID,
-} from '../../models/Constants/ThunkIds/UserThunkIds';
-import { buildAxiosCall } from '../api/buildAxiosCall';
-import { createMutationThunk } from '../api/createMutationThunk';
+} from '../constants/ThunkIds/UserThunkIds';
 import { dispatch } from '../store';
 import { uploadImage } from './ImageService';
 

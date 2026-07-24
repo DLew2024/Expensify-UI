@@ -1,13 +1,13 @@
 import { createAsyncThunk } from '@reduxjs/toolkit';
 import type { AccountResponseDTO, CreateAccountDTO } from '../../api/GeneratedDTOs';
+import type { Guid } from '../../utils/DataTypes/Guid';
+import { buildAxiosCall } from '../api/buildAxiosCall';
+import { createMutationThunk } from '../api/createMutationThunk';
 import {
 	CREATE_USER_ACCOUNTS,
 	DELETE_ACCOUNT_THUNK_ID,
 	GET_USER_ACCOUNTS,
-} from '../../models/Constants/ThunkIds/AccountThunkIds';
-import type { Guid } from '../../utils/DataTypes/Guid';
-import { buildAxiosCall } from '../api/buildAxiosCall';
-import { createMutationThunk } from '../api/createMutationThunk';
+} from '../constants/ThunkIds/AccountThunkIds';
 
 //#region GET
 export const getUserAccounts = createAsyncThunk<AccountResponseDTO[], void>(

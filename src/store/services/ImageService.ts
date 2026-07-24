@@ -1,6 +1,6 @@
-import { UPLOAD_IMAGE_THUNK_ID } from '../../models/Constants/ThunkIds/ImageThunkIds';
 import { buildAxiosCall } from '../api/buildAxiosCall';
 import { createMutationThunk } from '../api/createMutationThunk';
+import { UPLOAD_IMAGE_THUNK_ID } from '../constants/ThunkIds/ImageThunkIds';
 
 interface UploadImageResponse {
 	imageUrl?: string;

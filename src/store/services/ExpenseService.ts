@@ -4,15 +4,15 @@ import type {
 	ExpenseTransactionResponseDTO,
 	TransactionDTO,
 } from '../../api/GeneratedDTOs';
+import type { Guid } from '../../utils/DataTypes/Guid';
+import { buildAxiosCall } from '../api/buildAxiosCall';
+import { createMutationThunk } from '../api/createMutationThunk';
 import {
 	CREATE_EXPENSE_THUNK_ID,
 	DELETE_EXPENSE_THUNK_ID,
 	GET_ALL_EXPENSE_THUNK_ID,
 	GET_DOWNLOADED_EXPENSE_THUNK_ID,
-} from '../../models/Constants/ThunkIds/ExpenseThunkIds';
-import type { Guid } from '../../utils/DataTypes/Guid';
-import { buildAxiosCall } from '../api/buildAxiosCall';
-import { createMutationThunk } from '../api/createMutationThunk';
+} from '../constants/ThunkIds/ExpenseThunkIds';
 
 //#region GET
 export const getAllExpense = createAsyncThunk<TransactionDTO[], void>(

@@ -1,6 +1,7 @@
+//** GET */
+
 import { ThunkOperation } from '../Redux/ThunkOperations';
 
-//** GET */
 //#region GET
 export const GET_ALL_INCOME_THUNK_ID = `${ThunkOperation.GET}-All Income`;
 export const GET_DOWNLOADED_INCOME_THUNK_ID = `${ThunkOperation.GET}-Downloaded Income`;

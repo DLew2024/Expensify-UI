@@ -1,6 +1,6 @@
 import type { AxiosRequestConfig, AxiosResponse, CancelToken } from 'axios';
 import toast from 'react-hot-toast';
-import { ThunkOperation } from '../../models/Constants/Redux/ThunkOperations';
+import { ThunkOperation } from '../constants/Redux/ThunkOperations';
 import { withCancelToken } from '../utils/withCancel';
 import axiosInstance from './axiosInstance';
 
