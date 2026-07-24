@@ -1,4 +1,4 @@
-import type { AxiosRequestConfig, AxiosResponse, CancelToken } from 'axios';
+import type { AxiosRequestConfig, AxiosResponse } from 'axios';
 import toast from 'react-hot-toast';
 import { ThunkOperation } from '../constants/Redux/ThunkOperations';
 import { withCancelToken } from '../utils/withCancel';
@@ -22,13 +22,12 @@ async function buildAxiosCallBase<R, T>(
 		params,
 		signal,
 		configs,
-		cancelToken,
 		thunkId,
 		showSuccessToast = true,
 		showErrorToast = true,
 	} = options;
 
-	const config = buildAxiosConfig(signal, params, configs, cancelToken);
+	const config = buildAxiosConfig(signal, params, configs);
 
 	try {
 		let response: AxiosResponse<R>;
@@ -98,13 +97,11 @@ function buildAxiosConfig(
 	signal?: AbortSignal,
 	params?: AxiosRequestConfig['params'],
 	configs?: AxiosRequestConfig,
-	cancelToken?: CancelToken,
 ): AxiosRequestConfig {
 	return {
 		...configs,
 		params: params ?? configs?.params,
 		signal: signal ?? configs?.signal,
-		cancelToken: cancelToken ?? configs?.cancelToken,
 		headers: {
 			...configs?.headers,
 		},

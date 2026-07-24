@@ -1,7 +1,6 @@
 import type { AsyncThunk, Middleware } from '@reduxjs/toolkit';
 import { ThunkOperation } from '../constants/Redux/ThunkOperations';
 import { BypassFeedbackThunkSubjects } from '../constants/ThunkIds/BypassedThunks';
-import { removeCancelToken } from '../slices/cancelTokenSlice';
 import {
 	addLoadingMessage,
 	pushUniversalFeedbackNotification,
@@ -69,7 +68,6 @@ export const thunkMiddleware: Middleware = (api) => (next) => (action) => {
 	}
 
 	const requestStatus = action.meta.requestStatus;
-	const requestId = action.meta.requestId;
 	const thunkNameParts = action.type.split('/')[0]?.split('-') ?? [];
 	const thunkId = action.type.split('/')[0] ?? '';
 	/**
@@ -121,8 +119,6 @@ export const thunkMiddleware: Middleware = (api) => (next) => (action) => {
 					message: loadingMessage,
 				}),
 			);
-
-			api.dispatch(removeCancelToken(requestId));
 
 			// Action was aborted if this is true, so not actually 'rejected'
 			if (action.meta.aborted) {

@@ -1,10 +1,9 @@
-import type { AxiosRequestConfig, AxiosResponse, CancelToken } from 'axios';
+import type { AxiosRequestConfig, AxiosResponse } from 'axios';
 
 export interface BuildAxiosCallOptions {
 	params?: AxiosRequestConfig['params'];
 	signal?: AbortSignal;
 	configs?: AxiosRequestConfig;
-	cancelToken?: CancelToken;
 	thunkId?: string;
 	showSuccessToast?: boolean;
 	showErrorToast?: boolean;
