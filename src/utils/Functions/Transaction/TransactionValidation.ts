@@ -1,5 +1,5 @@
 import type { AddExpenseTransactionDTO, AddIncomeTransactionDTO } from '../../../api/GeneratedDTOs';
-import { EMPTY_GUID } from '../../DataTypes/Guid';
+import { EMPTY_GUID, type Guid } from '../../DataTypes/Guid';
 
 interface BaseTransactionValidationFields {
 	accountId: string;
@@ -7,6 +7,7 @@ interface BaseTransactionValidationFields {
 	amount: number;
 	description: string;
 	transactionDate: number;
+	paymentMethodId: Guid | null;
 }
 
 const validateBaseTransaction = (transaction: BaseTransactionValidationFields): string | null => {
@@ -30,6 +31,10 @@ const validateBaseTransaction = (transaction: BaseTransactionValidationFields): 
 		return 'Source is required.';
 	}
 
+	if (!transaction.paymentMethodId || transaction.paymentMethodId === EMPTY_GUID) {
+		return 'Payment method is required.';
+	}
+
 	return null;
 };
 
@@ -40,9 +45,7 @@ export const validateIncome = (income: AddIncomeTransactionDTO): string | null =
 		return baseError;
 	}
 
-	if (income.paymentMethodId || income.paymentMethodId === EMPTY_GUID) {
-		return 'Payment method is required.';
-	}
+	// Add Income-specific validation here
 
 	return null;
 };

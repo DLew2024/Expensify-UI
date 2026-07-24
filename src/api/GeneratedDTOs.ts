@@ -66,13 +66,8 @@ export type AddExpenseTransactionDTO = {
 	notes?: null | string;
 	isRecurring?: boolean;
 	/** Format: uuid */
-	paymentMethodId?: null | Guid;
-	tags?: string[];
+	paymentMethodId: null | Guid;
 	icon?: string;
-	/** Format: uuid */
-	budgetId?: null | Guid;
-	/** Format: uuid */
-	categoryId?: null | Guid;
 };
 
 export type AddIncomeTransactionDTO = {
@@ -84,10 +79,10 @@ export type AddIncomeTransactionDTO = {
 	transactionDate: number;
 	description: string;
 	source: string;
-	icon?: string;
-	notes?: string;
 	/** Format: uuid */
 	paymentMethodId: null | Guid;
+	icon?: string;
+	notes?: string;
 };
 
 export type CategoryDTO = {
@@ -204,11 +199,11 @@ export type LogoutUserDTO = {
 };
 
 export type PaymentMethodDTO = {
+	/** Format: uuid */
+	id: Guid;
 	name: string;
 	description?: string;
 	isSystemDefault?: boolean;
-	/** Format: uuid */
-	id: Guid;
 };
 
 export type RefreshTokenResponseDTO = {

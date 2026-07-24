@@ -11,6 +11,7 @@ import {
 import CardButton from '../common/CardButton';
 import EmojiPickerPopup from '../EmojiPickerPopup';
 import LabeledInput from '../Inputs/LabeledInput';
+import PaymentMethodSelector from '../Selectors/PaymentMethodSelector';
 import styles from './styles/_AddExpenseForm.module.scss';
 
 interface AddExpenseFormProps {
@@ -49,6 +50,13 @@ const AddExpenseForm = ({ onAddExpense }: AddExpenseFormProps) => {
 			<EmojiPickerPopup
 				icon={expense.icon}
 				onSelect={(selectedIcon) => handleChange('icon', selectedIcon)}
+			/>
+
+			<PaymentMethodSelector
+				selectedCurrencyId={expense.paymentMethodId}
+				onChange={(paymentMethodId) => {
+					handleChange('paymentMethodId', paymentMethodId);
+				}}
 			/>
 
 			<LabeledInput

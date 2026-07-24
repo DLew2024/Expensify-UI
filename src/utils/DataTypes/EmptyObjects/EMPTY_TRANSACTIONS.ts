@@ -13,11 +13,11 @@ export const EMPTY_INCOME_TRANSACTION: AddIncomeTransactionDTO = {
 
 export const EMPTY_EXPENSE_TRANSACTION: AddExpenseTransactionDTO = {
 	accountId: EMPTY_GUID,
+	paymentMethodId: EMPTY_GUID,
 	amount: 0,
 	transactionDate: 0,
 	description: '',
 	source: '',
 	isRecurring: false,
-	tags: [],
 	icon: '',
 };
