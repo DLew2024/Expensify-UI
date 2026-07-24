@@ -21,8 +21,6 @@ export type AccountResponseDTO = {
 	accountTypeName?: string;
 	/** Format: uuid */
 	currencyCodeId?: Guid;
-	currencyCode?: string;
-	currencySymbol?: string;
 	/** Format: double */
 	currentBalance?: number;
 	/** Format: double */

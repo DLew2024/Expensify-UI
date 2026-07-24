@@ -1,11 +1,11 @@
 import { createAsyncThunk } from '@reduxjs/toolkit';
-import { getUserAccounts } from './AccountService';
+import { getUserAccounts } from '../services/AccountService';
 import {
 	getAccountTypes,
 	getCategories,
 	getCurrencies,
 	getPaymentMethods,
-} from './ReferenceDataService';
+} from '../services/ReferenceDataService';
 
 export const initializeApplicationData = createAsyncThunk<void, void>(
 	'application/initialize',

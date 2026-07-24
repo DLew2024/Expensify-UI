@@ -14,7 +14,6 @@ import RecentTransactions from '../../components/Dashboard/RecentTransactions';
 import DashboardLayout from '../../components/layouts/DashboardLayout';
 import AccountSelector from '../../components/Selectors/AccountSelector';
 import { useUserAuth } from '../../hooks/useUserAuth';
-import { initializeApplicationData } from '../../store/services/ApplicationService';
 import { getUserDashboardData } from '../../store/services/DashboardService';
 import { type AppState, dispatch } from '../../store/store';
 import { addThousandsSeparator } from '../../utils/Functions/Conversions/NumberUtils';
@@ -29,10 +28,6 @@ const Home = () => {
 	const $selectedAccount = useSelector((state: AppState) => state.accounts.selectedAccount);
 
 	const [dashboardData, setDashboardData] = useState<DashboardDataResponseDTO | null>(null);
-
-	useEffect(() => {
-		dispatch(initializeApplicationData());
-	}, []);
 
 	useEffect(() => {
 		if (!$selectedAccountId) return;

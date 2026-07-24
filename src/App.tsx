@@ -3,7 +3,8 @@ import { Toaster } from 'react-hot-toast';
 import { useSelector } from 'react-redux';
 import { Navigate, Route, Routes } from 'react-router';
 import UserProvider from './context/userContext';
-import type { AppState } from './store/store';
+import { initializeApplicationData } from './store/application/ApplicationService';
+import { type AppState, dispatch } from './store/store';
 import { shouldBypassAuth } from './utils/Development/Dev';
 import { appRoutes } from './utils/Navigation/AppRoutes';
 import { NavigationRoutePaths } from './utils/Navigation/NavigationRoutePaths';
@@ -11,6 +12,14 @@ import { NavigationRoutePaths } from './utils/Navigation/NavigationRoutePaths';
 function App() {
 	const $selectedAccountId = useSelector((state: AppState) => state.accounts.selectedAccountId);
 	const availableRoutes = appRoutes.filter((route) => !route.requiresAccount || $selectedAccountId);
+
+	useEffect(() => {
+		const hasToken = shouldBypassAuth() || Boolean(localStorage.getItem('token'));
+
+		if (!hasToken) return;
+
+		dispatch(initializeApplicationData());
+	}, []);
 
 	return (
 		<UserProvider>

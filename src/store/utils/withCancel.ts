@@ -1,8 +1,8 @@
 import axios, { type AxiosRequestConfig, type AxiosResponse, type CancelToken } from 'axios';
 import { v4 } from 'uuid';
 import { extractPathFromEndpoint } from '../../utils/Functions/Conversions/StringUtils';
+import { useDispatch } from '../hooks';
 import { addCancelToken, removeCancelToken } from '../slices/cancelTokenSlice';
-import { dispatch } from '../store';
 
 /**
  * A higher order function to enhance buildAxiosCall with default cancel token and requestId handling.
@@ -32,7 +32,11 @@ export function withCancelToken<R, T>(
 		cancelToken?: CancelToken,
 		requestId?: string,
 	): Promise<AxiosResponse<R>> => {
-		// Generate a CancelTokenSource if not provided
+		/*
+		 * Must use the hook version of useDispatch to ensure no circular dependency issues when using dispatch within the function.
+		 */
+		const dispatch = useDispatch();
+
 		// eslint-disable-next-line import/no-named-as-default-member
 		const source = cancelToken ? undefined : axios.CancelToken.source();
 		const usedToken = cancelToken ? cancelToken : source?.token;
