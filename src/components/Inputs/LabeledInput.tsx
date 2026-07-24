@@ -21,12 +21,14 @@ const LabeledInput = ({
 	step,
 	placeholder,
 	type = 'text',
-	formatAsCurrency = false,
+	formatAsCurrency = type === 'number',
 	onBlur,
 	onChange,
 }: LabeledInputProps) => {
-	const [shouldShowPassword, setShouldShowPassword] = useState(false);
-	const [displayValue, setDisplayValue] = useState(value);
+	const [shouldShowPassword, setShouldShowPassword] = useState<boolean>(false);
+	const [displayValue, setDisplayValue] = useState<string | number | readonly string[] | undefined>(
+		value,
+	);
 
 	const togglePasswordVisibility = () => {
 		setShouldShowPassword((prev) => !prev);
