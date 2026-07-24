@@ -2,7 +2,7 @@
 
 import type { Guid } from '../utils/DataTypes/Guid';
 
-export type CurrencyCode = number;
+export type CategoryType = number;
 
 export type TransactionPostedStatus = number;
 
@@ -19,7 +19,10 @@ export type AccountResponseDTO = {
 	/** Format: uuid */
 	accountTypeId?: Guid;
 	accountTypeName?: string;
-	currencyCode?: CurrencyCode;
+	/** Format: uuid */
+	currencyCodeId?: Guid;
+	currencyCode?: string;
+	currencySymbol?: string;
 	/** Format: double */
 	currentBalance?: number;
 	/** Format: double */
@@ -42,6 +45,15 @@ export type AccountSummaryDTO = {
 	name?: string;
 	/** Format: double */
 	currentBalance?: number;
+};
+
+export type AccountTypeDTO = {
+	/** Format: uuid */
+	id?: Guid;
+	name?: string;
+	description?: string;
+	isSystemDefault?: boolean;
+	isActive?: boolean;
 };
 
 export type AddExpenseTransactionDTO = {
@@ -90,6 +102,10 @@ export type CategoryDTO = {
 	/** Format: uuid */
 	id?: Guid;
 	name?: string;
+	type?: CategoryType;
+	description?: string;
+	isSystemDefault?: boolean;
+	isActive?: boolean;
 };
 
 export type ChangePasswordDTO = {
@@ -104,43 +120,24 @@ export type CreateAccountDTO = {
 	accountTypeId: Guid;
 	institutionName: string;
 	lastFourDigits: string;
-	currencyCode: CurrencyCode;
 	/** Format: double */
 	initialBalance: number;
 	includeInNetWorth?: boolean;
-	/** Format: double */
-	creditLimit?: number;
-	/** Format: double */
-	interestRate?: number;
 	notes?: string;
 	icon?: string;
 	isDefault: boolean;
+	/** Format: uuid */
+	currencyCodeId: Guid;
 };
 
-export type CreateAccountResponseDTO = {
+export type CurrencyCodeDTO = {
 	/** Format: uuid */
-	accountId?: Guid;
-	name?: string;
-	/** Format: uuid */
-	accountTypeId?: Guid;
-	accountTypeName?: string;
-	institutionName?: null | string;
-	lastFourDigits?: null | string;
-	currencyCode?: CurrencyCode;
-	/** Format: double */
-	currentBalance?: number;
-	/** Format: double */
-	availableBalance?: number;
-	includeInNetWorth?: boolean;
-	isActive?: boolean;
-	isHidden?: boolean;
-	notes?: null | string;
-	/** Format: double */
-	creditLimit?: null | number;
-	/** Format: double */
-	interestRate?: null | number;
-	/** Format: int64 */
-	createDate?: number;
+	id: Guid;
+	code: string;
+	name: string;
+	symbol: string;
+	/** Format: int32 */
+	decimalPlaces?: number;
 };
 
 export type DashboardDataResponseDTO = {
@@ -218,6 +215,8 @@ export type PaymentMethodDTO = {
 	/** Format: uuid */
 	id?: Guid;
 	name?: string;
+	description?: string;
+	isSystemDefault?: boolean;
 };
 
 export type RefreshTokenResponseDTO = {
@@ -253,17 +252,11 @@ export type TransactionDTO = {
 	type: TransactionType;
 	/** Format: int64 */
 	transactionDate: number;
-	merchant?: string;
+	merchant: string;
 	description?: string;
 	notes?: string;
-	paymentMethod: PaymentMethodDTO;
-	category: CategoryDTO;
-	status?: TransactionPostedStatus;
-	isRecurring?: boolean;
-	/** Format: uuid */
-	recurringTransactionId?: Guid;
-	tags?: string[];
 	icon?: string;
+	status?: TransactionPostedStatus;
 };
 
 export type TransactionPeriodSummaryDTO = {
