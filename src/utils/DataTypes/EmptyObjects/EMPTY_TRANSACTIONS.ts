@@ -3,6 +3,7 @@ import { EMPTY_GUID } from '../Guid';
 
 export const EMPTY_INCOME_TRANSACTION: AddIncomeTransactionDTO = {
 	accountId: EMPTY_GUID,
+	paymentMethodId: EMPTY_GUID,
 	amount: 0,
 	transactionDate: 0,
 	description: '',

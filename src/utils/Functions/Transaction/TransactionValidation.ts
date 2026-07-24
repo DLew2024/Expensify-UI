@@ -40,7 +40,9 @@ export const validateIncome = (income: AddIncomeTransactionDTO): string | null =
 		return baseError;
 	}
 
-	// Add Income-specific validation here
+	if (income.paymentMethodId || income.paymentMethodId === EMPTY_GUID) {
+		return 'Payment method is required.';
+	}
 
 	return null;
 };

@@ -11,6 +11,7 @@ import {
 import CardButton from '../common/CardButton';
 import EmojiPickerPopup from '../EmojiPickerPopup';
 import LabeledInput from '../Inputs/LabeledInput';
+import PaymentMethodSelector from '../Selectors/PaymentMethodSelector';
 import styles from './styles/_AddIncomeForm.module.scss';
 
 interface AddIncomeFormProps {
@@ -49,6 +50,13 @@ const AddIncomeForm = ({ onAddIncome }: AddIncomeFormProps) => {
 			<EmojiPickerPopup
 				icon={income.icon}
 				onSelect={(selectedIcon) => handleChange('icon', selectedIcon)}
+			/>
+
+			<PaymentMethodSelector
+				selectedCurrencyId={income.paymentMethodId}
+				onChange={(paymentMethodId) => {
+					handleChange('paymentMethodId', paymentMethodId);
+				}}
 			/>
 
 			<LabeledInput
