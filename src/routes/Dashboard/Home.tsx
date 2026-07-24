@@ -4,7 +4,6 @@ import { LuHandCoins, LuWalletMinimal } from 'react-icons/lu';
 import { useSelector } from 'react-redux';
 import { useNavigate } from 'react-router';
 import type { DashboardDataResponseDTO } from '../../api/GeneratedDTOs';
-import AccountSelector from '../../components/Account/AccountSelector';
 import InfoCard from '../../components/Cards/InfoCard';
 import ExpenseTransactions from '../../components/Dashboard/ExpenseTransactions';
 import FinanceOverview from '../../components/Dashboard/FinanceOverview';
@@ -13,8 +12,9 @@ import RecentIncome from '../../components/Dashboard/RecentIncome';
 import RecentIncomeWithChart from '../../components/Dashboard/RecentIncomeWithChart';
 import RecentTransactions from '../../components/Dashboard/RecentTransactions';
 import DashboardLayout from '../../components/layouts/DashboardLayout';
+import AccountSelector from '../../components/Selectors/AccountSelector';
 import { useUserAuth } from '../../hooks/useUserAuth';
-import { getUserAccounts } from '../../store/services/AccountService';
+import { initializeApplicationData } from '../../store/services/ApplicationService';
 import { getUserDashboardData } from '../../store/services/DashboardService';
 import { type AppState, dispatch } from '../../store/store';
 import { addThousandsSeparator } from '../../utils/Functions/Conversions/NumberUtils';
@@ -27,15 +27,12 @@ const Home = () => {
 	const navigate = useNavigate();
 	const $selectedAccountId = useSelector((state: AppState) => state.accounts.selectedAccountId);
 	const $selectedAccount = useSelector((state: AppState) => state.accounts.selectedAccount);
-	const $accountsStatus = useSelector((state: AppState) => state.accounts.status);
 
 	const [dashboardData, setDashboardData] = useState<DashboardDataResponseDTO | null>(null);
 
 	useEffect(() => {
-		if ($accountsStatus === 'idle') {
-			dispatch(getUserAccounts());
-		}
-	}, [$accountsStatus]);
+		dispatch(initializeApplicationData());
+	}, []);
 
 	useEffect(() => {
 		if (!$selectedAccountId) return;

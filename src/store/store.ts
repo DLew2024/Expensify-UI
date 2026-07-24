@@ -5,11 +5,13 @@ import {
 } from '@reduxjs/toolkit';
 import { thunkMiddleware } from './middleware/thunkMiddleware';
 import accountsReducer from './slices/accountsSlice';
+import referenceDataReducer from './slices/referenceDataSlice';
 
 const customMiddleware = [thunkMiddleware];
 
 const rootReducer = combineReducers({
 	accounts: accountsReducer,
+	referenceData: referenceDataReducer,
 });
 
 const store = configureStore({

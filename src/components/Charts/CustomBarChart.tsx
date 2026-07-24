@@ -6,7 +6,6 @@ import {
 	Cell,
 	ResponsiveContainer,
 	Tooltip,
-	type TooltipPayload,
 	XAxis,
 	YAxis,
 } from 'recharts';

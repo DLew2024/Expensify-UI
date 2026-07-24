@@ -28,7 +28,7 @@ const ExpenseTransactions = ({ transactions, onSeeMore }: RecentTransactionsProp
 				{transactions?.slice(0, 5).map((expense) => (
 					<TransactionInfoCard
 						key={expense.id}
-						title={expense.category.name}
+						title={expense.merchant}
 						icon={expense.icon}
 						date={expense.transactionDate}
 						amount={expense.amount}

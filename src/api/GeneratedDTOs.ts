@@ -49,8 +49,8 @@ export type AccountSummaryDTO = {
 
 export type AccountTypeDTO = {
 	/** Format: uuid */
-	id?: Guid;
-	name?: string;
+	id: Guid;
+	name: string;
 	description?: string;
 	isSystemDefault?: boolean;
 	isActive?: boolean;

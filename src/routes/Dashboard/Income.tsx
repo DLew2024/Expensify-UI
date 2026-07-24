@@ -1,13 +1,13 @@
 import { useEffect, useState } from 'react';
 import { toast } from 'react-hot-toast';
 import type { AddIncomeTransactionDTO, TransactionDTO } from '../../api/GeneratedDTOs';
-import AccountSelector from '../../components/Account/AccountSelector';
 import DeleteAlert from '../../components/DeleteAlert';
 import AddIncomeForm from '../../components/Income/AddIncomeForm';
 import IncomeList from '../../components/Income/IncomeList';
 import IncomeOverview from '../../components/Income/IncomeOverview';
 import DashboardLayout from '../../components/layouts/DashboardLayout';
 import PrimaryModal from '../../components/PrimaryModal';
+import AccountSelector from '../../components/Selectors/AccountSelector';
 import { useUserAuth } from '../../hooks/useUserAuth';
 import { useSelector } from '../../store/hooks';
 import {

@@ -6,7 +6,7 @@ export const EMPTY_ACCOUNT: CreateAccountDTO = {
 	accountTypeId: EMPTY_GUID,
 	institutionName: '',
 	lastFourDigits: '',
-	currencyCode: 0,
+	currencyCodeId: EMPTY_GUID,
 	initialBalance: 0,
 	includeInNetWorth: true,
 	isDefault: false,

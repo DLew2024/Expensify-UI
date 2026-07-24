@@ -1,23 +1,14 @@
 import { useState } from 'react';
 import type { CreateAccountDTO } from '../../api/GeneratedDTOs';
 import { EMPTY_ACCOUNT } from '../../utils/DataTypes/EmptyObjects/EMPTY_ACCOUNT';
-import type { Guid } from '../../utils/DataTypes/Guid';
 import { AppliedCheckbox } from '../common/AppliedCheckbox';
 import CardButton from '../common/CardButton';
-import Selector from '../common/Selector';
 import EmojiPickerPopup from '../EmojiPickerPopup';
 import LabeledInput from '../Inputs/LabeledInput';
+import AccountTypeSelector from '../Selectors/AccountTypeSelector';
+import CurrencySelector from '../Selectors/CurrencySelector';
 import styles from './styles/_AddAccountForm.module.scss';
 
-interface Currency {
-	name: string;
-	currencyCode: string;
-}
-
-interface AccountTypeOption {
-	id: Guid;
-	name: string;
-}
 interface AddAccountFormProps {
 	onAddAccount: (account: CreateAccountDTO) => void;
 }
@@ -25,17 +16,6 @@ interface AddAccountFormProps {
 const AddAccountForm = ({ onAddAccount }: AddAccountFormProps) => {
 	const [account, setAccount] = useState<CreateAccountDTO>(EMPTY_ACCOUNT);
 	const [isShownInNetWorth, setIsShownInNetWorth] = useState<boolean>(false);
-
-	const CURRENCIES: Currency[] = [
-		{ name: 'US Dollar', currencyCode: '0' },
-		{ name: 'Euro', currencyCode: '1' },
-		{ name: 'British Pound', currencyCode: '2' },
-		{ name: 'Canadian Dollar', currencyCode: '3' },
-	];
-
-	const accountTypes: AccountTypeOption[] = [
-		{ id: '6f8332b7-cf15-4c41-b1b5-a85022859dd8' as Guid, name: 'Checking' },
-	];
 
 	const handleChange = <K extends keyof CreateAccountDTO>(key: K, value: CreateAccountDTO[K]) => {
 		setAccount((prevAccount) => ({
@@ -68,30 +48,9 @@ const AddAccountForm = ({ onAddAccount }: AddAccountFormProps) => {
 				onSelect={(selectedIcon) => handleChange('icon', selectedIcon)}
 			/>
 
-			<Selector<AccountTypeOption>
-				items={accountTypes}
-				selectedValue={account.accountTypeId}
-				label="Account Type"
-				placeholder="Select Account Type"
-				getValue={(accountType) => accountType.id}
-				getLabel={(accountType) => accountType.name}
-				onChange={(accountType) => {
-					if (accountType) {
-						handleChange('accountTypeId', accountType.id);
-					}
-				}}
-			/>
-			<Selector<Currency>
-				items={CURRENCIES}
-				selectedValue={String(account.currencyCode)}
-				label="Currency"
-				placeholder="Select Currency"
-				getValue={(currency) => currency.currencyCode}
-				getLabel={(currency) => `${currency.currencyCode} - ${currency.name}`}
-				onChange={(currency) => {
-					handleChange('currencyCode', Number(currency?.currencyCode) ?? '');
-				}}
-			/>
+			<AccountTypeSelector />
+
+			<CurrencySelector />
 
 			<LabeledInput
 				value={account.name ?? ''}

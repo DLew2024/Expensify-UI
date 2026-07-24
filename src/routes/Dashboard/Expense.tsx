@@ -1,13 +1,13 @@
 import { useEffect, useState } from 'react';
 import { toast } from 'react-hot-toast';
 import type { AddExpenseTransactionDTO, TransactionDTO } from '../../api/GeneratedDTOs';
-import AccountSelector from '../../components/Account/AccountSelector';
 import DeleteAlert from '../../components/DeleteAlert';
 import AddExpenseForm from '../../components/Expense/AddExpenseForm';
 import ExpenseList from '../../components/Expense/ExpenseList';
 import ExpenseOverview from '../../components/Expense/ExpenseOverview';
 import DashboardLayout from '../../components/layouts/DashboardLayout';
 import PrimaryModal from '../../components/PrimaryModal';
+import AccountSelector from '../../components/Selectors/AccountSelector';
 import { useUserAuth } from '../../hooks/useUserAuth';
 import {
 	addExpense,

@@ -13,10 +13,6 @@ import EmojiPickerPopup from '../EmojiPickerPopup';
 import LabeledInput from '../Inputs/LabeledInput';
 import styles from './styles/_AddExpenseForm.module.scss';
 
-enum CurrencyCode {
-	USD = 0,
-}
-
 interface AddExpenseFormProps {
 	onAddExpense: (expense: AddExpenseTransactionDTO) => void;
 }
