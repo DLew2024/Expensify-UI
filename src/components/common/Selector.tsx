@@ -25,6 +25,11 @@ const Selector = <T,>({
 	const handleChange = (event: ChangeEvent<HTMLSelectElement>) => {
 		const value = event.target.value;
 
+		if (value === '') {
+			onChange(null);
+			return;
+		}
+
 		const selectedItem = items.find((item) => getValue(item) === value) ?? null;
 
 		onChange(selectedItem);

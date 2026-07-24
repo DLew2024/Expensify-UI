@@ -117,7 +117,9 @@ export type ChangePasswordDTO = {
 export type CreateAccountDTO = {
 	name: string;
 	/** Format: uuid */
-	accountTypeId: Guid;
+	accountTypeId: null | Guid;
+	/** Format: uuid */
+	currencyCodeId: null | Guid;
 	institutionName: string;
 	lastFourDigits: string;
 	/** Format: double */
@@ -126,8 +128,6 @@ export type CreateAccountDTO = {
 	notes?: string;
 	icon?: string;
 	isDefault: boolean;
-	/** Format: uuid */
-	currencyCodeId: Guid;
 };
 
 export type CurrencyCodeDTO = {

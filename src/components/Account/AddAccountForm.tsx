@@ -48,9 +48,19 @@ const AddAccountForm = ({ onAddAccount }: AddAccountFormProps) => {
 				onSelect={(selectedIcon) => handleChange('icon', selectedIcon)}
 			/>
 
-			<AccountTypeSelector />
+			<AccountTypeSelector
+				selectedAccountTypeId={account.accountTypeId}
+				onChange={(accountTypeId) => {
+					handleChange('accountTypeId', accountTypeId);
+				}}
+			/>
 
-			<CurrencySelector />
+			<CurrencySelector
+				selectedCurrencyId={account.currencyCodeId}
+				onChange={(currencyCodeId) => {
+					handleChange('currencyCodeId', currencyCodeId);
+				}}
+			/>
 
 			<LabeledInput
 				value={account.name ?? ''}

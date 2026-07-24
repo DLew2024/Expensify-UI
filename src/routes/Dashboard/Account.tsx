@@ -50,7 +50,8 @@ const Account = () => {
 	};
 
 	const validateAccount = (account: CreateAccountDTO): string | null => {
-		const { name, institutionName, lastFourDigits, initialBalance } = account;
+		const { name, institutionName, lastFourDigits, initialBalance, accountTypeId, currencyCodeId } =
+			account;
 
 		if (!name.trim()) {
 			return 'Account name is required.';
@@ -66,6 +67,14 @@ const Account = () => {
 
 		if (!LAST_FOUR_DIGITS_REGEX.test(lastFourDigits.trim())) {
 			return 'Last four digits must contain exactly 4 numbers.';
+		}
+
+		if (!accountTypeId) {
+			return 'Account type is required.';
+		}
+
+		if (!currencyCodeId) {
+			return 'Account type is required.';
 		}
 
 		if (
