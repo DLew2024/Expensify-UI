@@ -2,17 +2,8 @@ import type { AxiosRequestConfig, AxiosResponse, CancelToken } from 'axios';
 import toast from 'react-hot-toast';
 import { ThunkOperation } from '../constants/Redux/ThunkOperations';
 import { withCancelToken } from '../utils/withCancel';
+import type { BuildAxiosCallOptions } from './axiosCallTypes';
 import axiosInstance from './axiosInstance';
-
-interface BuildAxiosCallOptions {
-	params?: AxiosRequestConfig['params'];
-	signal?: AbortSignal;
-	configs?: AxiosRequestConfig;
-	cancelToken?: CancelToken;
-	thunkId?: string;
-	showSuccessToast?: boolean;
-	showErrorToast?: boolean;
-}
 
 /**
  * Builds an Axios GET, POST, or PUT of the specified type T and return type R
