@@ -46,7 +46,7 @@ const Home = () => {
 	}, [$selectedAccountId]);
 
 	return (
-		<DashboardLayout activeMenu="Dashboard">
+		<DashboardLayout activeMenu='Dashboard'>
 			<div className={styles.dashboard}>
 				<AccountSelector />
 
@@ -57,21 +57,21 @@ const Home = () => {
 						value={addThousandsSeparator(
 							$selectedAccount?.currentBalance ?? dashboardData?.totalBalance ?? 0,
 						)}
-						variant="primary"
+						variant='primary'
 					/>
 
 					<InfoCard
 						icon={<LuWalletMinimal />}
-						label="Total Income"
+						label='Total Income'
 						value={addThousandsSeparator(dashboardData?.totalIncome ?? 0)}
-						variant="success"
+						variant='success'
 					/>
 
 					<InfoCard
 						icon={<LuHandCoins />}
-						label="Total Expense"
+						label='Total Expense'
 						value={addThousandsSeparator(dashboardData?.totalExpenses ?? 0)}
-						variant="danger"
+						variant='danger'
 					/>
 				</div>
 

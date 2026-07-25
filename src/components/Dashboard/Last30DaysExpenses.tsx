@@ -18,7 +18,7 @@ const Last30DaysExpenses = ({ data }: Last30DaysExpensesProps) => {
 	return (
 		<WrapperCard className={styles.expenseChart}>
 			<div className={styles.expenseChart__header}>
-				<MainTextTypography variant="h5" className={styles.expenseChart__title}>
+				<MainTextTypography variant='h5' className={styles.expenseChart__title}>
 					Last 30 Days Expenses
 				</MainTextTypography>
 			</div>

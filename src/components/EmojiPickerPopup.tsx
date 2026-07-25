@@ -14,12 +14,12 @@ const EmojiPickerPopup = ({ icon, onSelect }: EmojiPickerPopupProps) => {
 
 	return (
 		<div className={styles.emojiPicker}>
-			<button type="button" className={styles.emojiPicker__trigger} onClick={() => setIsOpen(true)}>
+			<button type='button' className={styles.emojiPicker__trigger} onClick={() => setIsOpen(true)}>
 				<div className={styles.emojiPicker__iconContainer}>
-					{icon ? <img src={icon} alt="Icon" className={styles.emojiPicker__icon} /> : <LuImage />}
+					{icon ? <img src={icon} alt='Icon' className={styles.emojiPicker__icon} /> : <LuImage />}
 				</div>
 
-				<MainTextTypography variant="body" className={styles.emojiPicker__label}>
+				<MainTextTypography variant='body' className={styles.emojiPicker__label}>
 					{icon ? 'Change Icon' : 'Pick Icon'}
 				</MainTextTypography>
 			</button>
@@ -27,7 +27,7 @@ const EmojiPickerPopup = ({ icon, onSelect }: EmojiPickerPopupProps) => {
 			{isOpen && (
 				<div className={styles.emojiPicker__popup}>
 					<button
-						type="button"
+						type='button'
 						className={styles.emojiPicker__closeButton}
 						onClick={() => setIsOpen(false)}
 					>

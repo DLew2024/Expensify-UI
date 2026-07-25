@@ -16,7 +16,7 @@ const ExpenseTransactions = ({ transactions, onSeeMore }: RecentTransactionsProp
 	return (
 		<WrapperCard>
 			<div className={styles.expensesCard__header}>
-				<MainTextTypography variant="h5">Expenses</MainTextTypography>
+				<MainTextTypography variant='h5'>Expenses</MainTextTypography>
 
 				<CardButton onClick={onSeeMore}>
 					See All

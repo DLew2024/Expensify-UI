@@ -20,11 +20,11 @@ const IncomeOverview = ({ transactions, onAddIncome }: IncomeOverviewProps) => {
 		<WrapperCard>
 			<div className={styles.incomeOverview__header}>
 				<div>
-					<MainTextTypography className={styles.incomeOverview__title} variant="h5">
+					<MainTextTypography className={styles.incomeOverview__title} variant='h5'>
 						Income Overview
 					</MainTextTypography>
 
-					<MainTextTypography className={styles.incomeOverview__description} variant="body">
+					<MainTextTypography className={styles.incomeOverview__description} variant='body'>
 						Track your earnings over time and analyze your income trends.
 					</MainTextTypography>
 				</div>

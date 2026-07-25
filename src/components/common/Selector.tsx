@@ -37,17 +37,17 @@ const Selector = <T,>({
 
 	return (
 		<div className={styles.selector}>
-			<label htmlFor="selector" className={styles.selector__label}>
+			<label htmlFor='selector' className={styles.selector__label}>
 				{label}
 			</label>
 
 			<select
-				id="selector"
+				id='selector'
 				className={styles.selector__select}
 				value={selectedValue ?? ''}
 				onChange={handleChange}
 			>
-				<option value="">{placeholder}</option>
+				<option value=''>{placeholder}</option>
 
 				{items.map((item) => {
 					const value = getValue(item);

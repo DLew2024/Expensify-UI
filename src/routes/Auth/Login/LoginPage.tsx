@@ -50,11 +50,11 @@ const LoginPage = () => {
 	return (
 		<AuthLayout>
 			<div className={styles.login_container}>
-				<MainTextTypography variant="h3" className={styles.login_container__header}>
+				<MainTextTypography variant='h3' className={styles.login_container__header}>
 					Welcome back!
 				</MainTextTypography>
 
-				<MainTextTypography variant="body" className={styles.login_container__subtitle}>
+				<MainTextTypography variant='body' className={styles.login_container__subtitle}>
 					Please enter your credentials to access your account.
 				</MainTextTypography>
 
@@ -63,30 +63,30 @@ const LoginPage = () => {
 						<LabeledInput
 							value={email}
 							onChange={(value: string) => setEmail(value)}
-							label="Email Address"
-							placeholder="dlewis@example.com"
+							label='Email Address'
+							placeholder='dlewis@example.com'
 						/>
 
 						<LabeledInput
 							value={password}
 							onChange={(value: string) => setPassword(value)}
-							label="Password"
-							placeholder="Minimum 8 characters"
-							type="password"
+							label='Password'
+							placeholder='Minimum 8 characters'
+							type='password'
 						/>
 
 						{error && (
-							<MainTextTypography variant="body" className={styles.errorText}>
+							<MainTextTypography variant='body' className={styles.errorText}>
 								{error}
 							</MainTextTypography>
 						)}
 					</div>
 
-					<PrimaryButton aria-label="Login Button" type="submit">
+					<PrimaryButton aria-label='Login Button' type='submit'>
 						LOGIN
 					</PrimaryButton>
 
-					<MainTextTypography variant="body" className={styles.signUpText}>
+					<MainTextTypography variant='body' className={styles.signUpText}>
 						Don't have an account?{' '}
 						<Link className={styles.signUpLink} to={NavigationRoutePaths.SIGN_UP}>
 							Sign up

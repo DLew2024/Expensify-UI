@@ -14,8 +14,8 @@ const AccountSelector = () => {
 		<Selector<AccountResponseDTO>
 			items={$userAccounts}
 			selectedValue={$selectedAccountId}
-			label="Selected Account"
-			placeholder="Select Account"
+			label='Selected Account'
+			placeholder='Select Account'
 			getValue={(account) => account.id}
 			getLabel={(account) => account.name || 'Unnamed Account'}
 			onChange={(account) => {

@@ -37,7 +37,7 @@ const SideMenu = ({ activeMenu }: SideMenuProps) => {
 					<img
 						className={styles.sidebar__profilePictureContainer__image}
 						src={user.profileImageUrl || ''}
-						alt="Profile Photograph"
+						alt='Profile Photograph'
 					/>
 				) : (
 					<CharAvatar
@@ -47,7 +47,7 @@ const SideMenu = ({ activeMenu }: SideMenuProps) => {
 				)}
 
 				<MainTextTypography
-					variant="h5"
+					variant='h5'
 					className={styles.sidebar__profilePictureContainer__header}
 				>
 					{user?.fullName || ''}
@@ -59,7 +59,7 @@ const SideMenu = ({ activeMenu }: SideMenuProps) => {
 					key={item.label}
 					className={clsx(styles.menu_item, activeMenu === item.label && styles.selectedMenuItem)}
 					onClick={() => handleClick(item.path)}
-					type="button"
+					type='button'
 				>
 					<item.icon className={styles.menu_item__icon} />
 					{item.label}

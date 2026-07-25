@@ -15,7 +15,7 @@ const RecentTransactions = ({ transactions, onSeeMore }: RecentTransactionsProps
 	return (
 		<WrapperCard>
 			<div className={styles.recentTransactions__header}>
-				<MainTextTypography className={styles.recentTransactions__title} variant="h5">
+				<MainTextTypography className={styles.recentTransactions__title} variant='h5'>
 					Recent Transactions
 				</MainTextTypography>
 

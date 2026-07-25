@@ -17,10 +17,10 @@ const StatsInfoCard = ({
 			<div className={styles.statsInfoCard__icon}>{icon}</div>
 
 			<div className={styles.statsInfoCard__body}>
-				<MainTextTypography variant="h6" className={styles.statsInfoCard__body__header}>
+				<MainTextTypography variant='h6' className={styles.statsInfoCard__body__header}>
 					{label}
 				</MainTextTypography>
-				<MainTextTypography variant="span">$ {value}</MainTextTypography>
+				<MainTextTypography variant='span'>$ {value}</MainTextTypography>
 			</div>
 		</div>
 	);
@@ -35,7 +35,7 @@ const AuthLayout = ({ children }: AuthLayoutProps) => {
 	return (
 		<div className={styles.authLayoutContainer}>
 			<div className={styles.authLayoutContainer__mainElement}>
-				<MainTextTypography variant="h2" className={styles.authLayoutContainer__mainElement__text}>
+				<MainTextTypography variant='h2' className={styles.authLayoutContainer__mainElement__text}>
 					Expensify
 				</MainTextTypography>
 				{children}
@@ -49,12 +49,12 @@ const AuthLayout = ({ children }: AuthLayoutProps) => {
 				<div className={styles.statsCardContainer}>
 					<StatsInfoCard
 						icon={<LuTrendingUpDown />}
-						label="Track Your Income & Expenses"
-						value="500,000"
+						label='Track Your Income & Expenses'
+						value='500,000'
 					/>
 				</div>
 
-				{imageUrl && <img src={imageUrl} className={styles.image} alt="" />}
+				{imageUrl && <img src={imageUrl} className={styles.image} alt='' />}
 			</div>
 		</div>
 	);

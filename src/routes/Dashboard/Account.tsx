@@ -127,7 +127,7 @@ const Account = () => {
 	}, []);
 
 	return (
-		<DashboardLayout activeMenu="Accounts">
+		<DashboardLayout activeMenu='Accounts'>
 			<div className={styles.accountPage}>
 				<div className={styles.accountPage__content}>
 					<AccountOverview onAddAccount={() => setIsAddAccountModalOpen(true)} />
@@ -146,7 +146,7 @@ const Account = () => {
 				<PrimaryModal
 					isOpen={isAddAccountModalOpen}
 					onClose={() => setIsAddAccountModalOpen(false)}
-					title="Add Account"
+					title='Add Account'
 				>
 					<AddAccountForm onAddAccount={handleAddAccount} />
 				</PrimaryModal>
@@ -159,10 +159,10 @@ const Account = () => {
 							data: null,
 						})
 					}
-					title="Delete Account"
+					title='Delete Account'
 				>
 					<DeleteAlert
-						content="Are you sure you want to delete this account? All account information associated to this account will be lost."
+						content='Are you sure you want to delete this account? All account information associated to this account will be lost.'
 						onDelete={() => {
 							if (openDeleteAlert.data) {
 								handleDeleteAccount(openDeleteAlert.data);

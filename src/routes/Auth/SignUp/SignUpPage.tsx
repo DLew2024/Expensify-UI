@@ -80,46 +80,46 @@ const SignUpPage = () => {
 					Join us today by entering your details below
 				</p>
 
-				<form onSubmit={handleSignUp} action="">
+				<form onSubmit={handleSignUp} action=''>
 					<ProfilePhotoSelector image={profilePictureURL} setImage={setProfilePictureURL} />
 
 					<div className={styles.form__inputContainer}>
 						<LabeledInput
 							value={fullName}
 							onChange={(value: string) => setFullName(value)}
-							label="Full Name"
-							placeholder="John Doe"
+							label='Full Name'
+							placeholder='John Doe'
 						/>
 
 						<LabeledInput
 							value={email}
 							onChange={(value: string) => setEmail(value)}
-							label="Email Address"
-							placeholder="dlewis@example.com"
+							label='Email Address'
+							placeholder='dlewis@example.com'
 						/>
 
 						<div className={styles.form__inputContainer__password}>
 							<LabeledInput
 								value={password}
 								onChange={(value: string) => setPassword(value)}
-								label="Password"
-								placeholder="Minimum 8 characters"
-								type="password"
+								label='Password'
+								placeholder='Minimum 8 characters'
+								type='password'
 							/>
 
 							{error && (
-								<MainTextTypography variant="body" className={styles.errorText}>
+								<MainTextTypography variant='body' className={styles.errorText}>
 									{error}
 								</MainTextTypography>
 							)}
 						</div>
 					</div>
 
-					<PrimaryButton aria-label="Sign Up Button" type="submit">
+					<PrimaryButton aria-label='Sign Up Button' type='submit'>
 						SIGN UP
 					</PrimaryButton>
 
-					<MainTextTypography variant="body" className={styles.signUpText}>
+					<MainTextTypography variant='body' className={styles.signUpText}>
 						Already have an account?{' '}
 						<Link className={styles.signUpLink} to={NavigationRoutePaths.LOGIN}>
 							Log In

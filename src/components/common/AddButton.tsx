@@ -8,7 +8,7 @@ interface AddButtonProps extends ButtonHTMLAttributes<HTMLButtonElement> {
 
 const AddButton = ({ children, icon, ...buttonProps }: AddButtonProps) => {
 	return (
-		<button type="button" className={styles.addButton} {...buttonProps}>
+		<button type='button' className={styles.addButton} {...buttonProps}>
 			{icon}
 			{children}
 		</button>

@@ -10,7 +10,7 @@ interface DeleteAlertProps {
 const DeleteAlert = ({ content, onDelete }: DeleteAlertProps) => {
 	return (
 		<div className={styles.deleteAlert}>
-			<MainTextTypography variant="body" className={styles.deleteAlert__content}>
+			<MainTextTypography variant='body' className={styles.deleteAlert__content}>
 				{content}
 			</MainTextTypography>
 

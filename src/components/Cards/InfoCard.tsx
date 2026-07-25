@@ -18,7 +18,7 @@ const InfoCard = ({ icon, label, value, variant }: InfoCardProps) => {
 			</div>
 
 			<div className={styles.infoCard__content}>
-				<MainTextTypography variant="h6" className={styles.infoCard__label}>
+				<MainTextTypography variant='h6' className={styles.infoCard__label}>
 					{label}
 				</MainTextTypography>
 

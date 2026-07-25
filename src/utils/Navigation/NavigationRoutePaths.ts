@@ -11,4 +11,3 @@ export const NavigationRoutePaths = {
 	HELP_PAGE: '/help',
 	NOT_FOUND: '*',
 } as const;
-
