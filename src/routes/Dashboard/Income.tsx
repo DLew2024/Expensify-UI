@@ -97,6 +97,8 @@ const Income = () => {
 	};
 
 	const refreshIncomeDetails = async () => {
+		if (!$selectedAccountId) return;
+
 		try {
 			const response = await dispatch(getAllIncome($selectedAccountId)).unwrap();
 			setIncomeData(response);
@@ -106,6 +108,8 @@ const Income = () => {
 	};
 
 	useEffect(() => {
+		if (!$selectedAccountId) return;
+
 		const fetchInitialIncome = async () => {
 			try {
 				const response = await dispatch(getAllIncome($selectedAccountId)).unwrap();
@@ -119,7 +123,7 @@ const Income = () => {
 	}, [$selectedAccountId]);
 
 	return (
-		<DashboardLayout activeMenu="Income">
+		<DashboardLayout activeMenu='Income'>
 			<div className={styles.incomeDashboard}>
 				<AccountSelector />
 
@@ -144,7 +148,7 @@ const Income = () => {
 				<PrimaryModal
 					isOpen={isAddIncomeModalOpen}
 					onClose={() => setIsOpenAddIncomeModal(false)}
-					title="Add Income"
+					title='Add Income'
 				>
 					<AddIncomeForm onAddIncome={handleAddIncome} />
 				</PrimaryModal>
@@ -157,10 +161,10 @@ const Income = () => {
 							data: null,
 						})
 					}
-					title="Delete Income"
+					title='Delete Income'
 				>
 					<DeleteAlert
-						content="Are you sure you want to delete this income detail?"
+						content='Are you sure you want to delete this income detail?'
 						onDelete={() => {
 							if (openDeleteAlert.data) {
 								handleDeleteIncome(openDeleteAlert.data);

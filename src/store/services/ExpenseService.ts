@@ -15,10 +15,13 @@ import {
 } from '../constants/ThunkIds/ExpenseThunkIds';
 
 //#region GET
-export const getAllExpense = createAsyncThunk<TransactionDTO[], void>(
+export const getAllExpenses = createAsyncThunk<TransactionDTO[], Guid>(
 	GET_ALL_EXPENSE_THUNK_ID,
-	async () => {
-		const { data } = await buildAxiosCall<TransactionDTO[], void>('GET', 'api/expense/getAll');
+	async (currentlySelectedAccountId) => {
+		const { data } = await buildAxiosCall<TransactionDTO[], void>(
+			'GET',
+			`api/expense/getAll?accountId=${currentlySelectedAccountId}`,
+		);
 		return data;
 	},
 );

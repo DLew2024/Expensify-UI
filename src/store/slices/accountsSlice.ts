@@ -49,11 +49,13 @@ const accountsSlice = createSlice({
 				state.status = 'succeeded';
 				state.userAccounts = action.payload;
 
-				const defaultAccount =
-					action.payload.find((account) => account.isDefault || account) ?? null;
+				if (state.selectedAccount === null) {
+					const defaultAccount =
+						action.payload.find((account) => account.isDefault || account) ?? null;
 
-				state.selectedAccount = defaultAccount;
-				state.selectedAccountId = defaultAccount?.id ?? null;
+					state.selectedAccount = defaultAccount;
+					state.selectedAccountId = defaultAccount?.id ?? null;
+				}
 			})
 			.addCase(getUserAccounts.rejected, (state) => {
 				state.status = 'failed';
