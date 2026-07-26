@@ -16,7 +16,7 @@ const Selector = <T,>({
 	items,
 	selectedValue,
 	label,
-	placeholder = 'All',
+	placeholder = 'Select',
 	getValue,
 	getLabel,
 	onChange,
@@ -111,6 +111,7 @@ const Selector = <T,>({
 		}
 	};
 
+	// biome-ignore lint/correctness/useExhaustiveDependencies: <Initial render only>
 	useEffect(() => {
 		const handleOutsideClick = (event: MouseEvent) => {
 			if (selectorRef.current && !selectorRef.current.contains(event.target as Node)) {
