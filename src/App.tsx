@@ -8,6 +8,7 @@ import { type AppState, dispatch } from './store/store';
 import { shouldBypassAuth } from './utils/Development/Dev';
 import { appRoutes } from './utils/Navigation/AppRoutes';
 import { NavigationRoutePaths } from './utils/Navigation/NavigationRoutePaths';
+import './styles/_base.scss';
 
 function App() {
 	const $selectedAccountId = useSelector((state: AppState) => state.accounts.selectedAccountId);
