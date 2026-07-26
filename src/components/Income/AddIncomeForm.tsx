@@ -70,7 +70,7 @@ const AddIncomeForm = ({ onAddIncome }: AddIncomeFormProps) => {
 				value={String(income.amount ?? '')}
 				onChange={(amount) => handleChange('amount', Number(amount))}
 				label='Amount'
-				type='number'
+				formatAsCurrency
 			/>
 
 			<LabeledInput

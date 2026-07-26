@@ -87,7 +87,7 @@ const AddAccountForm = ({ onAddAccount }: AddAccountFormProps) => {
 				value={String(account.initialBalance ?? 0)}
 				onChange={(initialBalance) => handleChange('initialBalance', Number(initialBalance))}
 				label='Initial Balance'
-				type='number'
+				formatAsCurrency
 			/>
 
 			<LabeledInput

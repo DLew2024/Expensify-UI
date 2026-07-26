@@ -70,7 +70,7 @@ const AddExpenseForm = ({ onAddExpense }: AddExpenseFormProps) => {
 				value={String(expense.amount ?? '')}
 				onChange={(amount) => handleChange('amount', Number(amount))}
 				label='Amount'
-				type='number'
+				formatAsCurrency
 			/>
 
 			<LabeledInput
