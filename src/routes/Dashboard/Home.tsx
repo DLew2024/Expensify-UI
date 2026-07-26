@@ -54,9 +54,7 @@ const Home = () => {
 					<InfoCard
 						icon={<IoMdCard />}
 						label={$selectedAccount ? $selectedAccount.name : 'Total Balance'}
-						value={addThousandsSeparator(
-							$selectedAccount?.currentBalance ?? dashboardData?.totalBalance ?? 0,
-						)}
+						value={addThousandsSeparator(dashboardData?.totalBalance ?? 0)}
 						variant='primary'
 					/>
 

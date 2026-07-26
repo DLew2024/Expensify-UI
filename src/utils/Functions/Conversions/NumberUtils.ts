@@ -11,11 +11,11 @@ export const addThousandsSeparator = (num: number): string => {
 		return '';
 	}
 
-	const [integerPart, fractionalPart] = num.toString().split('.');
+	const [integerPart, fractionalPart = ''] = num.toFixed(2).split('.');
 
 	const formattedInteger = integerPart.replace(THOUSANDS_SEPARATOR_REGEX, ',');
 
-	return fractionalPart ? `${formattedInteger}.${fractionalPart}` : formattedInteger;
+	return `${formattedInteger}.${fractionalPart}`;
 };
 
 export const prepareExpenseBarChartData = (data: TransactionDTO[] = []): CustomBarChartData[] => {

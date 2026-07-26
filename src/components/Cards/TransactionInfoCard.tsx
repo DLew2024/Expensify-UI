@@ -24,6 +24,7 @@ const TransactionInfoCard = ({
 	hideDeleteBtn = false,
 	onDelete,
 }: TransactionInfoCardProps) => {
+	const formattedAmount = Number(amount).toFixed(2);
 	return (
 		<div className={styles.transactionInfoCard}>
 			<div className={styles.transactionInfoCard__iconContainer}>
@@ -65,7 +66,7 @@ const TransactionInfoCard = ({
 						)}
 					>
 						<MainTextTypography className={styles.transactionInfoCard__amountText} variant='h6'>
-							{type === TransactionType.Income ? '+' : '-'} ${amount}
+							{type === TransactionType.Income ? '+' : '-'} ${formattedAmount}
 						</MainTextTypography>
 
 						{type === TransactionType.Income ? <LuTrendingUp /> : <LuTrendingDown />}
