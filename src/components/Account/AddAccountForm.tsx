@@ -65,36 +65,36 @@ const AddAccountForm = ({ onAddAccount }: AddAccountFormProps) => {
 			<LabeledInput
 				value={account.name ?? ''}
 				onChange={(name) => handleChange('name', name)}
-				label="Name of Account"
-				type="text"
+				label='Name of Account'
+				type='text'
 			/>
 
 			<LabeledInput
 				value={account.institutionName ?? ''}
 				onChange={(institutionName) => handleChange('institutionName', institutionName)}
-				label="Name of Institution"
-				type="text"
+				label='Name of Institution'
+				type='text'
 			/>
 
 			<LabeledInput
 				value={account.lastFourDigits ?? ''}
 				onChange={(lastFourDigits) => handleChange('lastFourDigits', lastFourDigits)}
-				label="Last Four Digits"
-				type="text"
+				label='Last Four Digits'
+				type='text'
 			/>
 
 			<LabeledInput
 				value={String(account.initialBalance ?? 0)}
 				onChange={(initialBalance) => handleChange('initialBalance', Number(initialBalance))}
-				label="Initial Balance"
-				type="number"
+				label='Initial Balance'
+				formatAsCurrency
 			/>
 
 			<LabeledInput
 				value={account.notes ?? ''}
 				onChange={(notes) => handleChange('notes', notes)}
-				label="Notes"
-				type="text"
+				label='Notes'
+				type='text'
 			/>
 
 			<div className={styles.addAccountForm__actions}>

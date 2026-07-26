@@ -62,15 +62,15 @@ const AddExpenseForm = ({ onAddExpense }: AddExpenseFormProps) => {
 			<LabeledInput
 				value={expense.source}
 				onChange={(source) => handleChange('source', source)}
-				label="Source"
-				placeholder="Rent, Groceries, etc"
+				label='Source'
+				placeholder='Rent, Groceries, etc'
 			/>
 
 			<LabeledInput
 				value={String(expense.amount ?? '')}
 				onChange={(amount) => handleChange('amount', Number(amount))}
-				label="Amount"
-				type="number"
+				label='Amount'
+				formatAsCurrency
 			/>
 
 			<LabeledInput
@@ -80,15 +80,15 @@ const AddExpenseForm = ({ onAddExpense }: AddExpenseFormProps) => {
 				onChange={(transactionDate) =>
 					handleChange('transactionDate', convertStringToEpochSeconds(transactionDate))
 				}
-				label="Date"
-				type="date"
+				label='Date'
+				type='date'
 			/>
 
 			<LabeledInput
 				value={String(expense.description ?? '')}
 				onChange={(description) => handleChange('description', description)}
-				label="Description"
-				type="text"
+				label='Description'
+				type='text'
 			/>
 
 			<div className={styles.addExpenseForm__actions}>

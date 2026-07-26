@@ -15,8 +15,8 @@ const AccountTypeSelector = ({ selectedAccountTypeId, onChange }: AccountTypeSel
 		<Selector<AccountTypeDTO>
 			items={$accountTypes}
 			selectedValue={selectedAccountTypeId}
-			label="Account Type"
-			placeholder="Select Account Type"
+			label='Account Type'
+			placeholder='Select Account Type'
 			getValue={(accountType) => accountType.id}
 			getLabel={(accountType) => accountType.name || 'Unnamed Account'}
 			onChange={(accountType) => {

@@ -13,7 +13,7 @@
 	"javascript": {
 		"formatter": {
 			"quoteStyle": "single",
-			"jsxQuoteStyle": "double"
+			"jsxQuoteStyle": "single"
 		}
 	}
 }

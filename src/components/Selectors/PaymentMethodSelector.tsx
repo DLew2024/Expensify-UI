@@ -16,8 +16,8 @@ const PaymentMethodSelector = ({ selectedCurrencyId, onChange }: PaymentMethodSe
 		<Selector<PaymentMethodDTO>
 			items={$paymentMethods}
 			selectedValue={selectedCurrencyId}
-			label="Payment Method"
-			placeholder="Select Payment Method"
+			label='Payment Method'
+			placeholder='Select Payment Method'
 			getValue={(paymentMethod) => paymentMethod.id}
 			getLabel={(paymentMethod) => paymentMethod.name}
 			onChange={(paymentMethod) => {

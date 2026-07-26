@@ -20,11 +20,11 @@ const ExpenseOverview = ({ transactions, onExpenseIncome }: ExpenseOverviewProps
 		<WrapperCard>
 			<div className={styles.expenseOverview__header}>
 				<div>
-					<MainTextTypography variant="h5" className={styles.expenseOverview__title}>
+					<MainTextTypography variant='h5' className={styles.expenseOverview__title}>
 						Expense Overview
 					</MainTextTypography>
 
-					<MainTextTypography variant="body" className={styles.expenseOverview__description}>
+					<MainTextTypography variant='body' className={styles.expenseOverview__description}>
 						Track your spending trends over time and gain insight into where your money goes.
 					</MainTextTypography>
 				</div>

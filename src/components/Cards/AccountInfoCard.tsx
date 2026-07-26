@@ -58,7 +58,7 @@ const AccountInfoCard = ({
 				<div className={styles.accountInfoCard__actions}>
 					{!hideDeleteBtn && (
 						<button
-							type="button"
+							type='button'
 							onClick={onDelete}
 							className={styles.accountInfoCard__deleteButton}
 						>

@@ -62,15 +62,15 @@ const AddIncomeForm = ({ onAddIncome }: AddIncomeFormProps) => {
 			<LabeledInput
 				value={income.source}
 				onChange={(source) => handleChange('source', source)}
-				label="Income Source"
-				placeholder="Freelance, Salary, etc"
+				label='Income Source'
+				placeholder='Freelance, Salary, etc'
 			/>
 
 			<LabeledInput
 				value={String(income.amount ?? '')}
 				onChange={(amount) => handleChange('amount', Number(amount))}
-				label="Amount"
-				type="number"
+				label='Amount'
+				formatAsCurrency
 			/>
 
 			<LabeledInput
@@ -80,15 +80,15 @@ const AddIncomeForm = ({ onAddIncome }: AddIncomeFormProps) => {
 				onChange={(transactionDate) =>
 					handleChange('transactionDate', convertStringToEpochSeconds(transactionDate))
 				}
-				label="Date"
-				type="date"
+				label='Date'
+				type='date'
 			/>
 
 			<LabeledInput
 				value={String(income.description ?? '')}
 				onChange={(description) => handleChange('description', description)}
-				label="Description"
-				type="text"
+				label='Description'
+				type='text'
 			/>
 
 			<div className={styles.addIncomeForm__actions}>

@@ -29,8 +29,8 @@ const CustomPieChart = ({
 			<PieChart>
 				<Pie
 					data={data}
-					dataKey="amount"
-					nameKey="name"
+					dataKey='amount'
+					nameKey='name'
 					cx={'50%'}
 					cy={'50%'}
 					outerRadius={130}
@@ -46,11 +46,11 @@ const CustomPieChart = ({
 
 				{showAnchorText && (
 					<>
-						<text x={'50%'} y={'50%'} dy={-25} textAnchor="middle" fill="#667" fontSize={'14px'}>
+						<text x={'50%'} y={'50%'} dy={-25} textAnchor='middle' fill='#667' fontSize={'14px'}>
 							{label}
 						</text>
 
-						<text x={'50%'} y={'50%'} dy={8} textAnchor="middle" fill="#333" fontSize={'semi-bold'}>
+						<text x={'50%'} y={'50%'} dy={8} textAnchor='middle' fill='#333' fontSize={'semi-bold'}>
 							{totalAmount}
 						</text>
 					</>

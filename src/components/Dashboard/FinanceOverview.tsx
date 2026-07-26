@@ -21,14 +21,14 @@ const FinanceOverview = ({ totalBalance, totalIncome, totalExpenses }: FinanceOv
 	return (
 		<WrapperCard>
 			<div className={styles.financeOverview__header}>
-				<MainTextTypography className={styles.financeOverview__title} variant="h5">
+				<MainTextTypography className={styles.financeOverview__title} variant='h5'>
 					Financial Overview
 				</MainTextTypography>
 			</div>
 
 			<CustomPieChart
 				data={balanceData}
-				label="Total Balance"
+				label='Total Balance'
 				totalAmount={`$${totalBalance}`}
 				colors={COLORS}
 				showAnchorText

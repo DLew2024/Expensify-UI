@@ -8,7 +8,7 @@ interface CardButtonProps extends ButtonHTMLAttributes<HTMLButtonElement> {
 
 const CardButton = ({ children, icon, ...buttonProps }: CardButtonProps) => {
 	return (
-		<button type="button" className={styles.cardButton} {...buttonProps}>
+		<button type='button' className={styles.cardButton} {...buttonProps}>
 			{children}
 			{icon}
 		</button>

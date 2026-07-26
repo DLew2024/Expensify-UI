@@ -1,5 +1,6 @@
 import { useEffect, useState } from 'react';
 import { toast } from 'react-hot-toast';
+import { useSelector } from 'react-redux';
 import type { AddExpenseTransactionDTO, TransactionDTO } from '../../api/GeneratedDTOs';
 import DeleteAlert from '../../components/DeleteAlert';
 import AddExpenseForm from '../../components/Expense/AddExpenseForm';
@@ -13,9 +14,9 @@ import {
 	addExpense,
 	deleteExpense,
 	downloadExpense,
-	getAllExpense,
+	getAllExpenses,
 } from '../../store/services/ExpenseService';
-import { dispatch } from '../../store/store';
+import { type AppState, dispatch } from '../../store/store';
 import type { Guid } from '../../utils/DataTypes/Guid';
 import type { DeleteAlertState } from '../../utils/DataTypes/ModalTypes';
 import { validateExpense } from '../../utils/Functions/Transaction/TransactionValidation';
@@ -24,6 +25,8 @@ import styles from './styles/_Expense.module.scss';
 
 const Expense = () => {
 	useUserAuth();
+
+	const $selectedAccountId = useSelector((state: AppState) => state.accounts.selectedAccountId);
 
 	const [expenseData, setExpenseData] = useState<TransactionDTO[]>([]);
 	const [isAddExpenseModalOpen, setIsAddExpenseModalOpen] = useState<boolean>(false);
@@ -83,13 +86,14 @@ const Expense = () => {
 			window.URL.revokeObjectURL(url);
 		} catch (error: unknown) {
 			handleApiError(error, 'Error downloading expense details:');
-			toast.error('Failed to download expense details. Please try again later.');
 		}
 	};
 
 	const refreshExpenseDetails = async () => {
+		if (!$selectedAccountId) return;
+
 		try {
-			const response = await dispatch(getAllExpense()).unwrap();
+			const response = await dispatch(getAllExpenses($selectedAccountId)).unwrap();
 			setExpenseData(response);
 		} catch (error: unknown) {
 			handleApiError(error, 'Error fetching income details:');
@@ -97,9 +101,11 @@ const Expense = () => {
 	};
 
 	useEffect(() => {
+		if (!$selectedAccountId) return;
+
 		const fetchInitialExpenses = async () => {
 			try {
-				const response = await dispatch(getAllExpense()).unwrap();
+				const response = await dispatch(getAllExpenses($selectedAccountId)).unwrap();
 				setExpenseData(response);
 			} catch (error: unknown) {
 				handleApiError(error, 'Error fetching income details:');
@@ -107,10 +113,10 @@ const Expense = () => {
 		};
 
 		fetchInitialExpenses();
-	}, []);
+	}, [$selectedAccountId]);
 
 	return (
-		<DashboardLayout activeMenu="Expense">
+		<DashboardLayout activeMenu='Expense'>
 			<div className={styles.expenseDashboard}>
 				<AccountSelector />
 
@@ -137,7 +143,7 @@ const Expense = () => {
 				<PrimaryModal
 					isOpen={isAddExpenseModalOpen}
 					onClose={() => setIsAddExpenseModalOpen(false)}
-					title="Add Expense"
+					title='Add Expense'
 				>
 					<AddExpenseForm onAddExpense={handleAddExpense} />
 				</PrimaryModal>
@@ -150,10 +156,10 @@ const Expense = () => {
 							data: null,
 						})
 					}
-					title="Delete Expense"
+					title='Delete Expense'
 				>
 					<DeleteAlert
-						content="Are you sure you want to delete this expense detail?"
+						content='Are you sure you want to delete this expense detail?'
 						onDelete={() => {
 							if (openDeleteAlert.data) {
 								handleDeleteExpense(openDeleteAlert.data);

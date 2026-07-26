@@ -24,6 +24,7 @@ const TransactionInfoCard = ({
 	hideDeleteBtn = false,
 	onDelete,
 }: TransactionInfoCardProps) => {
+	const formattedAmount = Number(amount).toFixed(2);
 	return (
 		<div className={styles.transactionInfoCard}>
 			<div className={styles.transactionInfoCard__iconContainer}>
@@ -36,11 +37,11 @@ const TransactionInfoCard = ({
 
 			<div className={styles.transactionInfoCard__content}>
 				<div>
-					<MainTextTypography className={styles.transactionInfoCard__title} variant="body">
+					<MainTextTypography className={styles.transactionInfoCard__title} variant='body'>
 						{title}
 					</MainTextTypography>
 
-					<MainTextTypography className={styles.transactionInfoCard__date} variant="body">
+					<MainTextTypography className={styles.transactionInfoCard__date} variant='body'>
 						{formatEpochSeconds(date, 'Do MMM YYYY')}
 					</MainTextTypography>
 				</div>
@@ -48,7 +49,7 @@ const TransactionInfoCard = ({
 				<div className={styles.transactionInfoCard__actions}>
 					{!hideDeleteBtn && (
 						<button
-							type="button"
+							type='button'
 							onClick={onDelete}
 							className={styles.transactionInfoCard__deleteButton}
 						>
@@ -64,8 +65,8 @@ const TransactionInfoCard = ({
 								: styles['transactionInfoCard__amount--expense'],
 						)}
 					>
-						<MainTextTypography className={styles.transactionInfoCard__amountText} variant="h6">
-							{type === TransactionType.Income ? '+' : '-'} ${amount}
+						<MainTextTypography className={styles.transactionInfoCard__amountText} variant='h6'>
+							{type === TransactionType.Income ? '+' : '-'} ${formattedAmount}
 						</MainTextTypography>
 
 						{type === TransactionType.Income ? <LuTrendingUp /> : <LuTrendingDown />}

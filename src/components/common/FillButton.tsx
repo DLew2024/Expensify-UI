@@ -8,7 +8,7 @@ interface FillButtonProps extends ButtonHTMLAttributes<HTMLButtonElement> {
 
 const FillButton = ({ children, icon, ...buttonProps }: FillButtonProps) => {
 	return (
-		<button type="button" className={styles.fillButton} {...buttonProps}>
+		<button type='button' className={styles.fillButton} {...buttonProps}>
 			{children}
 			{icon}
 		</button>

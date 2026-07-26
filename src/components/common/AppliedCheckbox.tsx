@@ -76,7 +76,7 @@ export const AppliedCheckbox = forwardRef<ElementRef<'button'>, AppliedCheckboxP
 						}}
 						ref={ref}
 						tabIndex={tabIndex}
-						type="button"
+						type='button'
 					>
 						{checked ? (
 							<AppliedFilledCheckboxIcon
@@ -100,7 +100,7 @@ export const AppliedCheckbox = forwardRef<ElementRef<'button'>, AppliedCheckboxP
 					className={clsx(styles.checkboxLabel, disabled && styles.disabledCheckboxLabel)}
 					onClick={(e) => !disableToggleWithLabel && toggleChecked(e)}
 					onKeyDown={(e) => !disableToggleWithLabel && handleOnKeyDown(e, () => toggleChecked(e))}
-					role="button"
+					role='button'
 					style={{
 						width: fullWidthLabel ? '100%' : 'auto',
 						cursor: disableToggleWithLabel ? 'default' : 'pointer',
@@ -108,7 +108,7 @@ export const AppliedCheckbox = forwardRef<ElementRef<'button'>, AppliedCheckboxP
 					tabIndex={disableToggleWithLabel || disableLabelFromTabbing ? -1 : 0}
 				>
 					{isLabelString ? (
-						<MainTextTypography className={checkboxLabelClassName} textAlign="left">
+						<MainTextTypography className={checkboxLabelClassName} textAlign='left'>
 							{label}
 						</MainTextTypography>
 					) : (
@@ -128,17 +128,17 @@ function AppliedEmptyCheckboxIcon({ className }: AppliedCheckboxIconProps) {
 	return (
 		<svg
 			className={className}
-			height="20"
-			viewBox="0 0 27 27"
-			width="20"
-			xmlns="http://www.w3.org/2000/svg"
-			aria-hidden="true"
+			height='20'
+			viewBox='0 0 27 27'
+			width='20'
+			xmlns='http://www.w3.org/2000/svg'
+			aria-hidden='true'
 		>
 			<path
-				d="M28.5,7.5v21H7.5V7.5h21m0-3H7.5a3.009,3.009,0,0,0-3,3v21a3.009,3.009,0,0,0,3,3h21a3.009,3.009,0,0,0,3-3V7.5A3.009,3.009,0,0,0,28.5,4.5Z"
-				data-name="Icon material-check-box-outline-blank"
-				id="Icon_material-check-box-outline-blank"
-				transform="translate(-4.5 -4.5)"
+				d='M28.5,7.5v21H7.5V7.5h21m0-3H7.5a3.009,3.009,0,0,0-3,3v21a3.009,3.009,0,0,0,3,3h21a3.009,3.009,0,0,0,3-3V7.5A3.009,3.009,0,0,0,28.5,4.5Z'
+				data-name='Icon material-check-box-outline-blank'
+				id='Icon_material-check-box-outline-blank'
+				transform='translate(-4.5 -4.5)'
 			/>
 		</svg>
 	);
@@ -148,17 +148,17 @@ function AppliedFilledCheckboxIcon({ className }: AppliedCheckboxIconProps) {
 	return (
 		<svg
 			className={className}
-			height="20"
-			viewBox="0 0 27 27"
-			width="20"
-			xmlns="http://www.w3.org/2000/svg"
-			aria-hidden="true"
+			height='20'
+			viewBox='0 0 27 27'
+			width='20'
+			xmlns='http://www.w3.org/2000/svg'
+			aria-hidden='true'
 		>
 			<path
-				d="M28.5,4.5H7.5a3,3,0,0,0-3,3v21a3,3,0,0,0,3,3h21a3,3,0,0,0,3-3V7.5A3,3,0,0,0,28.5,4.5ZM15,25.5,7.5,18l2.115-2.115L15,21.255,26.385,9.87,28.5,12Z"
-				data-name="Icon material-check-box"
-				id="Icon_material-check-box"
-				transform="translate(-4.5 -4.5)"
+				d='M28.5,4.5H7.5a3,3,0,0,0-3,3v21a3,3,0,0,0,3,3h21a3,3,0,0,0,3-3V7.5A3,3,0,0,0,28.5,4.5ZM15,25.5,7.5,18l2.115-2.115L15,21.255,26.385,9.87,28.5,12Z'
+				data-name='Icon material-check-box'
+				id='Icon_material-check-box'
+				transform='translate(-4.5 -4.5)'
 			/>
 		</svg>
 	);
@@ -168,17 +168,17 @@ function AppliedIndeterminateCheckboxIcon({ className }: AppliedCheckboxIconProp
 	return (
 		<svg
 			className={className}
-			height="20"
-			viewBox="0 0 27 27"
-			width="20"
-			xmlns="http://www.w3.org/2000/svg"
-			aria-hidden="true"
+			height='20'
+			viewBox='0 0 27 27'
+			width='20'
+			xmlns='http://www.w3.org/2000/svg'
+			aria-hidden='true'
 		>
 			<path
-				d="M28.5,4.5H7.5a3,3,0,0,0-3,3v21a3,3,0,0,0,3,3h21a3,3,0,0,0,3-3V7.5A3,3,0,0,0,28.5,4.5ZM10.5,16.5h15v3h-15Z"
-				data-name="Icon material-indeterminate-check-box"
-				id="Icon_material-indeterminate-check-box"
-				transform="translate(-4.5 -4.5)"
+				d='M28.5,4.5H7.5a3,3,0,0,0-3,3v21a3,3,0,0,0,3,3h21a3,3,0,0,0,3-3V7.5A3,3,0,0,0,28.5,4.5ZM10.5,16.5h15v3h-15Z'
+				data-name='Icon material-indeterminate-check-box'
+				id='Icon_material-indeterminate-check-box'
+				transform='translate(-4.5 -4.5)'
 			/>
 		</svg>
 	);

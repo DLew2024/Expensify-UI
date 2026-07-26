@@ -5,14 +5,13 @@ import { buildAxiosCall } from '../api/buildAxiosCall';
 import { GET_USER_DASHBOARD_INFO_THUNK_ID } from '../constants/ThunkIds/DashboardThunkIds';
 
 //#region GET
-export const getUserDashboardData = createAsyncThunk<DashboardDataResponseDTO, Guid | null>(
+export const getUserDashboardData = createAsyncThunk<DashboardDataResponseDTO, Guid>(
 	GET_USER_DASHBOARD_INFO_THUNK_ID,
 	async (currentlySelectedAccountId) => {
-		const url = currentlySelectedAccountId
-			? `api/dashboard?accountId=${currentlySelectedAccountId}`
-			: 'api/dashboard';
-
-		const { data } = await buildAxiosCall<DashboardDataResponseDTO, void>('GET', url);
+		const { data } = await buildAxiosCall<DashboardDataResponseDTO, void>(
+			'GET',
+			`api/dashboard?accountId=${currentlySelectedAccountId}`,
+		);
 
 		return data;
 	},

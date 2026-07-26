@@ -16,8 +16,8 @@ const CurrencySelector = ({ selectedCurrencyId, onChange }: CurrencySelectorProp
 		<Selector<CurrencyCodeDTO>
 			items={$currency}
 			selectedValue={selectedCurrencyId}
-			label="Account Currency"
-			placeholder="Select Currency Type"
+			label='Account Currency'
+			placeholder='Select Currency Type'
 			getValue={(currency) => currency.id}
 			getLabel={(currency) => `${currency.code} - ${currency.name}`}
 			onChange={(currency) => {

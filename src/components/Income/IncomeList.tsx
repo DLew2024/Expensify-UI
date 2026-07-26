@@ -17,7 +17,7 @@ const IncomeList = ({ transactions, onDelete, onDownload }: IncomeListProps) => 
 	return (
 		<WrapperCard>
 			<div className={styles.incomeList__header}>
-				<MainTextTypography className={styles.incomeList__title} variant="h5">
+				<MainTextTypography className={styles.incomeList__title} variant='h5'>
 					Income Sources
 				</MainTextTypography>
 

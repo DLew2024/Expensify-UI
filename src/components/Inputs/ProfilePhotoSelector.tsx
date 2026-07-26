@@ -38,12 +38,12 @@ const ProfilePhotoSelector = ({ image, setImage }: ProfilePhotoSelectorProps) =>
 	return (
 		<div className={styles.profilePhotoSelector}>
 			<input
-				accept="image/*"
+				accept='image/*'
 				className={styles.profilePhotoSelector__input}
 				onChange={handleImageChange}
-				placeholder="Choose a profile photo"
+				placeholder='Choose a profile photo'
 				ref={inputRef}
-				type="file"
+				type='file'
 			/>
 
 			{!image ? (
@@ -53,8 +53,8 @@ const ProfilePhotoSelector = ({ image, setImage }: ProfilePhotoSelectorProps) =>
 					<button
 						className={styles.profilePhotoSelector__chooseButton}
 						onClick={onChooseFile}
-						title="Choose a profile photo"
-						type="button"
+						title='Choose a profile photo'
+						type='button'
 					>
 						<LuUpload />
 					</button>
@@ -63,15 +63,15 @@ const ProfilePhotoSelector = ({ image, setImage }: ProfilePhotoSelectorProps) =>
 				<div className={styles.profilePhotoSelector__previewContainer}>
 					<img
 						className={styles.profilePhotoSelector__previewImage}
-						alt="Profile Preview"
+						alt='Profile Preview'
 						src={previewUrl || ''}
 					/>
 
 					<button
 						className={styles.profilePhotoSelector__removeButton}
 						onClick={handleRemoveImage}
-						type="button"
-						title="Remove profile photo"
+						type='button'
+						title='Remove profile photo'
 					>
 						<LuTrash />
 					</button>

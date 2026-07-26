@@ -14,7 +14,7 @@ const AccountList = ({ accounts, onDelete }: AccountListProps) => {
 	return (
 		<WrapperCard>
 			<div className={styles.accountList__header}>
-				<MainTextTypography variant="h5" className={styles.accountList__title}>
+				<MainTextTypography variant='h5' className={styles.accountList__title}>
 					Accounts
 				</MainTextTypography>
 			</div>

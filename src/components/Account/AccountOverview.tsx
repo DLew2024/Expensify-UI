@@ -12,11 +12,11 @@ export const AccountOverview = ({ onAddAccount }: AccountOverviewProps) => {
 		<WrapperCard>
 			<div className={styles.accountOverview__header}>
 				<div>
-					<MainTextTypography variant="h5" className={styles.accountOverview__title}>
+					<MainTextTypography variant='h5' className={styles.accountOverview__title}>
 						Account Overview
 					</MainTextTypography>
 
-					<MainTextTypography variant="body" className={styles.accountOverview__description}>
+					<MainTextTypography variant='body' className={styles.accountOverview__description}>
 						Create accounts to add financial data to.
 					</MainTextTypography>
 				</div>

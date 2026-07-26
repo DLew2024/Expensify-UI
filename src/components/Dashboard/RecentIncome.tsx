@@ -15,7 +15,7 @@ const RecentIncome = ({ transactions, onSeeMore }: RecentIncomesProps) => {
 	return (
 		<WrapperCard>
 			<div className={styles.recentIncome__header}>
-				<MainTextTypography className={styles.recentIncome__title} variant="h5">
+				<MainTextTypography className={styles.recentIncome__title} variant='h5'>
 					Income
 				</MainTextTypography>
 

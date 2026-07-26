@@ -17,7 +17,7 @@ const ExpenseList = ({ transactions, onDelete, onDownload }: ExpenseListProps) =
 	return (
 		<WrapperCard>
 			<div className={styles.expenseList__header}>
-				<MainTextTypography className={styles.expenseList__title} variant="h5">
+				<MainTextTypography className={styles.expenseList__title} variant='h5'>
 					All Expenses
 				</MainTextTypography>
 

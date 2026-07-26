@@ -37,11 +37,11 @@ const CustomBarChart = ({ data }: CustomBarChartProps) => {
 
 		return (
 			<div className={styles.customBarChart__tooltip}>
-				<MainTextTypography variant="body" className={styles.customBarChart__tooltipTitle}>
+				<MainTextTypography variant='body' className={styles.customBarChart__tooltipTitle}>
 					{item.sourceName}
 				</MainTextTypography>
 
-				<MainTextTypography variant="body" className={styles.customBarChart__tooltipText}>
+				<MainTextTypography variant='body' className={styles.customBarChart__tooltipText}>
 					Amount: <span className={styles.customBarChart__tooltipValue}>${item.amount}</span>
 				</MainTextTypography>
 			</div>
@@ -55,10 +55,10 @@ const CustomBarChart = ({ data }: CustomBarChartProps) => {
 		<div className={styles.customBarChart}>
 			<ResponsiveContainer width={'100%'} height={300}>
 				<BarChart data={data}>
-					<CartesianGrid stroke="none" />
+					<CartesianGrid stroke='none' />
 
-					<XAxis dataKey={'date'} tick={{ fontSize: 12, fill: '#555' }} stroke="none" />
-					<YAxis tick={{ fontSize: 12, fill: '#555' }} stroke="none" />
+					<XAxis dataKey={'date'} tick={{ fontSize: 12, fill: '#555' }} stroke='none' />
+					<YAxis tick={{ fontSize: 12, fill: '#555' }} stroke='none' />
 
 					<Tooltip content={<CustomTooltip />} />
 

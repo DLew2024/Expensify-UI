@@ -16,7 +16,7 @@ const Navbar = ({ activeMenu }: NavbarProps) => {
 			<button
 				className={styles.sideMenuButton}
 				onClick={() => setIsSideMenuOpen(!isSideMenuOpen)}
-				type="button"
+				type='button'
 			>
 				{isSideMenuOpen ? (
 					<HiOutlineX className={styles.menuIcon} />
@@ -25,7 +25,7 @@ const Navbar = ({ activeMenu }: NavbarProps) => {
 				)}
 			</button>
 
-			<MainTextTypography variant="h2" className={styles.navbar_container__header}>
+			<MainTextTypography variant='h2' className={styles.navbar_container__header}>
 				Expensify
 			</MainTextTypography>
 

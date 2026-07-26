@@ -26,14 +26,14 @@ const RecentIncomeWithChart = ({ data, totalIncome }: RecentIncomeWithChartProps
 	return (
 		<WrapperCard>
 			<div className={styles.recentIncomeWithChart__header}>
-				<MainTextTypography variant="h5" className={styles.recentIncomeWithChart__title}>
+				<MainTextTypography variant='h5' className={styles.recentIncomeWithChart__title}>
 					Last 60 Days Income
 				</MainTextTypography>
 			</div>
 
 			<CustomPieChart
 				data={chartData}
-				label="Total Income"
+				label='Total Income'
 				totalAmount={`$${totalIncome}`}
 				colors={COLORS}
 				showAnchorText
