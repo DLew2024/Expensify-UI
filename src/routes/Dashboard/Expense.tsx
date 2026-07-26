@@ -86,7 +86,6 @@ const Expense = () => {
 			window.URL.revokeObjectURL(url);
 		} catch (error: unknown) {
 			handleApiError(error, 'Error downloading expense details:');
-			toast.error('Failed to download expense details. Please try again later.');
 		}
 	};
 

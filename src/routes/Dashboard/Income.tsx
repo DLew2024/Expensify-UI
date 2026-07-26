@@ -67,8 +67,6 @@ const Income = () => {
 				data: null,
 			});
 
-			toast.success('Income details deleted successfully.');
-
 			await refreshIncomeDetails();
 		} catch (error: unknown) {
 			handleApiError(error, 'Error deleting income:');
@@ -92,7 +90,6 @@ const Income = () => {
 			window.URL.revokeObjectURL(url);
 		} catch (error: unknown) {
 			handleApiError(error, 'Error downloading income details:');
-			toast.error('Failed to download income details. Please try again later.');
 		}
 	};
 
